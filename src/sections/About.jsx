@@ -17,7 +17,7 @@ function About() {
             Soy Desarrolladora Front-End con experiencia en la creación de interfaces de usuario interactivas y responsivas utilizando JavaScript, HTML5, CSS3, React y Jest, con un fuerte enfoque en la calidad del código, el detalle visual y la experiencia de usuario (UX/UI).
           </p>
           <p className="text-lg mb-4">
-            Actualmente formo parte del equipo de desarrollo del Cloud Portal corporativo de Telefónica, donde trabajo en la implementación y mantenimiento de componentes frontend sobre una arquitectura híbrida basada en Joomla (PHP) y JavaScript. Desarrollo componentes reutilizables desde cero, gestionando renderizado dinámico, estilos encapsulados, eventos en cliente y sincronización con backend mediante props, siempre alineando la implementación con diseños de Figma de forma pixel-perfect.
+            He formado parte del equipo de desarrollo del Cloud Portal corporativo de Telefónica, donde he trabajado en la implementación y mantenimiento de componentes frontend sobre una arquitectura híbrida basada en Joomla (PHP) y JavaScript. Desarrollando componentes reutilizables desde cero, gestionando renderizado dinámico, estilos encapsulados, eventos en cliente y sincronización con backend mediante props, siempre alineando la implementación con diseños de Figma de forma pixel-perfect.
           </p>
           <p className="text-lg mb-4">
             He participado en proyectos reales para clientes de alto perfil como CaixaBank, trabajando con metodologías ágiles (Scrum). En uno de ellos colaboré en un proyecto galardonado centrado en el cálculo y reducción de la huella de carbono, combinando desarrollo web y sostenibilidad para generar impacto real.
