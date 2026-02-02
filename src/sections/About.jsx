@@ -23,7 +23,7 @@ function About() {
             He participado en proyectos reales para clientes de alto perfil como CaixaBank, trabajando con metodologías ágiles (Scrum). En uno de ellos colaboré en un proyecto galardonado centrado en el cálculo y reducción de la huella de carbono, combinando desarrollo web y sostenibilidad para generar impacto real.
           </p>
           <p className="text-lg">
-            Busco seguir creciendo en entornos técnicos y colaborativos, aportando valor a través del aprendizaje continuo, la capacidad de análisis y el trabajo en equipo. Como proyecto personal, he desarrollado una aplicación full-stack tipo calendario (AppCalendar) utilizando React, Node.js y MongoDB, reflejando mi compromiso con la creación de soluciones funcionales, bien estructuradas y visualmente cuidadas.
+            Busco seguir creciendo en entornos técnicos y colaborativos, aportando valor a través del aprendizaje continuo, la capacidad de análisis y el trabajo en equipo. Como proyecto personal, he desarrollado una aplicación full-stack tipo calendario (AppCalendar) utilizando React, Node.js y MongoDB, reflejando mi compromiso con la creación y el diseño de soluciones funcionales, bien estructuradas y visualmente cuidadas.
           </p>
           {/* Botón para descargar el CV */}
           <a
