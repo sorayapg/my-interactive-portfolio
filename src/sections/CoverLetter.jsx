@@ -8,7 +8,7 @@ const CoverLetter = () => {
     },
     {
       title: '💻 SOBRE MIS PASIONES',
-      text: 'Me encanta diseñar, programar y aprender. He creado desde aplicaciones prácticas como una App tipo calendario (CalendarApp, desarrollada con React, Node.js, MongoDB), hasta proyectos con impacto ecológico como el cálculo de huella de carbono. En cada línea de código que escribo, intento transmitir la creatividad con las manos lo que imagino con la mente.'
+      text: 'He participado en el desarrollo del Cloud Portal corporativo de Telefónica, creando componentes frontend, y he trabajado en proyectos como una aplicación de huella de carbono para CaixaBank y una aplicación full-stack de gestión de eventos. Me apasiona combinar la lógica técnica con la sensibilidad del diseño para crear productos que la gente ame usar.'
     },
     {
       title: '🌱 VALORES QUE DEFINEN MI TRABAJO',
