@@ -1,26 +1,24 @@
-import { useEffect, useState } from 'react';
+// src/components/DrawStory/usePrefersReducedMotion.js
 
-/**
- * Hook para detectar si el usuario prefiere animaciones reducidas
- * @returns {boolean} true si prefers-reduced-motion está activo
- */
+import React from 'react'; // <-- ESTA LÍNEA ES LA SOLUCIÓN
+
+const QUERY = '(prefers-reduced-motion: reduce)';
+
 export function usePrefersReducedMotion() {
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  const [prefersReducedMotion, setPrefersReducedMotion] = React.useState(
+    () => typeof window !== 'undefined' && window.matchMedia(QUERY).matches
+  );
 
-  useEffect(() => {
-    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-    setPrefersReducedMotion(mediaQuery.matches);
-
-    const handleChange = (event) => {
-      setPrefersReducedMotion(event.matches);
+  React.useEffect(() => {
+    if (typeof window === 'undefined') {
+      return;
+    }
+    const mediaQuery = window.matchMedia(QUERY);
+    const handleChange = () => {
+      setPrefersReducedMotion(mediaQuery.matches);
     };
-
-    // Escuchar cambios en la preferencia
     mediaQuery.addEventListener('change', handleChange);
-
-    return () => {
-      mediaQuery.removeEventListener('change', handleChange);
-    };
+    return () => mediaQuery.removeEventListener('change', handleChange);
   }, []);
 
   return prefersReducedMotion;
