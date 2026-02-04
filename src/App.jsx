@@ -9,6 +9,7 @@ import About from './sections/About';
 import Storyboard from './sections/Storyboard';
 import Projects from './sections/Projects';
 import CoverLetter from './sections/CoverLetter'; // Importar la nueva sección de la Carta de Presentación
+import DrawStory from './components/DrawStory'; // Sección interactiva de Draw Story
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <About /> {/* Sección sobre ti (CV y carta) */}
         <CoverLetter /> {/* Sección de la Carta de Presentación */}
         <Storyboard /> {/* Sección del storyboard */}
+        <DrawStory /> {/* Sección interactiva Draw Story */}
         <Projects /> {/* Sección de proyectos */}
       </main>
 

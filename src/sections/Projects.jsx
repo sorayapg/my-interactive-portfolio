@@ -2,7 +2,7 @@ import React from 'react';
 
 function Projects() {
   return (
-    <section className="py-16 bg-gray-200 text-gray-800"> {/* Padding vertical, fondo gris pastel */}
+    <section id="projects" className="py-16 bg-gray-200 text-gray-800"> {/* Padding vertical, fondo gris pastel */}
       <div className="container mx-auto px-4"> {/* Contenedor principal de la sección */}
         {/* Contenedor del título con margen negativo para alineación */}
         <div className="-mx-4"> {/* Margen negativo para alinear con los proyectos */}
