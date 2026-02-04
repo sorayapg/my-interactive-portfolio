@@ -1,24 +1,26 @@
-// src/components/DrawStory/usePrefersReducedMotion.js
+import React from 'react';
 
-import React from 'react'; // <-- ESTA LÍNEA ES LA SOLUCIÓN
-
-const QUERY = '(prefers-reduced-motion: reduce)';
+const QUERY = '(prefers-reduced-motion: no-preference)';
 
 export function usePrefersReducedMotion() {
   const [prefersReducedMotion, setPrefersReducedMotion] = React.useState(
-    () => typeof window !== 'undefined' && window.matchMedia(QUERY).matches
+    () => typeof window !== 'undefined' ? !window.matchMedia(QUERY).matches : false
   );
 
   React.useEffect(() => {
     if (typeof window === 'undefined') {
       return;
     }
-    const mediaQuery = window.matchMedia(QUERY);
-    const handleChange = () => {
-      setPrefersReducedMotion(mediaQuery.matches);
+
+    const mediaQueryList = window.matchMedia(QUERY);
+    const listener = (event) => {
+      setPrefersReducedMotion(!event.matches);
     };
-    mediaQuery.addEventListener('change', handleChange);
-    return () => mediaQuery.removeEventListener('change', handleChange);
+
+    mediaQueryList.addEventListener('change', listener);
+    return () => {
+      mediaQueryList.removeEventListener('change', listener);
+    };
   }, []);
 
   return prefersReducedMotion;

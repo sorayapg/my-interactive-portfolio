@@ -1,5 +1,5 @@
-import './App.css'; // Mantenemos la importación del CSS de la App
-import './index.css'; // Importación global de estilos, incluyendo Tailwind
+import './App.css';
+import './index.css';
 
 // Importar los componentes y secciones
 import Header from './components/Header';
@@ -7,25 +7,25 @@ import Footer from './components/Footer';
 import Hero from './sections/Hero';
 import About from './sections/About';
 import Storyboard from './sections/Storyboard';
+import ProfessionalStory from './sections/ProfessionalStory'; // <--- 1. HE AÑADIDO ESTA LÍNEA
 import Projects from './sections/Projects';
-import CoverLetter from './sections/CoverLetter'; // Importar la nueva sección de la Carta de Presentación
-import DrawStory from './components/DrawStory'; // Sección interactiva de Draw Story
+import CoverLetter from './sections/CoverLetter';
 
 function App() {
   return (
-    <div className="min-h-screen flex flex-col"> {/* Flex container para la estructura general */}
-      <Header /> {/* Encabezado */}
+    <div className="min-h-screen flex flex-col">
+      <Header />
 
-      <main className="flex-grow"> {/* Contenedor principal que ocupa el espacio restante */}
-        <Hero /> {/* Sección de bienvenida */}
-        <About /> {/* Sección sobre ti (CV y carta) */}
-        <CoverLetter /> {/* Sección de la Carta de Presentación */}
-        <Storyboard /> {/* Sección del storyboard */}
-        <DrawStory /> {/* Sección interactiva Draw Story */}
-        <Projects /> {/* Sección de proyectos */}
+      <main className="flex-grow">
+        <Hero />
+        <About />
+        <CoverLetter />
+        <Storyboard /> {/* <-- ESTE ES TU STORYBOARD KAWAII ORIGINAL */}
+        <ProfessionalStory /> {/* <-- 2. HE AÑADIDO ESTA LÍNEA (LA NUEVA ANIMACIÓN) */}
+        <Projects />
       </main>
 
-      <Footer /> {/* Pie de página */}
+      <Footer />
     </div>
   );
 }
