@@ -25,6 +25,7 @@ function DrawStory() {
   const [replayKey, setReplayKey] = useState(0);
   const [controlsVisible, setControlsVisible] = useState(true);
   const sentinelRefs = useRef([]);
+  const sectionRef = useRef(null);
   const hideControlsTimer = useRef(null);
 
   // Debug: detectar cambios en activeIndex
@@ -101,13 +102,30 @@ function DrawStory() {
   }, [hasAnimated]);
 
   const handleReplay = useCallback(() => {
-    console.log('🔄 DrawStory: Replay animation for scene', activeIndex);
-    setAnimateScene((prev) => ({ ...prev, [activeIndex]: false }));
+    console.log('🔄 DrawStory: Replay - volver a escena 0 y resetear todo');
+    
+    // 1. Resetear animaciones
+    setAnimateScene({});
+    setHasAnimated({});
+    setActiveIndex(0);
+    
+    // 2. Incrementar replayKey para forzar remount de SVGs
     setReplayKey((prev) => prev + 1);
+    
+    // 3. Scroll suave al inicio de la sección
+    if (sectionRef.current) {
+      sectionRef.current.scrollIntoView({ 
+        behavior: 'smooth', 
+        block: 'start' 
+      });
+    }
+    
+    // 4. Reiniciar animación de escena 0 después de scroll
     setTimeout(() => {
-      setAnimateScene((prev) => ({ ...prev, [activeIndex]: true }));
-    }, 50);
-  }, [activeIndex]);
+      setHasAnimated({ 0: true });
+      setAnimateScene({ 0: true });
+    }, 600);
+  }, []);
 
   const handleScrollToProjects = () => {
     document.querySelector('#projects')?.scrollIntoView({ behavior: 'smooth' });
@@ -115,6 +133,7 @@ function DrawStory() {
 
   return (
     <section
+      ref={sectionRef}
       className="relative bg-gradient-to-br from-pink-50 via-purple-50 to-indigo-50"
       aria-label="Mi historia profesional"
       onMouseMove={handleMouseMove}
@@ -136,7 +155,7 @@ function DrawStory() {
                 aria-hidden="true"
               />
               <div className="container mx-auto max-w-6xl">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 lg:items-start">
                   <div
                     className={`space-y-6 transition-all duration-700 ${
                       isActive ? 'opacity-100 translate-y-0' : 'opacity-40 translate-y-4'
@@ -168,7 +187,7 @@ function DrawStory() {
                     )}
                   </div>
                   <div
-                    className={`relative transition-all duration-700 ${
+                    className={`relative transition-all duration-700 lg:sticky lg:top-24 ${
                       isActive ? 'opacity-100 scale-100' : 'opacity-40 scale-95'
                     }`}
                   >
@@ -221,8 +240,8 @@ function DrawStory() {
           <button
             onClick={handleReplay}
             className="p-2 text-indigo-600 hover:text-indigo-700 hover:bg-indigo-50 rounded-full transition-colors"
-            aria-label="Repetir animación de la escena actual"
-            title="Repetir animación"
+            aria-label="Volver al inicio y repetir historia completa"
+            title="Reiniciar historia"
           >
             <ArrowPathIcon className="w-5 h-5" />
           </button>

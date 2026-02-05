@@ -1,10 +1,18 @@
 import { useEffect, useRef, useState } from 'react';
 import { usePrefersReducedMotion } from './usePrefersReducedMotion';
 
+// ============ CONSTANTES DE TIMING CONFIGURABLES ============
+const OUTLINE_DRAW_SEC = 3.2;       // Duración de dibujo por path (lento, con alma)
+const OUTLINE_STAGGER_SEC = 0.55;   // Stagger entre paths de contorno
+const EMOTIONAL_PAUSE_SEC = 0.8;    // Pausa emocional: "terminé de dibujar → ahora pinto"
+const FILL_WASH_SEC = 5.6;          // Duración del relleno acuarela con pigmento irregular
+const STICKERS_DELAY_SEC = 1.8;     // Delay tras completar rellenos
+
 /**
- * Componente SvgDraw mejorado con efecto acuarela y doodle
- * - Contornos tipo rotulador que se dibujan (stroke-dasharray)
- * - Rellenos tipo acuarela con textura orgánica (SVG filters + masks)
+ * Componente SvgDraw con efecto acuarela y doodle
+ * ORDEN GARANTIZADO: CONTORNOS → RELLENO → STICKERS
+ * - Contornos tipo rotulador con presión y jitter (stroke-dasharray)
+ * - Rellenos tipo acuarela con máscara animada (wipe con textura)
  * - Stickers flotantes con animación
  * - Respeta prefers-reduced-motion
  */
@@ -13,13 +21,7 @@ function SvgDraw({ outlinePaths = [], fillShapes = [], stickers = [], animate = 
   const pathRefs = useRef([]);
   const [pathLengths, setPathLengths] = useState([]);
   const [isAnimating, setIsAnimating] = useState(false);
-
-  // Debug: detectar cambios en animate
-  useEffect(() => {
-    if (animate) {
-      console.log('🎨 SvgDraw: Animation triggered', { replayKey, animate });
-    }
-  }, [animate, replayKey]);
+  const [stickersVisible, setStickersVisible] = useState(false);
 
   // Calcular longitudes de paths al montar o cambiar
   useEffect(() => {
@@ -29,23 +31,40 @@ function SvgDraw({ outlinePaths = [], fillShapes = [], stickers = [], animate = 
     setPathLengths(lengths);
   }, [outlinePaths]);
 
-  // Manejar animación
+  // Calcular timing total de la secuencia
+  const totalOutlineTime = outlinePaths.length > 0 
+    ? OUTLINE_DRAW_SEC + (outlinePaths.length - 1) * OUTLINE_STAGGER_SEC
+    : 0;
+  const fillStartTime = totalOutlineTime + EMOTIONAL_PAUSE_SEC;  // Pausa emocional perceptible
+  const stickersStartTime = fillStartTime + FILL_WASH_SEC + STICKERS_DELAY_SEC;
+  const totalAnimationTime = stickersStartTime + 2.5; // +2.5s para stickers
+
+  // Manejar animación con timing calculado
   useEffect(() => {
     if (animate && !prefersReducedMotion) {
       setIsAnimating(true);
-      
-      const baseDelay = 350; // Aumentado para más tiempo entre trazos
-      const animationDuration = 2500; // Aumentado para animación más lenta
-      const totalDuration = animationDuration + (baseDelay * (outlinePaths.length + fillShapes.length)) + 1500;
+      setStickersVisible(false); // Reset stickers al inicio
 
-      const timer = setTimeout(() => {
+      // Timer para finalizar animación principal
+      const animTimer = setTimeout(() => {
         setIsAnimating(false);
-        console.log('🎨 SvgDraw: Animation complete');
-      }, totalDuration);
+      }, totalAnimationTime * 1000);
 
-      return () => clearTimeout(timer);
+      // Timer para mostrar stickers (y mantenerlos visibles)
+      const stickersTimer = setTimeout(() => {
+        setStickersVisible(true);
+      }, stickersStartTime * 1000);
+
+      return () => {
+        clearTimeout(animTimer);
+        clearTimeout(stickersTimer);
+      };
+    } else if (animate && prefersReducedMotion) {
+      // Si hay reduced motion, mostrar todo inmediatamente
+      setIsAnimating(false);
+      setStickersVisible(true);
     }
-  }, [animate, prefersReducedMotion, outlinePaths.length, fillShapes.length]);
+  }, [animate, prefersReducedMotion, totalAnimationTime, stickersStartTime, replayKey]);
 
   // Paleta de gradientes pastel para acuarela
   const gradients = {
@@ -72,7 +91,27 @@ function SvgDraw({ outlinePaths = [], fillShapes = [], stickers = [], animate = 
       role="img"
     >
       <defs>
-        {/* FILTRO ACUARELA - Textura orgánica */}
+        {/* FILTRO TEXTURA ACUARELA - Para wipe effect */}
+        <filter id="watercolorTexture" x="-50%" y="-50%" width="200%" height="200%">
+          <feTurbulence 
+            type="fractalNoise" 
+            baseFrequency="0.04 0.03" 
+            numOctaves="4" 
+            seed="5"
+            result="turbulence"
+          />
+          <feDisplacementMap 
+            in="SourceGraphic" 
+            in2="turbulence" 
+            scale="15" 
+            xChannelSelector="R" 
+            yChannelSelector="G"
+            result="displaced"
+          />
+          <feGaussianBlur in="displaced" stdDeviation="1.2" />
+        </filter>
+
+        {/* FILTRO ACUARELA - Textura orgánica para fills */}
         <filter id="watercolor" x="-50%" y="-50%" width="200%" height="200%">
           <feTurbulence 
             type="fractalNoise" 
@@ -117,35 +156,42 @@ function SvgDraw({ outlinePaths = [], fillShapes = [], stickers = [], animate = 
           </linearGradient>
         ))}
 
-        {/* MÁSCARAS ANIMADAS para simular pincel acuarela */}
-        {fillShapes.map((shape, index) => (
-          <mask key={shape.maskId} id={shape.maskId}>
-            <rect 
-              x="0" 
-              y="0" 
-              width="300" 
-              height="250" 
-              fill="white"
-              style={{
-                opacity: isAnimating && animate && !prefersReducedMotion ? 1 : (prefersReducedMotion || !animate ? 1 : 0),
-                transition: isAnimating && !prefersReducedMotion 
-                  ? `opacity 1.2s ease-in ${(index + outlinePaths.length) * 0.3 + 1}s`
-                  : 'none',
-              }}
-            />
-          </mask>
-        ))}
+        {/* MÁSCARAS ANIMADAS para wipe effect acuarela (pincel pintando) */}
+        {fillShapes.map((shape, index) => {
+          const maskDelay = fillStartTime + (index * 0.5);
+          return (
+            <mask key={shape.maskId} id={shape.maskId}>
+              <rect 
+                x="-50" 
+                y="-50" 
+                width="400" 
+                height="350" 
+                fill="white"
+                filter="url(#watercolorTexture)"
+                style={{
+                  transformOrigin: 'center',
+                  transform: isAnimating && animate && !prefersReducedMotion 
+                    ? 'scale(1)' 
+                    : (prefersReducedMotion || !animate ? 'scale(1)' : 'scale(0)'),
+                  transition: !prefersReducedMotion && animate && isAnimating
+                    ? `transform ${FILL_WASH_SEC}s cubic-bezier(0.25, 0.1, 0.25, 1) ${maskDelay}s`
+                    : 'none',
+                }}
+              />
+            </mask>
+          );
+        })}
       </defs>
 
       {/* ========== 1️⃣ CONTORNOS TIPO ROTULADOR (DOODLE) ========== */}
       {outlinePaths.map((pathData, index) => {
         const length = pathLengths[index] || 0;
         const shouldAnimate = animate && !prefersReducedMotion && isAnimating;
-        const staggerDelay = index * 0.35; // Más espaciado entre trazos
+        const staggerDelay = index * OUTLINE_STAGGER_SEC;
 
         return (
           <path
-            key={`outline-${index}`}
+            key={`outline-${index}-${replayKey}`}
             ref={(el) => (pathRefs.current[index] = el)}
             d={pathData.d}
             fill="none"
@@ -159,11 +205,10 @@ function SvgDraw({ outlinePaths = [], fillShapes = [], stickers = [], animate = 
               strokeDasharray: length,
               strokeDashoffset: shouldAnimate ? 0 : (prefersReducedMotion ? 0 : length),
               transition: shouldAnimate 
-                ? `stroke-dashoffset 2.2s ease-out ${staggerDelay}s, stroke-width 2.2s ease-in-out ${staggerDelay}s`
+                ? `stroke-dashoffset ${OUTLINE_DRAW_SEC}s cubic-bezier(0.4, 0, 0.2, 1) ${staggerDelay}s`
                 : 'none',
-              strokeWidth: shouldAnimate ? '3' : '2.5',
-              animation: shouldAnimate && !prefersReducedMotion
-                ? `pressureVariation 2.2s ease-in-out ${staggerDelay}s`
+              animation: shouldAnimate
+                ? `pressureVariation ${OUTLINE_DRAW_SEC}s ease-in-out ${staggerDelay}s`
                 : 'none',
             }}
           />
@@ -172,41 +217,23 @@ function SvgDraw({ outlinePaths = [], fillShapes = [], stickers = [], animate = 
 
       {/* ========== 2️⃣ RELLENOS ACUARELA PASTEL (Aparecen DESPUÉS de contornos) ========== */}
       {fillShapes.map((shape, index) => {
-        // Delay aumentado para que aparezcan DESPUÉS de todos los contornos
-        const fillDelay = (outlinePaths.length * 0.35) + (index * 0.4) + 2.0;
+        const fillDelay = fillStartTime + (index * 0.5);
+        const fillAnimName = `watercolorWash-${replayKey}-${index}`;
         
-        // Determinar opacidad inicial y final
-        let initialOpacity = 0;
-        let finalOpacity = 1;
-        
-        if (prefersReducedMotion) {
-          initialOpacity = 0.8;
-          finalOpacity = 0.8;
-        } else if (!animate) {
-          // Si no hay animación, mostrar estado final
-          initialOpacity = 1;
-          finalOpacity = 1;
-        } else if (animate && isAnimating) {
-          // Durante animación: empezar invisible
-          initialOpacity = 0;
-          finalOpacity = 1;
-        } else if (animate && !isAnimating) {
-          // Después de animar: visible
-          initialOpacity = 1;
-          finalOpacity = 1;
-        }
+        // Opacidad: invisible hasta fillStart, luego animación orgánica
+        const shouldAnimate = !prefersReducedMotion && animate && isAnimating;
         
         return (
           <path
-            key={`fill-${index}`}
+            key={`fill-${index}-${replayKey}`}
             d={shape.d}
             fill={`url(#${shape.gradientId})`}
             filter="url(#watercolor)"
             mask={`url(#${shape.maskId})`}
-            opacity={isAnimating ? finalOpacity : initialOpacity}
             style={{
-              transition: !prefersReducedMotion && animate && isAnimating
-                ? `opacity 1.5s ease-in ${fillDelay}s`
+              opacity: shouldAnimate ? 0 : 0.9,
+              animation: shouldAnimate
+                ? `${fillAnimName} ${FILL_WASH_SEC}s ease-in-out ${fillDelay}s forwards`
                 : 'none',
             }}
           />
@@ -215,14 +242,21 @@ function SvgDraw({ outlinePaths = [], fillShapes = [], stickers = [], animate = 
 
       {/* ========== 3️⃣ STICKERS FLOTANTES (Aparecen al final y permanecen) ========== */}
       {stickers.map((sticker, index) => {
-        const shouldShow = !animate || prefersReducedMotion || isAnimating;
-        // Stickers aparecen después de todo (contornos + rellenos) y con más tiempo
-        const stickerDelay = (outlinePaths.length * 0.35) + (fillShapes.length * 0.4) + sticker.delay + 3.5;
+        // Stickers con estado separado para evitar resets
+        const shouldShowSticker = stickersVisible || prefersReducedMotion || !animate;
+        const stickerAnimDelay = (sticker.delay || 0);
         
         return (
           <g
-            key={`sticker-${index}`}
+            key={`sticker-${index}-${replayKey}`}
             transform={`translate(${sticker.x}, ${sticker.y})`}
+            style={{
+              opacity: shouldShowSticker ? 1 : 0,
+              pointerEvents: shouldShowSticker ? 'auto' : 'none',
+              transition: shouldShowSticker
+                ? `opacity 0.7s ease-out`
+                : 'none',
+            }}
           >
             <foreignObject 
               width="80" 
@@ -230,18 +264,17 @@ function SvgDraw({ outlinePaths = [], fillShapes = [], stickers = [], animate = 
               x="-40" 
               y="-20"
               style={{
-                opacity: shouldShow ? 1 : 0,
-                transform: shouldShow ? 'scale(1)' : 'scale(0.5)',
-                transition: !prefersReducedMotion && isAnimating
-                  ? `opacity 0.6s ease-out ${stickerDelay}s, transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) ${stickerDelay}s`
+                transform: shouldShowSticker ? 'scale(1)' : 'scale(0.5)',
+                transition: shouldShowSticker
+                  ? `transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1)`
                   : 'none',
               }}
             >
               <div 
                 className={`flex items-center justify-center ${sticker.className}`}
                 style={{
-                  animation: !prefersReducedMotion && shouldShow 
-                    ? `float 3s ease-in-out infinite ${sticker.delay}s`
+                  animation: !prefersReducedMotion && shouldShowSticker
+                    ? `float 3s ease-in-out infinite ${stickerAnimDelay}s`
                     : 'none',
                 }}
               >
@@ -252,7 +285,7 @@ function SvgDraw({ outlinePaths = [], fillShapes = [], stickers = [], animate = 
         );
       })}
 
-      {/* Animación flotante para stickers + variación de presión */}
+      {/* Keyframes: Float, Presión, y Acuarela orgánica con pigmento irregular */}
       <style>{`
         @keyframes float {
           0%, 100% { transform: translateY(0px); }
@@ -267,6 +300,20 @@ function SvgDraw({ outlinePaths = [], fillShapes = [], stickers = [], animate = 
           80% { stroke-width: 2.9; }
           100% { stroke-width: 3; }
         }
+        
+        /* EFECTO PIGMENTO IRREGULAR: no fade lineal, sino fluctuaciones naturales de acuarela real */
+        ${fillShapes.map((_, index) => `
+          @keyframes watercolorWash-${replayKey}-${index} {
+            0% { opacity: 0; }
+            10% { opacity: 0.2; }
+            25% { opacity: 0.45; }
+            40% { opacity: 0.6; }
+            55% { opacity: 0.48; }
+            70% { opacity: 0.65; }
+            85% { opacity: 0.78; }
+            100% { opacity: 0.9; }
+          }
+        `).join('')}
       `}</style>
     </svg>
   );

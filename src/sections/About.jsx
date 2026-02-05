@@ -8,7 +8,7 @@ function About() {
 
         {/* Contenedor de la imagen (arriba) */}
         <div className="text-center mb-8"> {/* Centramos la imagen y añadimos margen inferior */}
-          <img src="/images/Soraya.png" alt="Soraya Povedano" className="mx-auto rounded-full w-40 h-40 object-cover" />
+          <img src="public/images/storyboard/Soraya.png" alt="Soraya Povedano" className="mx-auto rounded-full w-40 h-40 object-cover" />
         </div>
 
         {/* Contenedor del texto (abajo) */}

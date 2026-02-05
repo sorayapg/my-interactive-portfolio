@@ -149,7 +149,7 @@ const CoverLetter = () => {
           >
             <div className="w-full h-64 flex items-center justify-center">
               <img
-                src="/images/transparent.png"
+                src="/images/storyboard/transparent.png"
                 alt="Ilustración de Soraya en estilo kawaii"
                 className="rounded-full border-4 border-pink-200 shadow-lg hover:rotate-[-2deg] transition-all duration-300 ease-in-out max-h-full object-contain"
               />
