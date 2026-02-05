@@ -22,7 +22,50 @@ function DrawStory() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [animateScene, setAnimateScene] = useState({});
   const [hasAnimated, setHasAnimated] = useState({});
+  const [replayKey, setReplayKey] = useState(0);
+  const [controlsVisible, setControlsVisible] = useState(true);
   const sentinelRefs = useRef([]);
+  const hideControlsTimer = useRef(null);
+
+  // Debug: detectar cambios en activeIndex
+  useEffect(() => {
+    console.log('📍 DrawStory: Active index changed to', activeIndex);
+  }, [activeIndex]);
+
+  // Auto-hide controles después de 4 segundos de inactividad
+  useEffect(() => {
+    // Mostrar controles cuando cambia la escena
+    setControlsVisible(true);
+    
+    // Limpiar timer anterior
+    if (hideControlsTimer.current) {
+      clearTimeout(hideControlsTimer.current);
+    }
+    
+    // Ocultar después de 4 segundos
+    hideControlsTimer.current = setTimeout(() => {
+      setControlsVisible(false);
+    }, 4000);
+    
+    return () => {
+      if (hideControlsTimer.current) {
+        clearTimeout(hideControlsTimer.current);
+      }
+    };
+  }, [activeIndex]);
+
+  // Mostrar controles al mover el mouse
+  const handleMouseMove = useCallback(() => {
+    setControlsVisible(true);
+    
+    if (hideControlsTimer.current) {
+      clearTimeout(hideControlsTimer.current);
+    }
+    
+    hideControlsTimer.current = setTimeout(() => {
+      setControlsVisible(false);
+    }, 4000);
+  }, []);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -58,7 +101,9 @@ function DrawStory() {
   }, [hasAnimated]);
 
   const handleReplay = useCallback(() => {
+    console.log('🔄 DrawStory: Replay animation for scene', activeIndex);
     setAnimateScene((prev) => ({ ...prev, [activeIndex]: false }));
+    setReplayKey((prev) => prev + 1);
     setTimeout(() => {
       setAnimateScene((prev) => ({ ...prev, [activeIndex]: true }));
     }, 50);
@@ -72,6 +117,7 @@ function DrawStory() {
     <section
       className="relative bg-gradient-to-br from-pink-50 via-purple-50 to-indigo-50"
       aria-label="Mi historia profesional"
+      onMouseMove={handleMouseMove}
     >
       <div className="relative">
         {scenes.map((scene, index) => {
@@ -126,10 +172,17 @@ function DrawStory() {
                       isActive ? 'opacity-100 scale-100' : 'opacity-40 scale-95'
                     }`}
                   >
-                    <div className="aspect-[4/3] bg-white rounded-2xl shadow-xl p-8 flex items-center justify-center">
+                    {/* Paper Card Container - Estilo cuaderno kawaii */}
+                    <div className="aspect-[4/3] bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50 rounded-2xl shadow-2xl p-8 flex items-center justify-center border-4 border-white/50 relative overflow-hidden">
+                      {/* Textura papel sutil */}
+                      <div className="absolute inset-0 opacity-10 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0zNiAxOGMzLjMxNCAwIDYgMi42ODYgNiA2cy0yLjY4NiA2LTYgNi02LTIuNjg2LTYtNiAyLjY4Ni02IDYtNnoiIGZpbGw9IiMwMDAiIG9wYWNpdHk9Ii4wMiIvPjwvZz48L3N2Zz4=')]"></div>
+                      
                       <SvgDraw
-                        paths={scene.paths}
+                        outlinePaths={scene.outlinePaths || []}
+                        fillShapes={scene.fillShapes || []}
+                        stickers={scene.stickers || []}
                         animate={animateScene[index] || false}
+                        replayKey={replayKey}
                       />
                     </div>
                   </div>
@@ -139,8 +192,14 @@ function DrawStory() {
           );
         })}
       </div>
-      <div className="fixed bottom-8 left-1/2 transform -translate-x-1/2 z-10">
-        <div className="bg-white/90 backdrop-blur-sm rounded-full shadow-lg px-6 py-4 flex items-center gap-4">
+      
+      {/* Indicadores de progreso y controles - Fixed position con auto-hide */}
+      <div 
+        className={`fixed bottom-8 left-1/2 -translate-x-1/2 z-50 transition-all duration-500 ease-in-out ${
+          controlsVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'
+        }`}
+      >
+        <div className="bg-white/95 backdrop-blur-md rounded-full shadow-2xl px-6 py-4 flex items-center gap-4 border border-gray-200/50">
           <div className="flex gap-2">
             {scenes.map((scene, index) => (
               <button
