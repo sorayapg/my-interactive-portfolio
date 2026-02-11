@@ -1,19 +1,32 @@
 import { useState, useEffect } from 'react';
-import { getSettings, updateSettings } from '../../services/contentService';
+import { getSettings, updateSettings, seedInitialData, checkExistingData } from '../../services/contentService';
+import { initialSeedData } from '../../data/seedData';
 
 const AdminSettings = () => {
   const [settings, setSettings] = useState({
-    showStoryboard: true,
-    showProjects: true,
-    maintenanceMode: false,
+    flags: {
+      showStoryboard: true,
+      showProjects: true,
+      showCoverLetter: true,
+      maintenanceMode: false,
+    },
+    sectionsOrder: ['hero', 'about', 'coverLetter', 'storyboard', 'professionalStory', 'projects'],
   });
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [seeding, setSeeding] = useState(false);
+  const [dataStatus, setDataStatus] = useState({ isEmpty: true });
   const [message, setMessage] = useState(null);
 
   useEffect(() => {
     loadSettings();
+    checkData();
   }, []);
+
+  const checkData = async () => {
+    const status = await checkExistingData();
+    setDataStatus(status);
+  };
 
   const loadSettings = async () => {
     setLoading(true);
@@ -25,7 +38,10 @@ const AdminSettings = () => {
   };
 
   const handleToggle = (key) => {
-    setSettings((prev) => ({ ...prev, [key]: !prev[key] }));
+    setSettings((prev) => ({
+      ...prev,
+      flags: { ...prev.flags, [key]: !prev.flags[key] },
+    }));
   };
 
   const handleSubmit = async (e) => {
@@ -43,6 +59,26 @@ const AdminSettings = () => {
 
     setSaving(false);
     setTimeout(() => setMessage(null), 3000);
+  };
+
+  const handleSeedData = async () => {
+    if (!window.confirm('⚠️ ¿Seguro que quieres cargar los datos iniciales?\n\nEsto añadirá el contenido actual del portfolio a Firestore.')) {
+      return;
+    }
+
+    setSeeding(true);
+    setMessage(null);
+
+    const { success, error } = await seedInitialData(initialSeedData);
+
+    if (error) {
+      setMessage({ type: 'error', text: `❌ Error: ${error}` });
+    } else {
+      setMessage({ type: 'success', text: '✅ Datos iniciales cargados correctamente' });
+      await checkData();
+    }
+
+    setSeeding(false);
   };
 
   if (loading) {
@@ -76,7 +112,54 @@ const AdminSettings = () => {
         </div>
       )}
 
+      {/* Seed Data Section */}
+      <div className="mb-8 p-6 border-2 border-purple-200 rounded-lg bg-gradient-to-br from-purple-50 to-pink-50">
+        <h2 className="text-xl font-bold text-gray-900 mb-4">
+          🌱 Datos Iniciales
+        </h2>
+        
+        <div className="space-y-3 mb-4">
+          <p className="text-gray-700">
+            {dataStatus.isEmpty ? (
+              <>
+                ⚠️ <strong>Firestore está vacío.</strong> Carga los datos iniciales del portfolio para empezar a gestionar contenido.
+              </>
+            ) : (
+              <>
+                ✅ <strong>Firestore tiene datos.</strong> Ya puedes gestionar contenido desde el panel admin.
+              </>
+            )}
+          </p>
+          
+          <div className="text-sm text-gray-600 space-y-1">
+            <p>• Perfil: {dataStatus.hasProfile ? '✅ Cargado' : '❌ Vacío'}</p>
+            <p>• Proyectos: {dataStatus.hasProjects ? '✅ Cargados' : '❌ Vacío'}</p>
+          </div>
+        </div>
+
+        <button
+          type="button"
+          onClick={handleSeedData}
+          disabled={seeding}
+          className={`px-6 py-3 rounded-lg font-semibold transition-all ${
+            seeding
+              ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+              : 'bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:from-purple-600 hover:to-pink-600 shadow-md hover:shadow-lg'
+          }`}
+        >
+          {seeding ? '⏳ Cargando...' : '🚀 Cargar Datos Iniciales'}
+        </button>
+        
+        <p className="text-xs text-gray-500 mt-3">
+          💡 Esto cargará el contenido actual del portfolio en Firestore. Solo necesitas hacerlo una vez.
+        </p>
+      </div>
+
       <form onSubmit={handleSubmit} className="space-y-6">
+        <h2 className="text-xl font-bold text-gray-900 mb-4">
+          🎛️ Configuración de Secciones
+        </h2>
+        
         <div className="space-y-4">
           <div className="flex items-center justify-between p-4 border-2 border-purple-200 rounded-lg bg-purple-50">
             <div>
@@ -89,12 +172,12 @@ const AdminSettings = () => {
               type="button"
               onClick={() => handleToggle('showStoryboard')}
               className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                settings.showStoryboard ? 'bg-purple-600' : 'bg-gray-300'
+                settings.flags?.showStoryboard ? 'bg-purple-600' : 'bg-gray-300'
               }`}
             >
               <span
                 className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                  settings.showStoryboard ? 'translate-x-6' : 'translate-x-1'
+                  settings.flags?.showStoryboard ? 'translate-x-6' : 'translate-x-1'
                 }`}
               />
             </button>
@@ -111,12 +194,12 @@ const AdminSettings = () => {
               type="button"
               onClick={() => handleToggle('showProjects')}
               className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                settings.showProjects ? 'bg-purple-600' : 'bg-gray-300'
+                settings.flags?.showProjects ? 'bg-purple-600' : 'bg-gray-300'
               }`}
             >
               <span
                 className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                  settings.showProjects ? 'translate-x-6' : 'translate-x-1'
+                  settings.flags?.showProjects ? 'translate-x-6' : 'translate-x-1'
                 }`}
               />
             </button>
@@ -133,12 +216,12 @@ const AdminSettings = () => {
               type="button"
               onClick={() => handleToggle('maintenanceMode')}
               className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                settings.maintenanceMode ? 'bg-red-600' : 'bg-gray-300'
+                settings.flags?.maintenanceMode ? 'bg-red-600' : 'bg-gray-300'
               }`}
             >
               <span
                 className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                  settings.maintenanceMode ? 'translate-x-6' : 'translate-x-1'
+                  settings.flags?.maintenanceMode ? 'translate-x-6' : 'translate-x-1'
                 }`}
               />
             </button>
