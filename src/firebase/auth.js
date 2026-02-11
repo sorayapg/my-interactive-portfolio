@@ -1,5 +1,7 @@
 import { 
-  signInWithPopup, 
+  signInWithPopup,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
   signOut as firebaseSignOut,
   onAuthStateChanged 
 } from 'firebase/auth';
@@ -14,6 +16,32 @@ export const signInWithGoogle = async () => {
     return { user: result.user, error: null };
   } catch (error) {
     console.error('Error al iniciar sesión:', error);
+    return { user: null, error: error.message };
+  }
+};
+
+/**
+ * Iniciar sesión con Email/Password
+ */
+export const signInWithEmail = async (email, password) => {
+  try {
+    const result = await signInWithEmailAndPassword(auth, email, password);
+    return { user: result.user, error: null };
+  } catch (error) {
+    console.error('Error al iniciar sesión:', error);
+    return { user: null, error: error.message };
+  }
+};
+
+/**
+ * Crear cuenta con Email/Password
+ */
+export const signUpWithEmail = async (email, password) => {
+  try {
+    const result = await createUserWithEmailAndPassword(auth, email, password);
+    return { user: result.user, error: null };
+  } catch (error) {
+    console.error('Error al crear cuenta:', error);
     return { user: null, error: error.message };
   }
 };
@@ -40,11 +68,13 @@ export const onAuthChange = (callback) => {
 
 /**
  * UIDs de administradores autorizados
- * 👉 Reemplaza con tu UID real después del primer login
+ * 👉 Reemplaza 'YOUR_ADMIN_UID_HERE' con tu UID real
+ * 📍 Para obtener tu UID: haz login y ve a /show-uid
  */
 export const ADMIN_UIDS = [
-  'YOUR_ADMIN_UID_HERE', // 👈 Reemplaza con tu UID real
-  // Puedes añadir más UIDs aquí
+  'dUvybxUGglg4p46PLsvlsD0MQz62', // 👈 REEMPLAZA ESTO con tu UID de /show-uid
+  // Ejemplo: 'abc123xyz456def789', 
+  // Puedes añadir más UIDs aquí separados por comas
 ];
 
 /**

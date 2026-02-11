@@ -6,9 +6,11 @@ import {
   addDoc,
   updateDoc,
   deleteDoc,
+  setDoc,
   query,
   orderBy,
   serverTimestamp,
+  writeBatch,
 } from 'firebase/firestore';
 import { db } from '../firebase/firebase';
 
@@ -48,10 +50,10 @@ export const getProfile = async () => {
 export const updateProfile = async (profileData) => {
   try {
     const docRef = doc(db, 'profile', 'main');
-    await updateDoc(docRef, {
+    await setDoc(docRef, {
       ...profileData,
       updatedAt: serverTimestamp(),
-    });
+    }, { merge: true });
     return { error: null };
   } catch (error) {
     console.error('Error al actualizar perfil:', error);
@@ -248,10 +250,10 @@ export const getCoverLetter = async () => {
 export const updateCoverLetter = async (content) => {
   try {
     const docRef = doc(db, 'coverLetter', 'main');
-    await updateDoc(docRef, {
+    await setDoc(docRef, {
       content,
       updatedAt: serverTimestamp(),
-    });
+    }, { merge: true });
     return { error: null };
   } catch (error) {
     console.error('Error al actualizar cover letter:', error);
@@ -334,13 +336,91 @@ export const getSettings = async () => {
 export const updateSettings = async (settingsData) => {
   try {
     const docRef = doc(db, 'settings', 'main');
-    await updateDoc(docRef, {
+    await setDoc(docRef, {
       ...settingsData,
       updatedAt: serverTimestamp(),
-    });
+    }, { merge: true });
     return { error: null };
   } catch (error) {
     console.error('Error al actualizar settings:', error);
     return { error: error.message };
+  }
+};
+
+/**
+ * ============================================
+ * SEED DATA - Carga inicial de datos
+ * ============================================
+ */
+
+export const seedInitialData = async (seedData) => {
+  try {
+    const batch = writeBatch(db);
+
+    // Profile
+    if (seedData.profile) {
+      const profileRef = doc(db, 'profile', 'main');
+      batch.set(profileRef, { ...seedData.profile, updatedAt: serverTimestamp() }, { merge: true });
+    }
+
+    // Cover Letter
+    if (seedData.coverLetter) {
+      const coverLetterRef = doc(db, 'coverLetter', 'main');
+      batch.set(coverLetterRef, { ...seedData.coverLetter, updatedAt: serverTimestamp() }, { merge: true });
+    }
+
+    // Settings
+    if (seedData.settings) {
+      const settingsRef = doc(db, 'settings', 'main');
+      batch.set(settingsRef, { ...seedData.settings, updatedAt: serverTimestamp() }, { merge: true });
+    }
+
+    await batch.commit();
+
+    // Projects (usar addDoc para colecciones)
+    if (seedData.projects && seedData.projects.length > 0) {
+      for (const project of seedData.projects) {
+        await addDoc(collection(db, 'projects'), {
+          ...project,
+          createdAt: serverTimestamp(),
+          updatedAt: serverTimestamp(),
+        });
+      }
+    }
+
+    // Experiences (usar addDoc para colecciones)
+    if (seedData.experiences && seedData.experiences.length > 0) {
+      for (const experience of seedData.experiences) {
+        await addDoc(collection(db, 'experiences'), {
+          ...experience,
+          createdAt: serverTimestamp(),
+          updatedAt: serverTimestamp(),
+        });
+      }
+    }
+
+    return { success: true, error: null };
+  } catch (error) {
+    console.error('Error al cargar datos iniciales:', error);
+    return { success: false, error: error.message };
+  }
+};
+
+/**
+ * Verificar si ya existen datos en Firestore
+ */
+export const checkExistingData = async () => {
+  try {
+    const profileSnap = await getDoc(doc(db, 'profile', 'main'));
+    const projectsSnap = await getDocs(collection(db, 'projects'));
+    
+    return {
+      hasProfile: profileSnap.exists(),
+      hasProjects: !projectsSnap.empty,
+      isEmpty: !profileSnap.exists() && projectsSnap.empty,
+    };
+  } catch (error) {
+    console.error('Error al verificar datos:', error);
+    return { hasProfile: false, hasProjects: false, isEmpty: true };
   }
 };
