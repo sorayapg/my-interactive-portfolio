@@ -1,0 +1,87 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // ============================================
+    // FUNCIÓN HELPER: Verificar si es admin
+    // ============================================
+    function isAdmin() {
+      // Lista de UIDs autorizados (debe coincidir con src/firebase/auth.js)
+      let adminUIDs = [
+        'dUvybxUGglg4p46PLsvlsD0MQz62'
+      ];
+      
+      // Lista de emails autorizados (backup)
+      let adminEmails = [
+        'tranchecitapg@gmail.com'
+      ];
+      
+      return request.auth != null && 
+             (request.auth.uid in adminUIDs || 
+              request.auth.token.email in adminEmails);
+    }
+    
+    // ============================================
+    // COLECCIÓN: profile
+    // ============================================
+    match /profile/{document=**} {
+      // Lectura: público (para mostrar en el portfolio)
+      allow read: if true;
+      
+      // Escritura: solo admin
+      allow write: if isAdmin();
+    }
+    
+    // ============================================
+    // COLECCIÓN: projects
+    // ============================================
+    match /projects/{document=**} {
+      // Lectura: público (para mostrar en el portfolio)
+      allow read: if true;
+      
+      // Escritura: solo admin
+      allow write: if isAdmin();
+    }
+    
+    // ============================================
+    // COLECCIÓN: experiences
+    // ============================================
+    match /experiences/{document=**} {
+      // Lectura: público (para mostrar en el portfolio)
+      allow read: if true;
+      
+      // Escritura: solo admin
+      allow write: if isAdmin();
+    }
+    
+    // ============================================
+    // COLECCIÓN: coverLetter
+    // ============================================
+    match /coverLetter/{document=**} {
+      // Lectura: público (para mostrar en el portfolio)
+      allow read: if true;
+      
+      // Escritura: solo admin
+      allow write: if isAdmin();
+    }
+    
+    // ============================================
+    // COLECCIÓN: settings
+    // ============================================
+    match /settings/{document=**} {
+      // Lectura: público (para flags como maintenance mode)
+      allow read: if true;
+      
+      // Escritura: solo admin
+      allow write: if isAdmin();
+    }
+    
+    // ============================================
+    // DENYLIST: Bloquear todo lo demás
+    // ============================================
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
