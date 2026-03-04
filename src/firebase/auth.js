@@ -68,19 +68,36 @@ export const onAuthChange = (callback) => {
 
 /**
  * UIDs de administradores autorizados
- * 👉 Reemplaza 'YOUR_ADMIN_UID_HERE' con tu UID real
- * 📍 Para obtener tu UID: haz login y ve a /show-uid
+ * ⚠️ SOLO estos usuarios tendrán acceso al panel /admin
  */
 export const ADMIN_UIDS = [
-  'dUvybxUGglg4p46PLsvlsD0MQz62', // 👈 REEMPLAZA ESTO con tu UID de /show-uid
-  // Ejemplo: 'abc123xyz456def789', 
-  // Puedes añadir más UIDs aquí separados por comas
+  'dUvybxUGglg4p46PLsvlsD0MQz62', // UID de la admin principal
+];
+
+/**
+ * Emails de administradores autorizados
+ * ⚠️ Backup por si el UID cambia o múltiples métodos de login
+ */
+export const ADMIN_EMAILS = [
+  'tranchecitapg@gmail.com', // Email de la admin principal
 ];
 
 /**
  * Verificar si un usuario es administrador
+ * Comprueba tanto UID como email contra las whitelists
  */
 export const isAdmin = (user) => {
   if (!user) return false;
-  return ADMIN_UIDS.includes(user.uid);
+  return ADMIN_UIDS.includes(user.uid) || ADMIN_EMAILS.includes(user.email);
+};
+
+/**
+ * Helper para forzar validación de admin o lanzar error
+ * Útil para operaciones críticas
+ */
+export const assertAdmin = (user) => {
+  if (!isAdmin(user)) {
+    throw new Error('Acceso denegado: no eres administrador');
+  }
+  return true;
 };
