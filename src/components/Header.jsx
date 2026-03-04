@@ -1,12 +1,28 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useAdmin } from '../hooks/useAdmin';
 import { signOut } from '../firebase/auth';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { getProfile } from '../services/contentService';
 
 function Header() {
   const { user, isAdmin } = useAdmin();
   const navigate = useNavigate();
   const [loggingOut, setLoggingOut] = useState(false);
+  const [profileName, setProfileName] = useState(null);
+
+  // Obtener nombre del perfil desde Firestore
+  useEffect(() => {
+    const fetchProfileName = async () => {
+      if (user) {
+        const { data } = await getProfile();
+        if (data && data.name) {
+          setProfileName(data.name);
+        }
+      }
+    };
+    
+    fetchProfileName();
+  }, [user]);
 
   const handleLogout = async () => {
     if (!window.confirm('¿Seguro que quieres cerrar sesión?')) return;
@@ -30,18 +46,8 @@ function Header() {
               <>
                 {/* Mostrar email/nombre del usuario */}
                 <span className="text-sm text-gray-600 hidden sm:inline">
-                  👋 {user.email || user.displayName}
+                  👋 {profileName || user.displayName || user.email}
                 </span>
-                
-                {/* Botón Ver UID (solo si no es admin todavía) */}
-                {!isAdmin && (
-                  <Link
-                    to="/show-uid"
-                    className="px-3 py-2 bg-yellow-100 text-yellow-700 rounded-lg hover:bg-yellow-200 transition-all font-medium text-sm"
-                  >
-                    🆔 Ver UID
-                  </Link>
-                )}
                 
                 {/* Botón Admin (solo si es admin) */}
                 {isAdmin && (
