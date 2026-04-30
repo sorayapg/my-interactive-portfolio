@@ -11,6 +11,7 @@ import Storyboard from './sections/Storyboard';
 import ProfessionalStory from './sections/ProfessionalStory';
 import Projects from './sections/Projects';
 import CoverLetter from './sections/CoverLetter';
+import Certifications from './sections/Certifications';
 
 // Importar componentes admin
 import AdminLayout from './components/admin/AdminLayout';
@@ -21,6 +22,7 @@ import AdminProjects from './pages/admin/AdminProjects';
 import AdminCoverLetter from './pages/admin/AdminCoverLetter';
 import AdminSettings from './pages/admin/AdminSettings';
 import AdminStoryboard from './pages/admin/AdminStoryboard';
+import AdminCertifications from './pages/admin/AdminCertifications';
 import PrivateRoute from './routes/PrivateRoute';
 import Login from './pages/Login';
 import ShowUID from './pages/ShowUID';
@@ -38,6 +40,7 @@ const PublicLayout = () => (
       <Storyboard />
       <ProfessionalStory />
       <Projects />
+      <Certifications />
     </main>
     <Footer />
   </div>
@@ -72,6 +75,7 @@ function App() {
           <Route path="cover-letter" element={<AdminCoverLetter />} />
           <Route path="settings" element={<AdminSettings />} />
           <Route path="storyboard" element={<AdminStoryboard />} />
+          <Route path="certifications" element={<AdminCertifications />} />
         </Route>
       </Routes>
     </BrowserRouter>

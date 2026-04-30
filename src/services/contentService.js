@@ -407,6 +407,71 @@ export const seedInitialData = async (seedData) => {
 };
 
 /**
+ * ============================================
+ * CERTIFICATIONS
+ * ============================================
+ */
+
+export const listCertifications = async () => {
+  try {
+    const q = query(collection(db, 'certifications'), orderBy('order', 'asc'));
+    const querySnapshot = await getDocs(q);
+
+    if (querySnapshot.empty) {
+      return { data: [], error: null };
+    }
+
+    const certifications = [];
+    querySnapshot.forEach((doc) => {
+      certifications.push({ id: doc.id, ...doc.data() });
+    });
+
+    return { data: certifications, error: null };
+  } catch (error) {
+    console.error('Error al listar certificaciones:', error);
+    return { data: [], error: error.message };
+  }
+};
+
+export const addCertification = async (certificationData) => {
+  try {
+    const docRef = await addDoc(collection(db, 'certifications'), {
+      ...certificationData,
+      createdAt: serverTimestamp(),
+      updatedAt: serverTimestamp(),
+    });
+    return { id: docRef.id, error: null };
+  } catch (error) {
+    console.error('Error al añadir certificación:', error);
+    return { id: null, error: error.message };
+  }
+};
+
+export const updateCertification = async (id, certificationData) => {
+  try {
+    const docRef = doc(db, 'certifications', id);
+    await updateDoc(docRef, {
+      ...certificationData,
+      updatedAt: serverTimestamp(),
+    });
+    return { error: null };
+  } catch (error) {
+    console.error('Error al actualizar certificación:', error);
+    return { error: error.message };
+  }
+};
+
+export const deleteCertification = async (id) => {
+  try {
+    await deleteDoc(doc(db, 'certifications', id));
+    return { error: null };
+  } catch (error) {
+    console.error('Error al eliminar certificación:', error);
+    return { error: error.message };
+  }
+};
+
+/**
  * Verificar si ya existen datos en Firestore
  */
 export const checkExistingData = async () => {

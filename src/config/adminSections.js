@@ -6,6 +6,7 @@ import {
   DocumentTextIcon,
   BookOpenIcon,
   Cog6ToothIcon,
+  AcademicCapIcon,
 } from '@heroicons/react/24/outline';
 
 /**
@@ -79,6 +80,17 @@ export const adminSections = [
       card: 'border-violet-200 from-violet-50',
       iconBg: 'bg-violet-100',
       iconText: 'text-violet-600',
+    },
+  },
+  {
+    path: '/admin/certifications',
+    label: 'Certificaciones',
+    description: 'Gestionar certificados y cursos',
+    icon: AcademicCapIcon,
+    cardClasses: {
+      card: 'border-emerald-200 from-emerald-50',
+      iconBg: 'bg-emerald-100',
+      iconText: 'text-emerald-600',
     },
   },
   {
