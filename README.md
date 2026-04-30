@@ -1,58 +1,126 @@
-# Portafolio de Proyectos
+# ✨ Portfolio Interactivo de Soraya
 
-�Bienvenido/a a mi portfolio de proyectos!
+Bienvenida a mi portfolio como desarrolladora Front-End.  
+Este proyecto combina creatividad, experiencia de usuario y desarrollo moderno con React.
 
-Este portfolio exhibe una selecci�n de mis trabajos y habilidades como desarrollador/a. Aqu� encontrar�s informaci�n sobre mis proyectos, experiencia y formaci�n.
+👉 Deploy: https://soraya-porfolio.web.app
 
-## Tecnolog�as Utilizadas
+---
 
-Este proyecto ha sido construido utilizando las siguientes tecnolog�as:
+## 🧩 Descripción
 
-*   **React:** Una biblioteca de JavaScript para construir interfaces de usuario.
-*   **Vite:** Un entorno de desarrollo frontend de nueva generaci�n.
-*   **Tailwind CSS:** Un framework de CSS de utilidad para estilizar r�pidamente.
-*   **Heroicons:** Un conjunto de iconos SVG dise�ados para ser utilizados con Tailwind CSS (utilizado a trav�s de `@heroicons/react` para componentes de React).
+Este portfolio no es una web estática tradicional.  
+Incluye:
 
-## Preparaci�n del Entorno e Instalaci�n
+- 🎨 Diseño visual estilo kawaii/pastel
+- 📖 Storyboard interactivo de mi trayectoria
+- 🧠 Animaciones tipo whiteboard storytelling
+- 🔐 CMS privado para gestionar contenido dinámicamente
 
-Para configurar y ejecutar este proyecto localmente, sigue los pasos a continuaci�n:
+El objetivo es mostrar no solo proyectos, sino también **cómo pienso, diseño y construyo experiencias**.
 
-1.  **Clonar el repositorio:** Si a�n no lo has hecho, clona el repositorio del proyecto desde su ubicaci�n (por ejemplo, GitHub).
-    ```bash
-    git clone <URL_DEL_REPOSITORIO>
-    ```
-2.  **Navegar al directorio del proyecto:**
-    ```bash
-    cd <NOMBRE_DEL_DIRECTORIO>
-    ```
-3.  **Instalar dependencias:** Utiliza npm para instalar las dependencias del proyecto.
-    ```bash
-    npm install
-    ```
-    Esto instalar� todas las librer�as necesarias, incluyendo React, Vite, Tailwind CSS y Heroicons.
-4.  **Iniciar el servidor de desarrollo:**
-    ```bash
-    npm run dev
-    ```
-    Esto iniciar� un servidor local y abrir� el portfolio en tu navegador predeterminado. El servidor se recargar� autom�ticamente con los cambios que hagas en el c�digo.
+---
 
-## Despliegue en Firebase
+## ⚙️ Tecnologías utilizadas
 
-Una vez que los cambios est�n listos para ser publicados, sigue estos pasos para desplegar la aplicaci�n en Firebase Hosting:
+### Frontend
+- React + Vite
+- JavaScript (ES6+)
+- Tailwind CSS
+- Animaciones personalizadas (SVG / CSS / lógica propia)
 
-1.  **Compilar el proyecto:** Genera la versi�n de producci�n de tu aplicaci�n. Este comando crear� una carpeta `dist` con todos los archivos est�ticos optimizados.
-    ```bash
-    npm run build
-    ```
+### Backend / Servicios
+- Firebase Hosting
+- Firebase Authentication
+- Firestore (CMS dinámico)
 
-2.  **Iniciar sesi�n en Firebase (solo la primera vez):** Si no has iniciado sesi�n en Firebase desde la terminal, ejecuta este comando. Se abrir� una ventana en tu navegador para que inicies sesi�n con tu cuenta de Google.
-    ```bash
-    firebase login
-    ```
+---
 
-3.  **Desplegar en Firebase Hosting:** Este comando sube el contenido de la carpeta `dist` a los servidores de Firebase.
-    ```bash
-    firebase deploy --only hosting
-    ```
+## 🧠 Funcionalidades principales
 
-�Y eso es todo! Despu�s de unos segundos, tu portfolio estar� actualizado y disponible en la URL de tu hosting de Firebase.
+### 🌐 Portfolio público
+- Hero inicial con presentación personal
+- Sección “Sobre mí”
+- Storyboard interactivo (historia profesional)
+- Whiteboard animation (narrativa visual)
+- Proyectos destacados
+- Certificaciones
+
+---
+
+### 🎬 Storyboard interactivo
+- Cards dinámicas con viñetas
+- Modal con contenido ampliado
+- Diseño responsive
+- Mejora reciente:
+  - Ajuste de layout de imágenes
+  - Mejora de integración visual
+  - UX más consistente
+
+---
+
+### 🎨 Whiteboard Animation
+- Animaciones progresivas tipo storytelling
+- Render dinámico por escena
+- Scroll controlado
+- Mejora reciente:
+  - Reducción de espacios verticales
+  - Transición más fluida entre escenas
+
+---
+
+### 🔐 CMS (Panel Admin)
+Ruta: `/admin`
+
+Permite:
+- Crear proyectos
+- Editar contenido
+- Eliminar elementos
+- Persistencia en Firestore
+
+Mejoras recientes:
+- Separación clara entre datos hardcodeados y Firestore
+- Integración completa con frontend
+- Flujo CRUD funcional
+
+---
+
+## 📁 Estructura del proyecto
+
+```bash
+src/
+│
+├── components/
+├── pages/
+├── services/
+├── hooks/
+├── assets/
+└── styles/
+```
+
+## 🚀 Cómo ejecutar el proyecto
+
+# 1. Instalar dependencias
+
+```bash
+npm install
+```
+
+# 2. Ejecutar en local
+
+```bash
+npm run dev
+```
+
+# 3. Build de producción
+
+```bash
+npm run build
+```
+
+# 4. Deploy en Firebase
+
+```bash
+firebase deploy
+```
+
