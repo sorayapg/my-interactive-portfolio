@@ -82,9 +82,9 @@ function Projects() {
                   </div>
 
                   <div className="flex justify-center space-x-4 items-center flex-wrap gap-2">
-                    {project.liveUrl && (
+                    {(project.liveUrl || project.demo) && (
                       <a
-                        href={project.liveUrl}
+                        href={project.liveUrl || project.demo}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-blue-600 hover:underline font-semibold"

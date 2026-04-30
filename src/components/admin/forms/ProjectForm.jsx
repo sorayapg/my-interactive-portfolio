@@ -6,15 +6,23 @@ const ProjectForm = ({ project, onSave, onCancel }) => {
     description: '',
     technologies: [],
     image: '',
+    liveUrl: '',
+    frontendRepo: '',
+    backendRepo: '',
     github: '',
-    demo: '',
     order: 0,
   });
   const [techInput, setTechInput] = useState('');
 
   useEffect(() => {
     if (project) {
-      setFormData(project);
+      // Compatibilidad: si el documento en Firestore tiene 'demo' pero no 'liveUrl',
+      // lo cargamos en liveUrl para que sea editable desde aquí.
+      const mapped = { ...project };
+      if (project.demo && !project.liveUrl) {
+        mapped.liveUrl = project.demo;
+      }
+      setFormData((prev) => ({ ...prev, ...mapped }));
     }
   }, [project]);
 
@@ -138,26 +146,45 @@ const ProjectForm = ({ project, onSave, onCancel }) => {
 
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-2">
-          GitHub URL
+          URL Live / Demo
         </label>
         <input
           type="url"
-          name="github"
-          value={formData.github}
+          name="liveUrl"
+          value={formData.liveUrl}
           onChange={handleChange}
+          placeholder="https://mi-app.com"
           className="w-full px-4 py-2 border-2 border-indigo-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
         />
       </div>
 
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-2">
-          Demo URL
+          GitHub / Repo Frontend
         </label>
         <input
           type="url"
-          name="demo"
-          value={formData.demo}
+          name="frontendRepo"
+          value={formData.frontendRepo}
           onChange={handleChange}
+          placeholder="https://github.com/usuario/repo"
+          className="w-full px-4 py-2 border-2 border-indigo-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+        />
+        <p className="text-xs text-gray-500 mt-1">
+          Si el proyecto tiene solo un repo, úsalo aquí.
+        </p>
+      </div>
+
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-2">
+          Repo Backend (opcional)
+        </label>
+        <input
+          type="url"
+          name="backendRepo"
+          value={formData.backendRepo}
+          onChange={handleChange}
+          placeholder="https://github.com/usuario/repo-backend"
           className="w-full px-4 py-2 border-2 border-indigo-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
         />
       </div>
