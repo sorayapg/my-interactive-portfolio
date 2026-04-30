@@ -38,12 +38,12 @@ function Projects() {
 
   if (loading) {
     return (
-      <section id="projects" className="py-16 bg-gray-200 text-gray-800">
+      <section id="projects" className="py-16 bg-violet-50 text-gray-800">
         <div className="container mx-auto px-4">
           <h2 className="text-4xl font-bold text-center mb-12">Mis Proyectos Destacados</h2>
           <div className="flex justify-center py-12">
             <div className="animate-pulse flex space-x-4">
-              <div className="rounded-lg bg-gray-300 h-64 w-96"></div>
+              <div className="rounded-2xl bg-violet-100 h-64 w-96"></div>
             </div>
           </div>
         </div>
@@ -52,7 +52,7 @@ function Projects() {
   }
 
   return (
-    <section id="projects" className="py-16 bg-gray-200 text-gray-800">
+    <section id="projects" className="py-16 bg-violet-50 text-gray-800">
       <div className="container mx-auto px-4">
         <div className="-mx-4">
           <h2 className="text-4xl font-bold text-center mb-12">Mis Proyectos Destacados</h2>
@@ -61,7 +61,7 @@ function Projects() {
         <div className="flex flex-wrap -mx-4">
           {projects.map((project) => (
             <div key={project.id} className="w-full px-4 mb-8">
-              <div className="bg-white rounded-lg shadow-lg overflow-hidden h-full">
+              <div className="bg-white rounded-2xl shadow-md border border-violet-100 overflow-hidden h-full transition-all duration-200 hover:-translate-y-1 hover:shadow-lg">
                 <div className="p-6 text-center">
                   <h3 className="text-2xl font-bold mb-2">{project.name || project.title}</h3>
                   <p className="text-gray-700 mb-4">{project.description}</p>
@@ -70,11 +70,11 @@ function Projects() {
                     <h4 className="text-xl font-semibold mb-2">Tecnologías:</h4>
                     <div className="flex flex-wrap justify-center gap-2">
                       {project.stack?.map((tech, idx) => (
-                        <span key={idx} className="bg-blue-200 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded">
+                        <span key={idx} className="bg-pink-100 text-pink-700 text-xs font-medium px-2.5 py-0.5 rounded-full">
                           {tech}
                         </span>
                       )) || project.technologies?.map((tech, idx) => (
-                        <span key={idx} className="bg-blue-200 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded">
+                        <span key={idx} className="bg-pink-100 text-pink-700 text-xs font-medium px-2.5 py-0.5 rounded-full">
                           {tech}
                         </span>
                       ))}
@@ -87,7 +87,7 @@ function Projects() {
                         href={project.liveUrl || project.demo}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-blue-600 hover:underline font-semibold"
+                        className="text-pink-500 hover:text-pink-700 font-semibold hover:underline transition-colors"
                       >
                         Ver Aplicación
                       </a>
@@ -97,7 +97,7 @@ function Projects() {
                         href={project.frontendRepo}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-gray-600 hover:text-gray-800"
+                        className="text-violet-500 hover:text-violet-700 transition-colors"
                       >
                         Frontend Repo
                       </a>
@@ -107,7 +107,7 @@ function Projects() {
                         href={project.backendRepo}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-gray-600 hover:text-gray-800"
+                        className="text-violet-500 hover:text-violet-700 transition-colors"
                       >
                         Backend Repo
                       </a>
@@ -117,7 +117,7 @@ function Projects() {
                         href={project.github}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-gray-600 hover:text-gray-800"
+                        className="text-violet-500 hover:text-violet-700 transition-colors"
                       >
                         GitHub
                       </a>

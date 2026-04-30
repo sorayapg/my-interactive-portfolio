@@ -3,11 +3,13 @@ import { listCertifications } from '../services/contentService';
 import CertificationModal from '../components/CertificationModal';
 import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/outline';
 
-// Palabras clave que marcan una certificación como destacada
-const FEATURED_KEYWORDS = ['generative ai', 'aws', 'gen ai', 'machine learning', 'cloud'];
-
-const isFeatured = (title = '') =>
-  FEATURED_KEYWORDS.some((k) => title.toLowerCase().includes(k));
+// Devuelve un Set con los IDs de las N certificaciones más recientes (por issueDate)
+const getRecentIds = (certs, n = 2) => {
+  const sorted = [...certs]
+    .filter((c) => c.issueDate)
+    .sort((a, b) => b.issueDate.localeCompare(a.issueDate));
+  return new Set(sorted.slice(0, n).map((c) => c.id));
+};
 
 function Certifications() {
   const [certifications, setCertifications] = useState([]);
@@ -32,12 +34,12 @@ function Certifications() {
 
   if (loading) {
     return (
-      <section id="certifications" className="py-16 bg-white text-gray-800">
+      <section id="certifications" className="py-16 bg-pink-50 text-gray-800">
         <div className="container mx-auto px-4">
           <h2 className="text-4xl font-bold text-center mb-12">Certificaciones</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {[1, 2, 3].map((n) => (
-              <div key={n} className="animate-pulse bg-gray-100 rounded-2xl h-64" />
+              <div key={n} className="animate-pulse bg-pink-100/60 rounded-2xl h-64" />
             ))}
           </div>
         </div>
@@ -45,19 +47,21 @@ function Certifications() {
     );
   }
 
+  const recentIds = getRecentIds(certifications, 2);
+
   return (
     <>
-      <section id="certifications" className="py-20 bg-gray-50 text-gray-800">
+      <section id="certifications" className="py-20 bg-pink-50 text-gray-800">
         <div className="container mx-auto px-4">
           {/* Encabezado */}
           <h2 className="text-4xl font-bold text-center mb-3">Certificaciones</h2>
-          <p className="text-center text-gray-400 mb-14 text-sm tracking-wide uppercase">
+          <p className="text-center text-pink-300 mb-14 text-sm tracking-wide uppercase">
             Formación continua y aprendizaje certificado
           </p>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {certifications.map((cert) => {
-              const featured = isFeatured(cert.title);
+              const isRecent = recentIds.has(cert.id);
 
               return (
                 <div
@@ -65,29 +69,30 @@ function Certifications() {
                   onClick={() => setSelectedCert(cert)}
                   className={`group relative flex flex-col bg-white rounded-2xl overflow-hidden cursor-pointer
                     transition-all duration-200 ease-out
-                    hover:-translate-y-1 hover:shadow-xl
-                    ${featured
-                      ? 'border-2 border-amber-200 shadow-md shadow-amber-50'
-                      : 'border border-gray-200 shadow-sm'
+                    hover:-translate-y-1.5
+                    ${
+                      isRecent
+                        ? 'border border-pink-200 shadow-sm hover:shadow-[0_12px_32px_rgba(244,114,182,0.20)]'
+                        : 'border border-purple-100 shadow-sm hover:shadow-[0_8px_24px_rgba(167,139,250,0.18)]'
                     }`}
                 >
-                  {/* Badge destacada */}
-                  {featured && (
-                    <span className="absolute top-3 left-3 z-10 text-xs font-semibold px-2.5 py-1 rounded-full bg-amber-100 text-amber-700 border border-amber-200">
-                      ✨ Destacada
+                  {/* Etiqueta Reciente — pequeña y discreta, solo en las 2 más nuevas */}
+                  {isRecent && (
+                    <span className="absolute top-2.5 right-2.5 z-10 text-[10px] font-semibold px-2 py-0.5 rounded-full bg-pink-50 text-pink-400 border border-pink-100 leading-tight">
+                      Reciente
                     </span>
                   )}
 
-                  {/* Zona imagen — más alta, más protagonismo */}
-                  <div className="flex items-center justify-center h-44 bg-gradient-to-br from-slate-50 to-emerald-50 p-6">
+                  {/* Zona imagen — alturas responsive, más protagonismo */}
+                  <div className="flex items-center justify-center h-[130px] sm:h-[140px] lg:h-[160px] bg-gradient-to-br from-pink-50 to-purple-50 p-5">
                     {cert.imageUrl ? (
                       <img
                         src={cert.imageUrl}
                         alt={cert.title}
-                        className="max-h-32 max-w-full w-auto object-contain drop-shadow-sm"
+                        className="max-h-[100px] sm:max-h-[110px] lg:max-h-[130px] max-w-[90%] w-auto object-contain drop-shadow-sm"
                       />
                     ) : (
-                      <div className="w-20 h-20 rounded-full bg-emerald-100 flex items-center justify-center text-4xl">
+                      <div className="w-20 h-20 rounded-full bg-pink-100 flex items-center justify-center text-3xl">
                         🎓
                       </div>
                     )}
@@ -101,7 +106,7 @@ function Certifications() {
                     </span>
 
                     {/* Título — peso visual principal */}
-                    <h3 className="text-[15px] font-bold text-gray-900 leading-snug mb-2 group-hover:text-emerald-700 transition-colors duration-150">
+                    <h3 className="text-[15px] font-bold text-gray-800 leading-snug mb-2 group-hover:text-pink-500 transition-colors duration-150">
                       {cert.title}
                     </h3>
 
@@ -121,13 +126,13 @@ function Certifications() {
                         {cert.skills.slice(0, 3).map((skill) => (
                           <span
                             key={skill}
-                            className="px-2 py-0.5 text-xs bg-slate-100 text-slate-500 rounded-full"
+                            className="px-2 py-0.5 text-xs bg-purple-50 text-purple-400 rounded-full"
                           >
                             {skill}
                           </span>
                         ))}
                         {cert.skills.length > 3 && (
-                          <span className="px-2 py-0.5 text-xs bg-gray-100 text-gray-400 rounded-full">
+                          <span className="px-2 py-0.5 text-xs bg-pink-50 text-pink-300 rounded-full">
                             +{cert.skills.length - 3}
                           </span>
                         )}
@@ -136,8 +141,8 @@ function Certifications() {
                   </div>
 
                   {/* Footer de la card */}
-                  <div className="px-5 pb-4 pt-2 flex items-center justify-between border-t border-gray-50">
-                    <span className="text-xs text-emerald-600 font-medium group-hover:underline">
+                  <div className="px-5 pb-4 pt-2 flex items-center justify-between border-t border-pink-100">
+                    <span className="text-xs text-pink-500 font-medium group-hover:underline">
                       Ver detalles →
                     </span>
                     {cert.credentialUrl && (
@@ -146,7 +151,7 @@ function Certifications() {
                         target="_blank"
                         rel="noopener noreferrer"
                         onClick={(e) => e.stopPropagation()}
-                        className="p-1.5 rounded-lg text-gray-300 hover:text-emerald-600 hover:bg-emerald-50 transition"
+                        className="p-1.5 rounded-lg text-pink-200 hover:text-pink-500 hover:bg-pink-50 transition"
                         title="Verificar certificado"
                       >
                         <ArrowTopRightOnSquareIcon className="w-4 h-4" />

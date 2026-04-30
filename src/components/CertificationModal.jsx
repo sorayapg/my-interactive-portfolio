@@ -48,27 +48,27 @@ const CertificationModal = ({ cert, onClose }) => {
         {/* Botón cerrar */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition z-10"
+          className="absolute top-4 right-4 p-2 rounded-full bg-pink-50 hover:bg-pink-100 transition z-10"
           aria-label="Cerrar"
         >
-          <XMarkIcon className="w-5 h-5 text-gray-600" />
+          <XMarkIcon className="w-5 h-5 text-pink-400" />
         </button>
 
         {/* Imagen centrada en su propio bloque — más grande y con fondo suave */}
         {cert.imageUrl && (
-          <div className="flex items-center justify-center bg-gradient-to-br from-slate-50 to-emerald-50 rounded-t-2xl px-8 py-7">
+          <div className="flex items-center justify-center bg-gradient-to-br from-pink-50 to-purple-50 rounded-t-2xl px-8 py-8">
             <img
               src={cert.imageUrl}
               alt={cert.title}
-              className="max-h-40 max-w-xs w-auto object-contain drop-shadow-sm"
+              className="max-h-48 max-w-[80%] w-auto object-contain drop-shadow-sm"
             />
           </div>
         )}
 
         {/* Cabecera de texto */}
-        <div className={`px-6 py-5 border-b border-gray-100 ${!cert.imageUrl ? 'pt-10' : ''}`}>
+        <div className={`px-6 py-5 border-b border-pink-100 ${!cert.imageUrl ? 'pt-10' : ''}`}>
           <h2 className="text-xl font-bold text-gray-900 leading-tight pr-8">{cert.title}</h2>
-          <p className="text-emerald-600 font-semibold mt-1">{cert.platform}</p>
+          <p className="text-pink-500 font-semibold mt-1">{cert.platform}</p>
           {formattedDate && (
             <p className="text-sm text-gray-400 mt-0.5">Emitido: {formattedDate}</p>
           )}
@@ -96,7 +96,7 @@ const CertificationModal = ({ cert, onClose }) => {
                 {cert.skills.map((skill) => (
                   <span
                     key={skill}
-                    className="px-3 py-1 bg-emerald-100 text-emerald-800 rounded-full text-sm font-medium"
+                    className="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-sm font-medium"
                   >
                     {skill}
                   </span>
@@ -114,7 +114,7 @@ const CertificationModal = ({ cert, onClose }) => {
               <ul className="space-y-1.5">
                 {cert.achievements.map((achievement) => (
                   <li key={achievement} className="flex items-start gap-2 text-sm text-gray-700">
-                    <span className="text-emerald-500 mt-0.5 flex-shrink-0">✓</span>
+                    <span className="text-pink-400 mt-0.5 flex-shrink-0">✓</span>
                     <span>{achievement}</span>
                   </li>
                 ))}
@@ -130,7 +130,7 @@ const CertificationModal = ({ cert, onClose }) => {
               href={cert.credentialUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center gap-2 w-full py-3 px-6 bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-semibold rounded-xl hover:from-emerald-600 hover:to-teal-600 transition"
+              className="flex items-center justify-center gap-2 w-full py-3 px-6 bg-gradient-to-r from-pink-400 to-rose-400 text-white font-semibold rounded-xl hover:from-pink-500 hover:to-rose-500 transition"
             >
               <ArrowTopRightOnSquareIcon className="w-4 h-4" />
               Verificar certificado
