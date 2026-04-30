@@ -96,12 +96,13 @@ function Storyboard() {
                 className={`group flex flex-col ${vineta.bg} rounded-xl shadow-md border-2 border-gray-300 overflow-hidden cursor-pointer
                   transition-all duration-200 hover:-translate-y-1 hover:shadow-xl`}
               >
-                {/* Imagen — h-56 con contain para no cortar la composición */}
-                <div className="w-full h-56 overflow-hidden flex items-center justify-center bg-white/60">
+                {/* Bloque imagen — contain completo, fondo blanco semitransparente sobre el color de la card */}
+                <div className="w-full h-44 sm:h-52 flex items-center justify-center p-3 rounded-t-2xl overflow-hidden bg-white/70 shadow-inner">
                   <img
                     src={vineta.img}
                     alt={vineta.alt}
-                    className="h-full w-full object-contain group-hover:scale-105 transition-transform duration-300"
+                    style={{ width: '100%', height: '100%', objectFit: 'contain', objectPosition: 'center' }}
+                    className="group-hover:scale-105 transition-transform duration-300"
                   />
                 </div>
                 {/* Título + CTA — sin texto largo */}
