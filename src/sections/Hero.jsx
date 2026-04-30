@@ -2,7 +2,7 @@ import React from 'react';
 
 function Hero() {
   return (
-    <section className="relative min-h-[90vh] py-16 flex items-center justify-center text-center text-gray-800"
+    <section className="relative min-h-[55vh] py-10 flex items-center justify-center text-center text-gray-800"
              style={{ backgroundColor: '#FCE7F3' }}> {/* Padding vertical, fondo rosa pastel ligero */}
       <div className="container mx-auto px-4 max-w-md"> {/* Mantenemos max-w-md */}
         <h1 className="text-5xl md:text-6xl font-bold mb-4">

@@ -146,7 +146,7 @@ function DrawStory() {
           return (
             <div
               key={scene.id}
-              className="min-h-screen flex items-center justify-center py-16 px-4 relative"
+              className="min-h-[72vh] flex items-center justify-center py-8 px-4 relative"
             >
               <div
                 ref={(el) => (sentinelRefs.current[index] = el)}

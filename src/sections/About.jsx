@@ -31,7 +31,7 @@ function About() {
   const paragraphs = profile.about?.split('\n\n') || [];
 
   return (
-    <section className="py-16 min-h-[90vh] flex flex-col justify-center bg-white text-gray-800">
+    <section className="py-14 bg-white text-gray-800">
       <div className="container mx-auto px-4">
         <h2 className="text-4xl font-bold text-center mb-8">Sobre Mí</h2>
 
