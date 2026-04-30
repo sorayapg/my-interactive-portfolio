@@ -56,7 +56,7 @@ const CoverLetter = () => {
   const contactSection = sections[6]; // La sección de contacto
 
   return (
-    <section id="cover-letter" className="py-20 bg-pink-50 text-gray-800">
+    <section id="cover-letter" className="py-20 min-h-[90vh] flex flex-col justify-center bg-pink-50 text-gray-800">
       <div className="container mx-auto px-4 text-center">
         <h2 className="text-4xl font-bold mb-12 text-pink-600">Mi Carta de Presentación Kawaii</h2>
 

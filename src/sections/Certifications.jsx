@@ -34,7 +34,7 @@ function Certifications() {
 
   if (loading) {
     return (
-      <section id="certifications" className="py-16 bg-pink-50 text-gray-800">
+      <section id="certifications" className="py-16 min-h-[90vh] flex flex-col justify-center bg-pink-50 text-gray-800">
         <div className="container mx-auto px-4">
           <h2 className="text-4xl font-bold text-center mb-12">Certificaciones</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -51,7 +51,7 @@ function Certifications() {
 
   return (
     <>
-      <section id="certifications" className="py-20 bg-pink-50 text-gray-800">
+      <section id="certifications" className="py-20 min-h-[90vh] flex flex-col justify-center bg-pink-50 text-gray-800">
         <div className="container mx-auto px-4">
           {/* Encabezado */}
           <h2 className="text-4xl font-bold text-center mb-3">Certificaciones</h2>

@@ -2,7 +2,7 @@ import React from 'react';
 
 function Storyboard() {
   return (
-    <section className="py-16 bg-purple-100 text-gray-800">
+    <section className="py-16 min-h-screen bg-purple-100 text-gray-800">
       <div className="container mx-auto px-4 text-center">
         <h2 className="text-4xl font-bold mb-12">Storyboard Kawaii de Soraya: Una aventura front-end</h2>
 
