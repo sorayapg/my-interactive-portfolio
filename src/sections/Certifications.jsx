@@ -83,36 +83,38 @@ function Certifications() {
                     </span>
                   )}
 
-                  {/* Zona imagen — alturas responsive, más protagonismo */}
-                  <div className="flex items-center justify-center h-[130px] sm:h-[140px] lg:h-[160px] bg-gradient-to-br from-pink-50 to-purple-50 p-5">
+                  {/* Zona imagen — bloque completo, sin padding, imagen al 100% del ancho */}
+                  <div className="w-full h-56 md:h-64 bg-gradient-to-br from-pink-50 to-purple-50 overflow-hidden">
                     {cert.imageUrl ? (
                       <img
                         src={cert.imageUrl}
                         alt={cert.title}
-                        className="max-h-[100px] sm:max-h-[110px] lg:max-h-[130px] max-w-[90%] w-auto object-contain drop-shadow-sm"
+                        className="w-full h-full object-contain"
                       />
                     ) : (
-                      <div className="w-20 h-20 rounded-full bg-pink-100 flex items-center justify-center text-3xl">
-                        🎓
+                      <div className="w-full h-full flex items-center justify-center">
+                        <div className="w-20 h-20 rounded-full bg-pink-100 flex items-center justify-center text-3xl">
+                          🎓
+                        </div>
                       </div>
                     )}
                   </div>
 
-                  {/* Contenido de la card */}
-                  <div className="flex flex-col flex-1 px-5 pt-4 pb-3">
-                    {/* Plataforma — por encima del título, discreta */}
-                    <span className="text-xs font-medium text-gray-400 uppercase tracking-widest mb-1.5">
+                  {/* Contenido de la card — compacto */}
+                  <div className="flex flex-col flex-1 px-4 pt-3 pb-2">
+                    {/* Plataforma — badge con jerarquía visible */}
+                    <span className="inline-block self-start text-[10px] font-semibold uppercase tracking-wide px-2 py-0.5 rounded-full bg-purple-100 text-purple-500 mb-1.5">
                       {cert.platform}
                     </span>
 
                     {/* Título — peso visual principal */}
-                    <h3 className="text-[15px] font-bold text-gray-800 leading-snug mb-2 group-hover:text-pink-500 transition-colors duration-150">
+                    <h3 className="text-[14px] font-bold text-gray-800 leading-snug mb-1 group-hover:text-pink-500 transition-colors duration-150">
                       {cert.title}
                     </h3>
 
-                    {/* Fecha — discreta */}
+                    {/* Fecha */}
                     {cert.issueDate && (
-                      <p className="text-xs text-gray-300 mb-3">
+                      <p className="text-xs text-gray-500 font-medium mb-2">
                         {new Date(cert.issueDate + '-01').toLocaleDateString('es-ES', {
                           year: 'numeric',
                           month: 'long',

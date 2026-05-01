@@ -38,7 +38,7 @@ function Projects() {
 
   if (loading) {
     return (
-      <section id="projects" className="py-14 bg-violet-50 text-gray-800">
+      <section id="projects" className="py-20 bg-gradient-to-b from-white to-violet-50 text-gray-800">
         <div className="container mx-auto px-4">
           <h2 className="text-4xl font-bold text-center mb-12">Mis Proyectos Destacados</h2>
           <div className="flex justify-center py-12">
@@ -52,7 +52,7 @@ function Projects() {
   }
 
   return (
-    <section id="projects" className="py-14 bg-violet-50 text-gray-800">
+    <section id="projects" className="py-20 bg-gradient-to-b from-white to-violet-50 text-gray-800">
       <div className="container mx-auto px-4">
         <div className="-mx-4">
           <h2 className="text-4xl font-bold text-center mb-12">Mis Proyectos Destacados</h2>
