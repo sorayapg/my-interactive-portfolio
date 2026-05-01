@@ -35,14 +35,14 @@ const AdminLayout = () => {
               
               <Link 
                 to="/" 
-                className="px-3 py-1.5 text-sm bg-purple-100 text-purple-700 rounded-lg hover:bg-purple-200 transition"
+                className="px-3 py-1.5 text-sm bg-purple-100 text-purple-700 rounded-lg hover:bg-purple-200 hover:shadow-sm transition-all duration-200"
               >
                 Ver Portfolio
               </Link>
               
               <button
                 onClick={handleLogout}
-                className="px-3 py-1.5 text-sm bg-pink-100 text-pink-700 rounded-lg hover:bg-pink-200 transition"
+                className="px-3 py-1.5 text-sm bg-pink-100 text-pink-700 rounded-lg hover:bg-pink-200 hover:shadow-sm transition-all duration-200"
               >
                 Cerrar Sesión
               </button>

@@ -23,9 +23,9 @@ const AdminHome = () => {
             <Link
               key={link.path}
               to={link.path}
-              className={`p-6 rounded-xl border-2 ${link.cardClasses.card} bg-gradient-to-br to-white hover:shadow-lg hover:scale-105 transition-all duration-200`}
+              className={`group p-6 rounded-xl border-2 ${link.cardClasses.card} bg-gradient-to-br to-white hover:shadow-lg hover:-translate-y-1 hover:scale-[1.02] transition-all duration-300`}
             >
-              <div className={`w-12 h-12 rounded-full ${link.cardClasses.iconBg} flex items-center justify-center mb-4`}>
+              <div className={`w-12 h-12 rounded-full ${link.cardClasses.iconBg} flex items-center justify-center mb-4 transition-transform duration-200 group-hover:scale-110`}>
                 <Icon className={`w-6 h-6 ${link.cardClasses.iconText}`} />
               </div>
               <h3 className="text-lg font-bold text-gray-900 mb-1">

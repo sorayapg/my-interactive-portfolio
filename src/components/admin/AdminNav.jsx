@@ -13,14 +13,14 @@ const AdminNav = () => {
                 to={item.path}
                 end={item.exact}
                 className={({ isActive }) =>
-                  `flex items-center space-x-3 px-4 py-2.5 rounded-lg transition-all ${
+                  `group flex items-center space-x-3 px-4 py-2.5 rounded-lg transition-all duration-200 ${
                     isActive
-                      ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-md'
-                      : 'text-gray-700 hover:bg-purple-50 hover:text-purple-600'
+                      ? 'bg-gradient-to-r from-pink-100 to-purple-100 text-pink-600 shadow-sm font-semibold'
+                      : 'text-gray-600 hover:bg-purple-50 hover:text-purple-600'
                   }`
                 }
               >
-                <Icon className="w-5 h-5" />
+                <Icon className="w-5 h-5 transition-transform duration-200 group-hover:scale-110" />
                 <span className="font-medium">{item.label}</span>
               </NavLink>
             </li>
