@@ -133,6 +133,7 @@ function DrawStory() {
 
   return (
     <section
+      id="whiteboard"
       ref={sectionRef}
       className="relative bg-gradient-to-br from-pink-50 via-purple-50 to-indigo-50"
       aria-label="Mi historia profesional"
