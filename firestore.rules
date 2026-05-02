@@ -89,6 +89,17 @@ service cloud.firestore {
     }
     
     // ============================================
+    // COLECCIÓN: storybook
+    // ============================================
+    match /storybook/{document=**} {
+      // Lectura: público (para mostrar en el portfolio)
+      allow read: if true;
+      
+      // Escritura: solo admin
+      allow write: if isAdmin();
+    }
+
+    // ============================================
     // DENYLIST: Bloquear todo lo demás
     // ============================================
     match /{document=**} {
