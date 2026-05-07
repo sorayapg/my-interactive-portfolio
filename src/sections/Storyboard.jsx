@@ -112,7 +112,7 @@ function Storyboard() {
                   transition-all duration-200 hover:-translate-y-1 hover:shadow-xl`}
               >
                 {/* Bloque imagen — aspect cuadrado, ocupa todo el ancho de la card */}
-                <div className={`w-full aspect-square overflow-hidden bg-white/70`}>
+                <div className="w-full aspect-square overflow-hidden">
                   <img
                     src={vineta.img}
                     alt={vineta.alt}
