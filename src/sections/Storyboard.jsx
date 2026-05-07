@@ -111,8 +111,8 @@ function Storyboard() {
                 className={`group flex flex-col ${vineta.bg} rounded-xl shadow-md border-2 border-gray-300 overflow-hidden cursor-pointer
                   transition-all duration-200 hover:-translate-y-1 hover:shadow-xl`}
               >
-                {/* Bloque imagen — contain completo, fondo blanco semitransparente sobre el color de la card */}
-                <div className="w-full h-44 sm:h-52 flex items-center justify-center p-3 rounded-t-2xl overflow-hidden bg-white/70 shadow-inner">
+                {/* Bloque imagen — aspect cuadrado, ocupa todo el ancho de la card */}
+                <div className={`w-full aspect-square overflow-hidden bg-white/70`}>
                   <img
                     src={vineta.img}
                     alt={vineta.alt}
@@ -120,9 +120,9 @@ function Storyboard() {
                     className="group-hover:scale-105 transition-transform duration-300"
                   />
                 </div>
-                {/* Título + CTA — sin texto largo */}
-                <div className="w-full p-3 text-left">
-                  <h3 className="text-sm font-semibold text-gray-800 leading-snug mb-2">{vineta.title}</h3>
+                {/* Título + CTA — compacto, no roba protagonismo */}
+                <div className="w-full px-3 py-2 text-left border-t border-white/40">
+                  <h3 className="text-[0.85rem] font-semibold text-gray-800 leading-snug mb-1 line-clamp-2">{vineta.title}</h3>
                   <span className="text-xs text-purple-500 font-medium group-hover:underline">
                     Ver historia →
                   </span>
