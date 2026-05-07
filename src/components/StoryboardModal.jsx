@@ -30,7 +30,7 @@ const StoryboardModal = ({ vineta, onClose }) => {
       onClick={onClose}
     >
       <div
-        className="relative bg-white rounded-2xl shadow-2xl w-full max-w-3xl max-h-[90vh] overflow-y-auto"
+        className="relative bg-white rounded-2xl shadow-2xl w-full max-w-4xl max-h-[90vh] overflow-y-auto"
         style={{ animation: 'certModalIn 0.22s cubic-bezier(0.16, 1, 0.3, 1)' }}
         onClick={(e) => e.stopPropagation()}
       >
@@ -45,8 +45,8 @@ const StoryboardModal = ({ vineta, onClose }) => {
 
         {/* Layout: imagen arriba en móvil, imagen izquierda en desktop */}
         <div className="flex flex-col md:flex-row">
-          {/* Imagen — ocupa la mitad en desktop, toda la anchura en móvil */}
-          <div className={`md:w-1/2 flex-shrink-0 flex items-center justify-center p-6 md:rounded-l-2xl rounded-t-2xl md:rounded-tr-none ${vineta.bg}`}>
+          {/* Imagen — ocupa 3/5 en desktop, toda la anchura en móvil */}
+          <div className={`md:w-3/5 flex-shrink-0 flex items-center justify-center p-6 md:rounded-l-2xl rounded-t-2xl md:rounded-tr-none ${vineta.bg}`}>
             <img
               src={vineta.img}
               alt={vineta.alt}
@@ -54,12 +54,12 @@ const StoryboardModal = ({ vineta, onClose }) => {
             />
           </div>
 
-          {/* Contenido — mitad derecha en desktop, debajo en móvil */}
-          <div className="md:w-1/2 flex flex-col justify-center px-6 py-8 md:pr-10">
-            <h2 className="text-xl md:text-2xl font-bold text-gray-800 leading-tight pr-6 mb-4">
+          {/* Contenido — 2/5 derecha en desktop, debajo en móvil */}
+          <div className="md:w-2/5 flex flex-col justify-center px-6 py-8 md:pr-10">
+            <h2 className="text-xl md:text-3xl font-bold text-gray-800 leading-tight pr-6 mb-4">
               {vineta.title}
             </h2>
-            <p className="text-gray-700 text-base leading-relaxed">{vineta.text}</p>
+            <p className="text-gray-700 text-base md:text-lg leading-relaxed">{vineta.text}</p>
           </div>
         </div>
       </div>

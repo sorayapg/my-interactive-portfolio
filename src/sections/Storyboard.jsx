@@ -102,8 +102,8 @@ function Storyboard() {
           <h2 className="text-4xl font-bold mb-2">Storyboard Kawaii de Soraya</h2>
           <p className="text-purple-400 text-sm tracking-wide uppercase mb-10">Una aventura front-end</p>
 
-          {/* Grid 2 cols en móvil, 3 en tablet/desktop — 9 cards = 3 filas perfectas */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+          {/* Grid: 1 col móvil → 2 sm → 3 md → 4 lg → 5 xl */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
             {vinetas.map((vineta) => (
               <div
                 key={vineta.id}
