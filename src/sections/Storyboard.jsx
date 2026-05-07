@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import StoryboardModal from '../components/StoryboardModal';
+import { listStorybook } from '../services/contentService';
 
-// Todo el contenido original preservado — las cards muestran solo imagen + título
-const vinetas = [
+// Fallback local — se usa solo si Firestore está vacío
+const VINETAS_FALLBACK = [
   {
     id: 1,
     title: '🎀 Viñeta 1: ¡Hola mundo!',
@@ -79,6 +80,20 @@ const vinetas = [
 
 function Storyboard() {
   const [selectedVineta, setSelectedVineta] = useState(null);
+  const [vinetas, setVinetas] = useState(VINETAS_FALLBACK);
+
+  useEffect(() => {
+    listStorybook().then(({ data }) => {
+      if (data && data.length > 0) {
+        // Firestore como fuente principal — filtrar solo visibles y ordenar
+        const visibles = data
+          .filter((v) => v.visible !== false)
+          .sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+        setVinetas(visibles);
+      }
+      // Si Firestore está vacío o falla, VINETAS_FALLBACK ya es el estado inicial
+    });
+  }, []);
 
   return (
     <>

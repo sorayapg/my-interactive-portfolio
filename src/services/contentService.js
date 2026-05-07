@@ -302,6 +302,82 @@ export const updateStoryOrder = async (id, newOrder) => {
   }
 };
 
+export const addStorybook = async (storyData) => {
+  try {
+    const docRef = await addDoc(collection(db, 'storybook'), {
+      ...storyData,
+      createdAt: serverTimestamp(),
+      updatedAt: serverTimestamp(),
+    });
+    return { id: docRef.id, error: null };
+  } catch (error) {
+    console.error('Error al añadir viñeta:', error);
+    return { id: null, error: error.message };
+  }
+};
+
+export const updateStorybook = async (id, storyData) => {
+  try {
+    const docRef = doc(db, 'storybook', id);
+    await updateDoc(docRef, {
+      ...storyData,
+      updatedAt: serverTimestamp(),
+    });
+    return { error: null };
+  } catch (error) {
+    console.error('Error al actualizar viñeta:', error);
+    return { error: error.message };
+  }
+};
+
+export const deleteStorybook = async (id) => {
+  try {
+    await deleteDoc(doc(db, 'storybook', id));
+    return { error: null };
+  } catch (error) {
+    console.error('Error al eliminar viñeta:', error);
+    return { error: error.message };
+  }
+};
+
+/**
+ * Migración idempotente: sube viñetas locales a Firestore.
+ * Usa `localId` como clave para evitar duplicados si se ejecuta más de una vez.
+ */
+export const seedStorybookFromLocal = async (vinetas) => {
+  try {
+    // Obtener localIds ya existentes en Firestore
+    const q = query(collection(db, 'storybook'));
+    const snapshot = await getDocs(q);
+    const existingLocalIds = new Set();
+    snapshot.forEach((d) => {
+      if (d.data().localId != null) existingLocalIds.add(String(d.data().localId));
+    });
+
+    let added = 0;
+    for (const vineta of vinetas) {
+      if (existingLocalIds.has(String(vineta.id))) continue; // ya migrada
+      await addDoc(collection(db, 'storybook'), {
+        localId: String(vineta.id),
+        title: vineta.title,
+        text: vineta.text,
+        img: vineta.img,
+        alt: vineta.alt,
+        bg: vineta.bg,
+        order: vineta.id, // mantener orden original
+        visible: true,
+        createdAt: serverTimestamp(),
+        updatedAt: serverTimestamp(),
+      });
+      added++;
+    }
+    return { added, error: null };
+  } catch (error) {
+    console.error('Error en migración storybook:', error);
+    return { added: 0, error: error.message };
+  }
+};
+
 /**
  * ============================================
  * SETTINGS
