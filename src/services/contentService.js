@@ -263,6 +263,117 @@ export const updateCoverLetter = async (content) => {
 
 /**
  * ============================================
+ * COVER LETTER CARDS (modelo modular por card)
+ * Usa la misma colección 'coverLetter'.
+ * El doc 'main' (legado) queda excluido automáticamente
+ * porque orderBy('order') ignora documentos sin ese campo.
+ * ============================================
+ */
+
+export const listCoverLetterCards = async () => {
+  try {
+    const q = query(collection(db, 'coverLetter'), orderBy('order', 'asc'));
+    const querySnapshot = await getDocs(q);
+    if (querySnapshot.empty) {
+      return { data: [], error: null };
+    }
+    const cards = [];
+    querySnapshot.forEach((d) => {
+      if (d.id !== 'main') cards.push({ id: d.id, ...d.data() });
+    });
+    return { data: cards, error: null };
+  } catch (error) {
+    console.error('Error al listar cover letter cards:', error);
+    return { data: [], error: error.message };
+  }
+};
+
+export const addCoverLetterCard = async (cardData) => {
+  try {
+    const docRef = await addDoc(collection(db, 'coverLetter'), {
+      ...cardData,
+      createdAt: serverTimestamp(),
+      updatedAt: serverTimestamp(),
+    });
+    return { id: docRef.id, error: null };
+  } catch (error) {
+    console.error('Error al añadir card:', error);
+    return { id: null, error: error.message };
+  }
+};
+
+export const updateCoverLetterCard = async (id, cardData) => {
+  try {
+    const docRef = doc(db, 'coverLetter', id);
+    await updateDoc(docRef, {
+      ...cardData,
+      updatedAt: serverTimestamp(),
+    });
+    return { error: null };
+  } catch (error) {
+    console.error('Error al actualizar card:', error);
+    return { error: error.message };
+  }
+};
+
+export const deleteCoverLetterCard = async (id) => {
+  try {
+    await deleteDoc(doc(db, 'coverLetter', id));
+    return { error: null };
+  } catch (error) {
+    console.error('Error al eliminar card:', error);
+    return { error: error.message };
+  }
+};
+
+export const updateCoverLetterCardOrder = async (id, newOrder) => {
+  try {
+    const docRef = doc(db, 'coverLetter', id);
+    await updateDoc(docRef, {
+      order: newOrder,
+      updatedAt: serverTimestamp(),
+    });
+    return { error: null };
+  } catch (error) {
+    console.error('Error al actualizar orden:', error);
+    return { error: error.message };
+  }
+};
+
+/**
+ * Migración idempotente: sube las cards locales a Firestore.
+ * Usa 'localId' para evitar duplicados si se ejecuta más de una vez.
+ */
+export const seedCoverLetterFromLocal = async (cards) => {
+  try {
+    const q = query(collection(db, 'coverLetter'));
+    const snapshot = await getDocs(q);
+    const existingLocalIds = new Set();
+    snapshot.forEach((d) => {
+      if (d.data().localId != null) existingLocalIds.add(String(d.data().localId));
+    });
+
+    let added = 0;
+    for (const card of cards) {
+      if (existingLocalIds.has(String(card.localId))) continue;
+      const { localId, ...rest } = card;
+      await addDoc(collection(db, 'coverLetter'), {
+        localId: String(localId),
+        ...rest,
+        createdAt: serverTimestamp(),
+        updatedAt: serverTimestamp(),
+      });
+      added++;
+    }
+    return { added, error: null };
+  } catch (error) {
+    console.error('Error en migración cover letter:', error);
+    return { added: 0, error: error.message };
+  }
+};
+
+/**
+ * ============================================
  * STORYBOOK
  * ============================================
  */
