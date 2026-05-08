@@ -5,6 +5,7 @@ import {
   RectangleStackIcon,
   DocumentTextIcon,
   BookOpenIcon,
+  PaintBrushIcon,
   Cog6ToothIcon,
   AcademicCapIcon,
 } from '@heroicons/react/24/outline';
@@ -80,6 +81,17 @@ export const adminSections = [
       card: 'border-violet-200 from-violet-50',
       iconBg: 'bg-violet-100',
       iconText: 'text-violet-600',
+    },
+  },
+  {
+    path: '/admin/whiteboard',
+    label: 'Whiteboard',
+    description: 'Editar textos del viaje profesional',
+    icon: PaintBrushIcon,
+    cardClasses: {
+      card: 'border-indigo-200 from-indigo-50',
+      iconBg: 'bg-indigo-100',
+      iconText: 'text-indigo-600',
     },
   },
   {

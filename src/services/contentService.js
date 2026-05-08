@@ -491,6 +491,77 @@ export const seedStorybookFromLocal = async (vinetas) => {
 
 /**
  * ============================================
+ * WHITEBOARD
+ * Colección 'whiteboard'. Documentos identificados por sceneId (0-4).
+ * Solo se editan title, description, buttonText, buttonLink.
+ * Las animaciones y paths visuales vienen siempre de scenes.js.
+ * ============================================
+ */
+
+export const listWhiteboardScenes = async () => {
+  try {
+    const q = query(collection(db, 'whiteboard'), orderBy('sceneId', 'asc'));
+    const querySnapshot = await getDocs(q);
+    if (querySnapshot.empty) return { data: [], error: null };
+    const scenes = [];
+    querySnapshot.forEach((d) => scenes.push({ id: d.id, ...d.data() }));
+    return { data: scenes, error: null };
+  } catch (error) {
+    console.error('Error al listar whiteboard scenes:', error);
+    return { data: [], error: error.message };
+  }
+};
+
+export const updateWhiteboardScene = async (id, sceneData) => {
+  try {
+    const docRef = doc(db, 'whiteboard', id);
+    await updateDoc(docRef, {
+      ...sceneData,
+      updatedAt: serverTimestamp(),
+    });
+    return { error: null };
+  } catch (error) {
+    console.error('Error al actualizar escena whiteboard:', error);
+    return { error: error.message };
+  }
+};
+
+/**
+ * Migración idempotente: sube escenas locales a Firestore.
+ * Usa sceneId como clave para evitar duplicados.
+ */
+export const seedWhiteboardFromLocal = async (scenes) => {
+  try {
+    const q = query(collection(db, 'whiteboard'));
+    const snapshot = await getDocs(q);
+    const existingSceneIds = new Set();
+    snapshot.forEach((d) => {
+      if (d.data().sceneId != null) existingSceneIds.add(String(d.data().sceneId));
+    });
+
+    let added = 0;
+    for (const scene of scenes) {
+      if (existingSceneIds.has(String(scene.sceneId))) continue;
+      await addDoc(collection(db, 'whiteboard'), {
+        sceneId: scene.sceneId,
+        title: scene.title,
+        description: scene.description,
+        buttonText: scene.buttonText || '',
+        buttonLink: scene.buttonLink || '',
+        createdAt: serverTimestamp(),
+        updatedAt: serverTimestamp(),
+      });
+      added++;
+    }
+    return { added, error: null };
+  } catch (error) {
+    console.error('Error en migración whiteboard:', error);
+    return { added: 0, error: error.message };
+  }
+};
+
+/**
+ * ============================================
  * SETTINGS
  * ============================================
  */

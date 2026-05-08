@@ -22,6 +22,7 @@ import AdminProjects from './pages/admin/AdminProjects';
 import AdminCoverLetter from './pages/admin/AdminCoverLetter';
 import AdminSettings from './pages/admin/AdminSettings';
 import AdminStoryboard from './pages/admin/AdminStoryboard';
+import AdminWhiteboard from './pages/admin/AdminWhiteboard';
 import AdminCertifications from './pages/admin/AdminCertifications';
 import PrivateRoute from './routes/PrivateRoute';
 import Login from './pages/Login';
@@ -75,6 +76,7 @@ function App() {
           <Route path="cover-letter" element={<AdminCoverLetter />} />
           <Route path="settings" element={<AdminSettings />} />
           <Route path="storyboard" element={<AdminStoryboard />} />
+          <Route path="whiteboard" element={<AdminWhiteboard />} />
           <Route path="certifications" element={<AdminCertifications />} />
         </Route>
       </Routes>

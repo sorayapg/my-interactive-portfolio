@@ -9,6 +9,7 @@ import {
 } from '@heroicons/react/24/outline';
 import SvgDraw from './SvgDraw';
 import { scenes } from './scenes';
+import { listWhiteboardScenes } from '../../services/contentService';
 
 const iconMap = {
   SparklesIcon,
@@ -24,6 +25,7 @@ function DrawStory() {
   const [hasAnimated, setHasAnimated] = useState({});
   const [replayKey, setReplayKey] = useState(0);
   const [controlsVisible, setControlsVisible] = useState(true);
+  const [mergedScenes, setMergedScenes] = useState(scenes);
   const sentinelRefs = useRef([]);
   const sectionRef = useRef(null);
   const hideControlsTimer = useRef(null);
@@ -32,6 +34,26 @@ function DrawStory() {
   useEffect(() => {
     console.log('📍 DrawStory: Active index changed to', activeIndex);
   }, [activeIndex]);
+
+  // Cargar textos desde Firestore y hacer merge con scenes.js (fallback local)
+  useEffect(() => {
+    listWhiteboardScenes().then(({ data }) => {
+      if (!data || data.length === 0) return; // usar fallback local
+      setMergedScenes(
+        scenes.map((localScene) => {
+          const remote = data.find((d) => d.sceneId === localScene.id);
+          if (!remote) return localScene;
+          return {
+            ...localScene,
+            title: remote.title ?? localScene.title,
+            description: remote.description ?? localScene.description,
+            buttonText: remote.buttonText || '',
+            buttonLink: remote.buttonLink || '',
+          };
+        })
+      );
+    });
+  }, []);
 
   // Auto-hide controles después de 4 segundos de inactividad
   useEffect(() => {
@@ -127,10 +149,6 @@ function DrawStory() {
     }, 600);
   }, []);
 
-  const handleScrollToProjects = () => {
-    document.querySelector('#projects')?.scrollIntoView({ behavior: 'smooth' });
-  };
-
   return (
     <section
       id="whiteboard"
@@ -140,7 +158,7 @@ function DrawStory() {
       onMouseMove={handleMouseMove}
     >
       <div className="relative">
-        {scenes.map((scene, index) => {
+        {mergedScenes.map((scene, index) => {
           const IconComponent = iconMap[scene.icon];
           const isActive = activeIndex === index;
 
@@ -178,10 +196,17 @@ function DrawStory() {
                     {scene.id === 4 && (
                       <div className="flex justify-center lg:justify-start pt-4">
                         <button
-                          onClick={handleScrollToProjects}
+                          onClick={() => {
+                            const link = scene.buttonLink || '#projects';
+                            if (link.startsWith('#')) {
+                              document.querySelector(link)?.scrollIntoView({ behavior: 'smooth' });
+                            } else {
+                              window.open(link, '_blank', 'noopener,noreferrer');
+                            }
+                          }}
                           className="px-8 py-4 bg-indigo-600 text-white font-semibold rounded-lg shadow-lg hover:bg-indigo-700 transition-colors duration-300 flex items-center gap-2"
                         >
-                          Ver Proyectos
+                          {scene.buttonText || 'Ver Proyectos'}
                           <RocketLaunchIcon className="w-5 h-5" />
                         </button>
                       </div>
