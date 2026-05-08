@@ -147,7 +147,7 @@ function DrawStory() {
           return (
             <div
               key={scene.id}
-              className="min-h-[60vh] flex items-center justify-center py-10 px-4 relative"
+              className="min-h-[50vh] flex items-center justify-center py-6 px-4 relative"
             >
               <div
                 ref={(el) => (sentinelRefs.current[index] = el)}
@@ -156,7 +156,7 @@ function DrawStory() {
                 aria-hidden="true"
               />
               <div className="container mx-auto max-w-6xl">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 lg:items-start">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:items-start">
                   <div
                     className={`space-y-6 transition-all duration-700 delay-100 ${
                       isActive ? 'opacity-100 translate-y-0' : 'opacity-40 translate-y-4'
