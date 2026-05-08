@@ -12,6 +12,9 @@ import {
   AcademicCapIcon,
   Bars3Icon,
   XMarkIcon,
+  IdentificationIcon,
+  UserCircleIcon,
+  ArrowRightStartOnRectangleIcon,
 } from '@heroicons/react/24/outline';
 import { StarIcon, KeyIcon } from '@heroicons/react/20/solid';
 
@@ -69,17 +72,17 @@ function Header() {
   return (
     <header className="bg-white/80 backdrop-blur-md border-b border-purple-100 shadow-sm sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
+        <div className="flex justify-between items-center h-[5.5rem]">
 
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2 text-xl font-bold text-purple-600 hover:text-pink-500 transition shrink-0">
-            <StarIcon className="w-5 h-5 text-pink-400" />
+          <Link to="/" className="flex items-center gap-2 text-2xl font-bold text-purple-600 hover:text-pink-500 transition shrink-0">
+            <StarIcon className="w-6 h-6 text-pink-400" />
             Mi Portfolio
           </Link>
 
           {/* Nav desktop — centro, estilo kawaii/pastel */}
-          <nav className="hidden lg:flex items-center" aria-label="Navegación principal">
-            <div className="flex items-center gap-1 bg-white/70 backdrop-blur-sm border border-pink-100 rounded-full px-3 py-2 shadow-sm">
+          <nav className="hidden lg:flex flex-1 items-center justify-center mx-8" aria-label="Navegación principal">
+            <div className="flex items-center gap-1 bg-white/70 backdrop-blur-sm border border-pink-100 rounded-full px-5 py-3 shadow-sm">
               {NAV_LINKS.map(({ label, href, icon: Icon, hover, iconColor }) => (
                 <span
                   key={href}
@@ -87,13 +90,13 @@ function Header() {
                   tabIndex={0}
                   onClick={() => handleNavClick(href)}
                   onKeyDown={(e) => e.key === 'Enter' && handleNavClick(href)}
-                  className={`group flex items-center gap-2 px-4 py-1.5 rounded-full text-[0.95rem] font-medium cursor-pointer select-none
+                  className={`group flex items-center gap-2 px-4 py-2 rounded-full text-base font-medium cursor-pointer select-none
                     text-purple-500
                     hover:scale-105 hover:shadow-sm
                     focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pink-200
                     transition-all duration-200 ${hover}`}
                 >
-                  <Icon className={`w-5 h-5 shrink-0 ${iconColor}`} />
+                  <Icon className={`w-[1.15rem] h-[1.15rem] shrink-0 ${iconColor}`} />
                   {label}
                 </span>
               ))}
@@ -101,26 +104,29 @@ function Header() {
           </nav>
 
           {/* Derecha: usuario + hamburguesa móvil */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-4 shrink-0">
             {user ? (
               <>
-                <span className="text-sm text-gray-600 hidden sm:inline">
-                  👋 {profileName || user.displayName || user.email}
+                <span className="flex items-center gap-1.5 text-base text-gray-600 hidden sm:inline-flex max-w-[200px] truncate">
+                  <IdentificationIcon className="w-5 h-5 text-purple-400 shrink-0" />
+                  <span className="truncate">{profileName || user.displayName || user.email}</span>
                 </span>
                 {isAdmin && (
                   <Link
                     to="/admin"
-                    className="px-4 py-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-lg hover:from-purple-600 hover:to-pink-600 transition-all shadow-md hover:shadow-lg font-medium text-sm"
+                    className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-lg hover:from-purple-600 hover:to-pink-600 transition-all shadow-md hover:shadow-lg font-medium text-base"
                   >
-                    🔐 Admin Panel
+                    <UserCircleIcon className="w-5 h-5 shrink-0" />
+                    Admin Panel
                   </Link>
                 )}
                 <button
                   onClick={handleLogout}
                   disabled={loggingOut}
-                  className="px-4 py-2 bg-pink-100 text-pink-700 rounded-lg hover:bg-pink-200 transition-all font-medium text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="flex items-center gap-2 px-5 py-2.5 bg-pink-100 text-pink-700 rounded-lg hover:bg-pink-200 transition-all font-medium text-base disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  {loggingOut ? '⏳' : '🚪 Salir'}
+                  <ArrowRightStartOnRectangleIcon className="w-5 h-5 shrink-0" />
+                  {loggingOut ? 'Saliendo...' : 'Salir'}
                 </button>
               </>
             ) : (
