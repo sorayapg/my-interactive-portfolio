@@ -211,7 +211,7 @@ const AdminWhiteboard = () => {
             </h2>
             <button
               onClick={closeForm}
-              className="p-1.5 text-gray-500 hover:text-gray-700 hover:bg-white rounded-lg transition"
+              className="cms-close-btn p-1.5"
             >
               <XMarkIcon className="w-5 h-5" />
             </button>
@@ -279,7 +279,7 @@ const AdminWhiteboard = () => {
             </button>
             <button
               onClick={closeForm}
-              className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition font-medium text-sm"
+              className="cms-close-btn flex items-center gap-2 px-4 py-2 font-medium text-sm"
             >
               <XMarkIcon className="w-4 h-4" />
               Cancelar
@@ -324,7 +324,7 @@ const AdminWhiteboard = () => {
               onClick={() => openEdit(scene)}
               disabled={!scene.id}
               title={!scene.id ? 'Migra primero las escenas a Firestore' : 'Editar'}
-              className="shrink-0 p-2 text-indigo-600 hover:bg-indigo-50 rounded-lg transition disabled:opacity-30 disabled:cursor-not-allowed"
+              className="cms-action-btn p-1.5 disabled:opacity-30 disabled:cursor-not-allowed"
             >
               <PencilIcon className="w-4 h-4" />
             </button>

@@ -153,7 +153,7 @@ const AdminExperiences = () => {
                   <div className="flex space-x-2 ml-4">
                     <button
                       onClick={() => handleEdit(exp)}
-                      className="p-2 bg-blue-100 text-blue-600 rounded-lg hover:bg-blue-200 transition"
+                      className="cms-action-btn p-2"
                     >
                       <PencilIcon className="w-5 h-5" />
                     </button>

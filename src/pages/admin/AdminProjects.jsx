@@ -147,7 +147,7 @@ const AdminProjects = () => {
                   <div className="flex space-x-2">
                     <button
                       onClick={() => handleEdit(project)}
-                      className="p-2 bg-blue-100 text-blue-600 rounded-lg hover:bg-blue-200 transition"
+                      className="cms-action-btn p-2"
                     >
                       <PencilIcon className="w-4 h-4" />
                     </button>

@@ -187,7 +187,7 @@ const AdminCertifications = () => {
                   <div className="flex space-x-2 flex-shrink-0 ml-4">
                     <button
                       onClick={() => handleEdit(cert)}
-                      className="p-2 bg-blue-100 text-blue-600 rounded-lg hover:bg-blue-200 transition"
+                      className="cms-action-btn p-2"
                       title="Editar"
                     >
                       <PencilIcon className="w-4 h-4" />

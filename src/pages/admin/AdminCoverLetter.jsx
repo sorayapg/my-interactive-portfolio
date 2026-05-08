@@ -489,7 +489,7 @@ const AdminCoverLetter = () => {
             </button>
             <button
               onClick={closeForm}
-              className="flex items-center gap-2 px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition font-medium text-sm"
+              className="cms-close-btn flex items-center gap-2 px-4 py-2 font-medium text-sm"
             >
               <XMarkIcon className="w-4 h-4" />
               Cancelar
@@ -595,7 +595,7 @@ const AdminCoverLetter = () => {
                   <>
                     <button
                       onClick={() => openEdit(card)}
-                      className="p-1.5 bg-purple-100 text-purple-600 rounded hover:bg-purple-200 transition"
+                      className="cms-action-btn p-1.5"
                     >
                       <PencilIcon className="w-4 h-4" />
                     </button>
