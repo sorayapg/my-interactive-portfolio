@@ -26,7 +26,6 @@ import AdminWhiteboard from './pages/admin/AdminWhiteboard';
 import AdminCertifications from './pages/admin/AdminCertifications';
 import PrivateRoute from './routes/PrivateRoute';
 import Login from './pages/Login';
-import ShowUID from './pages/ShowUID';
 
 // NOTA: Si ves errores de importación, haz: npm run dev (reiniciar servidor)
 
@@ -56,10 +55,7 @@ function App() {
         
         {/* Ruta de login */}
         <Route path="/login" element={<Login />} />
-        
-        {/* Ruta para ver UID (temporal) */}
-        <Route path="/show-uid" element={<ShowUID />} />
-        
+
         {/* Rutas protegidas del admin panel */}
         <Route
           path="/admin"
