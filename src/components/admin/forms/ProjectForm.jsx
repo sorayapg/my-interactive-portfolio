@@ -11,6 +11,9 @@ const ProjectForm = ({ project, onSave, onCancel }) => {
     backendRepo: '',
     github: '',
     order: 0,
+    longDescription: '',
+    challenge: '',
+    learned: '',
   });
   const [techInput, setTechInput] = useState('');
 
@@ -185,6 +188,48 @@ const ProjectForm = ({ project, onSave, onCancel }) => {
           value={formData.backendRepo}
           onChange={handleChange}
           placeholder="https://github.com/usuario/repo-backend"
+          className="w-full px-4 py-2 border-2 border-indigo-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+        />
+      </div>
+
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-2">
+          Descripción ampliada — modal (opcional)
+        </label>
+        <textarea
+          name="longDescription"
+          value={formData.longDescription}
+          onChange={handleChange}
+          rows="3"
+          placeholder="Más contexto que se mostrará en el modal de detalle."
+          className="w-full px-4 py-2 border-2 border-indigo-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+        />
+      </div>
+
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-2">
+          Retos técnicos (opcional)
+        </label>
+        <textarea
+          name="challenge"
+          value={formData.challenge}
+          onChange={handleChange}
+          rows="3"
+          placeholder="Qué problemas técnicos resolviste con este proyecto."
+          className="w-full px-4 py-2 border-2 border-indigo-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+        />
+      </div>
+
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-2">
+          Qué aprendí (opcional)
+        </label>
+        <textarea
+          name="learned"
+          value={formData.learned}
+          onChange={handleChange}
+          rows="3"
+          placeholder="Aprendizajes y habilidades que adquiriste."
           className="w-full px-4 py-2 border-2 border-indigo-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
         />
       </div>
