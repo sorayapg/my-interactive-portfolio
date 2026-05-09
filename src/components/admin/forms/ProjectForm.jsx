@@ -74,7 +74,7 @@ const ProjectForm = ({ project, onSave, onCancel }) => {
           name="title"
           value={formData.title}
           onChange={handleChange}
-          className="w-full px-4 py-2 border-2 border-indigo-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+          className="cms-field px-4 py-2"
           required
         />
       </div>
@@ -88,7 +88,7 @@ const ProjectForm = ({ project, onSave, onCancel }) => {
           value={formData.description}
           onChange={handleChange}
           rows="4"
-          className="w-full px-4 py-2 border-2 border-indigo-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+          className="cms-field px-4 py-2"
           required
         />
       </div>
@@ -104,7 +104,7 @@ const ProjectForm = ({ project, onSave, onCancel }) => {
             onChange={(e) => setTechInput(e.target.value)}
             onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), handleAddTech())}
             placeholder="Ej: React, Tailwind..."
-            className="flex-1 px-4 py-2 border-2 border-indigo-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+            className="flex-1 px-4 py-2 border-2 border-violet-200 rounded-lg focus:border-violet-400 focus:outline-none focus:ring-2 focus:ring-violet-200/50 transition-all duration-200 text-slate-700 bg-white"
           />
           <button
             type="button"
@@ -143,7 +143,7 @@ const ProjectForm = ({ project, onSave, onCancel }) => {
           value={formData.image}
           onChange={handleChange}
           placeholder="/images/proyecto.png"
-          className="w-full px-4 py-2 border-2 border-indigo-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+          className="cms-field px-4 py-2"
         />
       </div>
 
@@ -157,7 +157,7 @@ const ProjectForm = ({ project, onSave, onCancel }) => {
           value={formData.liveUrl}
           onChange={handleChange}
           placeholder="https://mi-app.com"
-          className="w-full px-4 py-2 border-2 border-indigo-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+          className="cms-field px-4 py-2"
         />
       </div>
 
@@ -171,7 +171,7 @@ const ProjectForm = ({ project, onSave, onCancel }) => {
           value={formData.frontendRepo}
           onChange={handleChange}
           placeholder="https://github.com/usuario/repo"
-          className="w-full px-4 py-2 border-2 border-indigo-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+          className="cms-field px-4 py-2"
         />
         <p className="text-xs text-gray-500 mt-1">
           Si el proyecto tiene solo un repo, úsalo aquí.
@@ -188,7 +188,7 @@ const ProjectForm = ({ project, onSave, onCancel }) => {
           value={formData.backendRepo}
           onChange={handleChange}
           placeholder="https://github.com/usuario/repo-backend"
-          className="w-full px-4 py-2 border-2 border-indigo-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+          className="cms-field px-4 py-2"
         />
       </div>
 
@@ -202,7 +202,7 @@ const ProjectForm = ({ project, onSave, onCancel }) => {
           onChange={handleChange}
           rows="3"
           placeholder="Más contexto que se mostrará en el modal de detalle."
-          className="w-full px-4 py-2 border-2 border-indigo-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+          className="cms-field px-4 py-2"
         />
       </div>
 
@@ -216,7 +216,7 @@ const ProjectForm = ({ project, onSave, onCancel }) => {
           onChange={handleChange}
           rows="3"
           placeholder="Qué problemas técnicos resolviste con este proyecto."
-          className="w-full px-4 py-2 border-2 border-indigo-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+          className="cms-field px-4 py-2"
         />
       </div>
 
@@ -230,7 +230,7 @@ const ProjectForm = ({ project, onSave, onCancel }) => {
           onChange={handleChange}
           rows="3"
           placeholder="Aprendizajes y habilidades que adquiriste."
-          className="w-full px-4 py-2 border-2 border-indigo-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+          className="cms-field px-4 py-2"
         />
       </div>
 
@@ -243,7 +243,7 @@ const ProjectForm = ({ project, onSave, onCancel }) => {
           name="order"
           value={formData.order}
           onChange={handleChange}
-          className="w-full px-4 py-2 border-2 border-indigo-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+          className="cms-field px-4 py-2"
           min="0"
         />
         <p className="text-xs text-gray-500 mt-1">
@@ -261,7 +261,7 @@ const ProjectForm = ({ project, onSave, onCancel }) => {
         <button
           type="button"
           onClick={onCancel}
-          className="flex-1 bg-gray-200 text-gray-700 font-bold py-3 px-6 rounded-lg hover:bg-gray-300 transition"
+          className="cms-close-btn flex-1 py-3 px-6 font-bold"
         >
           Cancelar
         </button>

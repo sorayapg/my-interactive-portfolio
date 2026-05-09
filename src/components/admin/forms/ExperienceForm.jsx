@@ -43,7 +43,7 @@ const ExperienceForm = ({ experience, onSave, onCancel }) => {
           name="company"
           value={formData.company}
           onChange={handleChange}
-          className="w-full px-4 py-2 border-2 border-purple-200 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+          className="cms-field px-4 py-2"
           required
         />
       </div>
@@ -57,7 +57,7 @@ const ExperienceForm = ({ experience, onSave, onCancel }) => {
           name="role"
           value={formData.role}
           onChange={handleChange}
-          className="w-full px-4 py-2 border-2 border-purple-200 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+          className="cms-field px-4 py-2"
           required
         />
       </div>
@@ -72,7 +72,7 @@ const ExperienceForm = ({ experience, onSave, onCancel }) => {
           value={formData.period}
           onChange={handleChange}
           placeholder="Ej: 2022 - 2024"
-          className="w-full px-4 py-2 border-2 border-purple-200 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+          className="cms-field px-4 py-2"
           required
         />
       </div>
@@ -86,7 +86,7 @@ const ExperienceForm = ({ experience, onSave, onCancel }) => {
           value={formData.description}
           onChange={handleChange}
           rows="4"
-          className="w-full px-4 py-2 border-2 border-purple-200 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+          className="cms-field px-4 py-2"
           required
         />
       </div>
@@ -100,7 +100,7 @@ const ExperienceForm = ({ experience, onSave, onCancel }) => {
           name="order"
           value={formData.order}
           onChange={handleChange}
-          className="w-full px-4 py-2 border-2 border-purple-200 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+          className="cms-field px-4 py-2"
           min="0"
         />
         <p className="text-xs text-gray-500 mt-1">
@@ -118,7 +118,7 @@ const ExperienceForm = ({ experience, onSave, onCancel }) => {
         <button
           type="button"
           onClick={onCancel}
-          className="flex-1 bg-gray-200 text-gray-700 font-bold py-3 px-6 rounded-lg hover:bg-gray-300 transition"
+          className="cms-close-btn flex-1 py-3 px-6 font-bold"
         >
           Cancelar
         </button>

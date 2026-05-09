@@ -331,7 +331,7 @@ const AdminCoverLetter = () => {
               <select
                 value={form.type}
                 onChange={(e) => setForm({ ...form, type: e.target.value })}
-                className="w-full px-3 py-2 border-2 border-pink-200 rounded-lg focus:border-pink-400 focus:outline-none text-sm"
+                className="cms-field px-3 py-2 text-sm"
               >
                 {TYPE_OPTIONS.map((o) => (
                   <option key={o.value} value={o.value}>{o.label}</option>
@@ -346,7 +346,7 @@ const AdminCoverLetter = () => {
                 type="number"
                 value={form.order}
                 onChange={(e) => setForm({ ...form, order: Number(e.target.value) })}
-                className="w-full px-3 py-2 border-2 border-pink-200 rounded-lg focus:border-pink-400 focus:outline-none text-sm"
+                className="cms-field px-3 py-2 text-sm"
                 min={0}
               />
             </div>
@@ -359,7 +359,7 @@ const AdminCoverLetter = () => {
                   type="text"
                   value={form.title}
                   onChange={(e) => setForm({ ...form, title: e.target.value })}
-                  className="w-full px-3 py-2 border-2 border-pink-200 rounded-lg focus:border-pink-400 focus:outline-none text-sm"
+                  className="cms-field px-3 py-2 text-sm"
                   placeholder="💖 DISEÑO CON ALMA"
                 />
               </div>
@@ -373,7 +373,7 @@ const AdminCoverLetter = () => {
                   value={form.text}
                   onChange={(e) => setForm({ ...form, text: e.target.value })}
                   rows={4}
-                  className="w-full px-3 py-2 border-2 border-pink-200 rounded-lg focus:border-pink-400 focus:outline-none text-sm resize-none"
+                  className="cms-field px-3 py-2 text-sm resize-none"
                   placeholder="Descripción de la card..."
                 />
               </div>
@@ -389,7 +389,7 @@ const AdminCoverLetter = () => {
                   value={form.linesRaw}
                   onChange={(e) => setForm({ ...form, linesRaw: e.target.value })}
                   rows={5}
-                  className="w-full px-3 py-2 border-2 border-pink-200 rounded-lg focus:border-pink-400 focus:outline-none text-sm font-mono resize-none"
+                  className="cms-field px-3 py-2 text-sm font-mono resize-none"
                   placeholder={'📧 email@ejemplo.com\n📞 +34 600000000\n🐱 GitHub: https://github.com/usuario'}
                 />
                 <p className="text-xs text-gray-400 mt-1">
@@ -407,7 +407,7 @@ const AdminCoverLetter = () => {
                     type="text"
                     value={form.imageUrl}
                     onChange={(e) => setForm({ ...form, imageUrl: e.target.value })}
-                    className="w-full px-3 py-2 border-2 border-pink-200 rounded-lg focus:border-pink-400 focus:outline-none text-sm"
+                    className="cms-field px-3 py-2 text-sm"
                     placeholder="/images/storyboard/carta-presentacion.png"
                   />
                 </div>
@@ -417,7 +417,7 @@ const AdminCoverLetter = () => {
                     type="text"
                     value={form.imageAlt}
                     onChange={(e) => setForm({ ...form, imageAlt: e.target.value })}
-                    className="w-full px-3 py-2 border-2 border-pink-200 rounded-lg focus:border-pink-400 focus:outline-none text-sm"
+                    className="cms-field px-3 py-2 text-sm"
                     placeholder="Descripción de la imagen"
                   />
                 </div>
@@ -430,7 +430,7 @@ const AdminCoverLetter = () => {
               <select
                 value={form.bg}
                 onChange={(e) => setForm({ ...form, bg: e.target.value })}
-                className="w-full px-3 py-2 border-2 border-pink-200 rounded-lg focus:border-pink-400 focus:outline-none text-sm"
+                className="cms-field px-3 py-2 text-sm"
               >
                 {BG_OPTIONS.map((o) => (
                   <option key={o.value} value={o.value}>{o.label} ({o.value})</option>
@@ -444,7 +444,7 @@ const AdminCoverLetter = () => {
               <select
                 value={form.hoverColor}
                 onChange={(e) => setForm({ ...form, hoverColor: e.target.value })}
-                className="w-full px-3 py-2 border-2 border-pink-200 rounded-lg focus:border-pink-400 focus:outline-none text-sm"
+                className="cms-field px-3 py-2 text-sm"
               >
                 {HOVER_OPTIONS.map((o) => (
                   <option key={o.value} value={o.value}>{o.label}{o.value ? ` (${o.value})` : ''}</option>

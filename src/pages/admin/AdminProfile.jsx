@@ -92,7 +92,7 @@ const AdminProfile = () => {
             name="name"
             value={profile.name}
             onChange={handleChange}
-            className="w-full px-4 py-2 border-2 border-purple-200 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+            className="cms-field px-4 py-2"
             required
           />
         </div>
@@ -106,7 +106,7 @@ const AdminProfile = () => {
             name="title"
             value={profile.title}
             onChange={handleChange}
-            className="w-full px-4 py-2 border-2 border-purple-200 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+            className="cms-field px-4 py-2"
             required
           />
         </div>
@@ -120,7 +120,7 @@ const AdminProfile = () => {
             value={profile.bio}
             onChange={handleChange}
             rows="4"
-            className="w-full px-4 py-2 border-2 border-purple-200 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+            className="cms-field px-4 py-2"
             required
           />
         </div>
@@ -134,7 +134,7 @@ const AdminProfile = () => {
             name="email"
             value={profile.email}
             onChange={handleChange}
-            className="w-full px-4 py-2 border-2 border-purple-200 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+            className="cms-field px-4 py-2"
             required
           />
         </div>
@@ -148,7 +148,7 @@ const AdminProfile = () => {
             name="github"
             value={profile.github}
             onChange={handleChange}
-            className="w-full px-4 py-2 border-2 border-purple-200 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+            className="cms-field px-4 py-2"
           />
         </div>
 
@@ -161,7 +161,7 @@ const AdminProfile = () => {
             name="linkedin"
             value={profile.linkedin}
             onChange={handleChange}
-            className="w-full px-4 py-2 border-2 border-purple-200 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+            className="cms-field px-4 py-2"
           />
         </div>
 

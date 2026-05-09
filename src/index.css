@@ -59,6 +59,24 @@ button:focus-visible {
   outline: none;
 }
 
+/* Inputs, textareas, selects — suprimir outline nativo del navegador */
+/* Los focus indicators se proporcionan vía Tailwind (focus:ring) o .cms-field */
+input:focus,
+input:focus-visible,
+textarea:focus,
+textarea:focus-visible,
+select:focus,
+select:focus-visible {
+  outline: none;
+}
+
+/* Campo de formulario del CMS — base centralizada */
+.cms-field {
+  @apply w-full border-2 border-violet-200 rounded-lg
+    focus:border-violet-400 focus:ring-2 focus:ring-violet-200/50
+    transition-all duration-200 text-slate-700 bg-white;
+}
+
 /* Botones de acción del CMS — editar */
 .cms-action-btn {
   display: inline-flex;

@@ -225,7 +225,7 @@ const AdminWhiteboard = () => {
                 type="text"
                 value={form.title}
                 onChange={(e) => setForm({ ...form, title: e.target.value })}
-                className="w-full px-3 py-2 border-2 border-indigo-200 rounded-lg focus:border-indigo-400 focus:outline-none text-sm"
+                className="cms-field px-3 py-2 text-sm"
                 placeholder="Mi Viaje Profesional"
               />
             </div>
@@ -237,7 +237,7 @@ const AdminWhiteboard = () => {
                 value={form.description}
                 onChange={(e) => setForm({ ...form, description: e.target.value })}
                 rows={4}
-                className="w-full px-3 py-2 border-2 border-indigo-200 rounded-lg focus:border-indigo-400 focus:outline-none text-sm resize-none"
+                className="cms-field px-3 py-2 text-sm resize-none"
                 placeholder="Texto descriptivo de la escena..."
               />
             </div>
@@ -250,7 +250,7 @@ const AdminWhiteboard = () => {
                   type="text"
                   value={form.buttonText}
                   onChange={(e) => setForm({ ...form, buttonText: e.target.value })}
-                  className="w-full px-3 py-2 border-2 border-indigo-200 rounded-lg focus:border-indigo-400 focus:outline-none text-sm"
+                  className="cms-field px-3 py-2 text-sm"
                   placeholder="Ver Proyectos"
                 />
               </div>
@@ -260,7 +260,7 @@ const AdminWhiteboard = () => {
                   type="text"
                   value={form.buttonLink}
                   onChange={(e) => setForm({ ...form, buttonLink: e.target.value })}
-                  className="w-full px-3 py-2 border-2 border-indigo-200 rounded-lg focus:border-indigo-400 focus:outline-none text-sm"
+                  className="cms-field px-3 py-2 text-sm"
                   placeholder="#projects"
                 />
               </div>

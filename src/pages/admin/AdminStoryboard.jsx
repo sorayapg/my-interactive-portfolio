@@ -231,7 +231,7 @@ const AdminStoryboard = () => {
                 type="text"
                 value={form.title}
                 onChange={(e) => setForm({ ...form, title: e.target.value })}
-                className="w-full px-3 py-2 border-2 border-purple-200 rounded-lg focus:border-purple-400 focus:outline-none text-sm"
+                className="cms-field px-3 py-2 text-sm"
                 placeholder="🎀 Viñeta 1: ¡Hola mundo!"
               />
             </div>
@@ -241,7 +241,7 @@ const AdminStoryboard = () => {
                 value={form.text}
                 onChange={(e) => setForm({ ...form, text: e.target.value })}
                 rows={3}
-                className="w-full px-3 py-2 border-2 border-purple-200 rounded-lg focus:border-purple-400 focus:outline-none text-sm resize-none"
+                className="cms-field px-3 py-2 text-sm resize-none"
                 placeholder="Descripción de la viñeta..."
               />
             </div>
@@ -251,7 +251,7 @@ const AdminStoryboard = () => {
                 type="text"
                 value={form.img}
                 onChange={(e) => setForm({ ...form, img: e.target.value })}
-                className="w-full px-3 py-2 border-2 border-purple-200 rounded-lg focus:border-purple-400 focus:outline-none text-sm"
+                className="cms-field px-3 py-2 text-sm"
                 placeholder="/images/storyboard/nombre.png"
               />
             </div>
@@ -261,7 +261,7 @@ const AdminStoryboard = () => {
                 type="text"
                 value={form.alt}
                 onChange={(e) => setForm({ ...form, alt: e.target.value })}
-                className="w-full px-3 py-2 border-2 border-purple-200 rounded-lg focus:border-purple-400 focus:outline-none text-sm"
+                className="cms-field px-3 py-2 text-sm"
                 placeholder="Descripción de la imagen"
               />
             </div>
@@ -270,7 +270,7 @@ const AdminStoryboard = () => {
               <select
                 value={form.bg}
                 onChange={(e) => setForm({ ...form, bg: e.target.value })}
-                className="w-full px-3 py-2 border-2 border-purple-200 rounded-lg focus:border-purple-400 focus:outline-none text-sm"
+                className="cms-field px-3 py-2 text-sm"
               >
                 {BG_OPTIONS.map((o) => (
                   <option key={o.value} value={o.value}>
@@ -285,7 +285,7 @@ const AdminStoryboard = () => {
                 type="number"
                 value={form.order}
                 onChange={(e) => setForm({ ...form, order: Number(e.target.value) })}
-                className="w-full px-3 py-2 border-2 border-purple-200 rounded-lg focus:border-purple-400 focus:outline-none text-sm"
+                className="cms-field px-3 py-2 text-sm"
                 min={0}
               />
             </div>
