@@ -107,40 +107,40 @@ const ProjectModal = ({ project, onClose }) => {
         </div>
 
         {/* Cuerpo con scroll interno */}
-        <div className="p-6 space-y-5">
+        <div className="p-6 space-y-7">
           {project.description && (
             <div>
-              <h3 className="text-sm font-semibold text-gray-700 uppercase tracking-wide mb-2">
+              <h3 className="text-xs font-bold uppercase tracking-widest text-violet-600 mb-2">
                 Descripción
               </h3>
-              <p className="text-gray-700 text-sm leading-relaxed">{project.description}</p>
+              <p className="text-base leading-7 text-slate-600">{project.description}</p>
             </div>
           )}
 
           {project.longDescription && (
             <div>
-              <h3 className="text-sm font-semibold text-gray-700 uppercase tracking-wide mb-2">
+              <h3 className="text-xs font-bold uppercase tracking-widest text-violet-600 mb-2">
                 Más detalles
               </h3>
-              <p className="text-gray-700 text-sm leading-relaxed">{project.longDescription}</p>
+              <p className="text-base leading-7 text-slate-600">{project.longDescription}</p>
             </div>
           )}
 
           {project.challenge && (
             <div>
-              <h3 className="text-sm font-semibold text-gray-700 uppercase tracking-wide mb-2">
+              <h3 className="text-xs font-bold uppercase tracking-widest text-violet-600 mb-2">
                 Retos técnicos
               </h3>
-              <p className="text-gray-700 text-sm leading-relaxed">{project.challenge}</p>
+              <p className="text-base leading-7 text-slate-600">{project.challenge}</p>
             </div>
           )}
 
           {project.learned && (
             <div>
-              <h3 className="text-sm font-semibold text-gray-700 uppercase tracking-wide mb-2">
+              <h3 className="text-xs font-bold uppercase tracking-widest text-violet-600 mb-2">
                 Qué aprendí
               </h3>
-              <p className="text-gray-700 text-sm leading-relaxed">{project.learned}</p>
+              <p className="text-base leading-7 text-slate-600">{project.learned}</p>
             </div>
           )}
         </div>
