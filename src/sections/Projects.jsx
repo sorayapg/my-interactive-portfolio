@@ -41,7 +41,7 @@ function Projects() {
     return (
       <section id="projects" className="py-20 bg-gradient-to-b from-white to-violet-50 text-gray-800">
         <div className="container mx-auto px-4">
-          <h2 className="text-4xl font-bold text-center mb-12">Mis Proyectos Destacados</h2>
+          <h2 className="portfolio-title text-center mb-12">Mis <span className="portfolio-accent">Proyectos</span> Destacados</h2>
           <div className="flex justify-center py-12">
             <div className="animate-pulse flex space-x-4">
               <div className="rounded-2xl bg-violet-100 h-64 w-96"></div>
@@ -55,7 +55,7 @@ function Projects() {
   return (
     <section id="projects" className="py-20 bg-gradient-to-b from-white to-violet-50 text-gray-800">
       <div className="container mx-auto px-4">
-        <h2 className="text-4xl font-bold text-center mb-12">Mis Proyectos Destacados</h2>
+        <h2 className="portfolio-title text-center mb-12">Mis <span className="portfolio-accent">Proyectos</span> Destacados</h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
           {projects.map((project) => {

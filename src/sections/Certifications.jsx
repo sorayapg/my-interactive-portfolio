@@ -36,7 +36,7 @@ function Certifications() {
     return (
       <section id="certifications" className="py-14 bg-pink-50 text-gray-800">
         <div className="container mx-auto px-4">
-          <h2 className="text-4xl font-bold text-center mb-12">Certificaciones</h2>
+          <h2 className="portfolio-title text-center mb-12"><span className="portfolio-accent">Certificaciones</span></h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {[1, 2, 3].map((n) => (
               <div key={n} className="animate-pulse bg-pink-100/60 rounded-2xl h-64" />
@@ -54,10 +54,8 @@ function Certifications() {
       <section id="certifications" className="py-14 bg-pink-50 text-gray-800">
         <div className="container mx-auto px-4">
           {/* Encabezado */}
-          <h2 className="text-4xl font-bold text-center mb-3">Certificaciones</h2>
-          <p className="text-center text-pink-300 mb-14 text-sm tracking-wide uppercase">
-            Formación continua y aprendizaje certificado
-          </p>
+          <h2 className="portfolio-title text-center mb-3"><span className="portfolio-accent">Certificaciones</span></h2>
+          <p className="portfolio-subtitle text-center mb-14">Formación continua y aprendizaje certificado</p>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {certifications.map((cert) => {

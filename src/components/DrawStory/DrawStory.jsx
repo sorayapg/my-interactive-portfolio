@@ -187,7 +187,7 @@ function DrawStory() {
                         </div>
                       </div>
                     )}
-                    <h3 className="text-3xl lg:text-4xl font-bold text-gray-800 text-center lg:text-left">
+                    <h3 className="scene-title">
                       {scene.title}
                     </h3>
                     <p className="text-lg text-gray-700 leading-relaxed text-center lg:text-left">

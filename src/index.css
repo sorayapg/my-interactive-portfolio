@@ -77,6 +77,53 @@ select:focus-visible {
     transition-all duration-200 text-slate-700 bg-white;
 }
 
+/* ── Títulos del portfolio público ────────────────────────────────── */
+/*
+  Paleta editorial kawaii:
+    --editorial-rose:    #d47ab5  dusty rose    (inicio del gradiente)
+    --editorial-lavender:#9470d4  lavender soft  (fin del gradiente)
+    --editorial-subtitle:#c07ab5  mauve rose     (subtítulos)
+  Base oscura: text-slate-800 (#1e293b) — negro suave, no puro.
+*/
+
+/* Título principal de sección (h2) */
+.portfolio-title {
+  @apply text-4xl font-bold text-slate-800;
+}
+
+/* Variante con gradiente editorial para secciones de énfasis */
+.portfolio-title-gradient {
+  @apply text-4xl font-bold;
+  background: linear-gradient(135deg, #d47ab5 0%, #9470d4 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Subtítulo de sección — etiqueta uppercase suave */
+.portfolio-subtitle {
+  @apply text-sm font-bold uppercase tracking-widest;
+  color: #c07ab5;
+}
+
+/* Palabra clave destacada dentro de un título — gradient inline */
+.portfolio-accent {
+  display: inline;
+  background: linear-gradient(135deg, #d47ab5 0%, #9470d4 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Título dentro de escenas (DrawStory h3) — gradiente editorial completo */
+.scene-title {
+  @apply text-3xl lg:text-4xl font-bold text-center lg:text-left;
+  background: linear-gradient(135deg, #d47ab5 0%, #9470d4 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
 /* Botones de acción del CMS — editar */
 .cms-action-btn {
   display: inline-flex;

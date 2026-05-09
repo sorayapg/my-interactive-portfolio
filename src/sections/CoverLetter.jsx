@@ -140,7 +140,8 @@ const CoverLetter = () => {
   return (
     <section id="cover-letter" className="py-14 bg-pink-50 text-gray-800">
       <div className="container mx-auto px-4 text-center">
-        <h2 className="text-4xl font-bold mb-12 text-pink-600">Mi Carta de Presentacion Kawaii</h2>
+        <h2 className="portfolio-title-gradient mb-3 text-center">Mi Carta de Presentación Kawaii</h2>
+        <p className="portfolio-subtitle text-center mb-12">Aquí vivo, diseño y creo ✨</p>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-center justify-items-center">
           {[...topRow, ...midRow].map((card) => (

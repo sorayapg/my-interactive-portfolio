@@ -33,7 +33,7 @@ function About() {
   return (
     <section id="about" className="py-14 bg-white text-gray-800">
       <div className="container mx-auto px-4">
-        <h2 className="text-4xl font-bold text-center mb-8">Sobre Mí</h2>
+        <h2 className="portfolio-title text-center mb-8">Sobre <span className="portfolio-accent">Mí</span></h2>
 
         <div className="text-center mb-8">
           <img 

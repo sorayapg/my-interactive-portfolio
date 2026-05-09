@@ -99,8 +99,8 @@ function Storyboard() {
     <>
       <section id="storyboard" className="py-14 bg-purple-100 text-gray-800">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-4xl font-bold mb-2">Storyboard Kawaii de Soraya</h2>
-          <p className="text-purple-400 text-sm tracking-wide uppercase mb-10">Una aventura front-end</p>
+          <h2 className="portfolio-title text-center mb-2">Storyboard <span className="portfolio-accent">Kawaii</span> de Soraya</h2>
+          <p className="portfolio-subtitle text-center mb-10">Una aventura front-end</p>
 
           {/* Grid: 1 col móvil → 2 sm → 3 md → 4 lg → 5 xl */}
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
