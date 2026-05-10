@@ -114,7 +114,7 @@ function Header() {
                 {isAdmin && (
                   <Link
                     to="/admin"
-                    className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-lg hover:from-purple-600 hover:to-pink-600 transition-all shadow-md hover:shadow-lg font-medium text-base"
+                    className="hidden lg:flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-lg hover:from-purple-600 hover:to-pink-600 transition-all shadow-md hover:shadow-lg font-medium text-base"
                   >
                     <UserCircleIcon className="w-5 h-5 shrink-0" />
                     Admin Panel
@@ -123,7 +123,7 @@ function Header() {
                 <button
                   onClick={handleLogout}
                   disabled={loggingOut}
-                  className="flex items-center gap-2 px-5 py-2.5 bg-pink-100 text-pink-700 rounded-lg hover:bg-pink-200 transition-all font-medium text-base disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="hidden lg:flex items-center gap-2 px-5 py-2.5 bg-pink-100 text-pink-700 rounded-lg hover:bg-pink-200 transition-all font-medium text-base disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <ArrowRightStartOnRectangleIcon className="w-5 h-5 shrink-0" />
                   {loggingOut ? 'Saliendo...' : 'Salir'}
@@ -175,6 +175,31 @@ function Header() {
                 {label}
               </span>
             ))}
+
+            {/* Admin Panel y Salir — solo en menú móvil cuando hay sesión */}
+            {user && (
+              <>
+                <div className="my-1 border-t border-pink-200" />
+                {isAdmin && (
+                  <Link
+                    to="/admin"
+                    onClick={() => setMenuOpen(false)}
+                    className="flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-medium text-purple-600 hover:bg-purple-100 hover:text-purple-700 transition-all duration-200 w-full"
+                  >
+                    <UserCircleIcon className="w-5 h-5 shrink-0 text-purple-400" />
+                    Admin Panel
+                  </Link>
+                )}
+                <button
+                  onClick={() => { setMenuOpen(false); handleLogout(); }}
+                  disabled={loggingOut}
+                  className="flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-medium text-pink-600 hover:bg-pink-100 transition-all duration-200 w-full disabled:opacity-50"
+                >
+                  <ArrowRightStartOnRectangleIcon className="w-5 h-5 shrink-0 text-pink-400" />
+                  {loggingOut ? 'Saliendo...' : 'Salir'}
+                </button>
+              </>
+            )}
           </nav>
         </div>
       )}
