@@ -6,7 +6,7 @@ import {
   deleteProject,
 } from '../../services/contentService';
 import ProjectForm from '../../components/admin/forms/ProjectForm';
-import { PencilIcon, TrashIcon, PlusIcon } from '@heroicons/react/24/outline';
+import { PencilIcon, TrashIcon, PlusIcon, RocketLaunchIcon } from '@heroicons/react/24/outline';
 
 const AdminProjects = () => {
   const [projects, setProjects] = useState([]);
@@ -91,8 +91,9 @@ const AdminProjects = () => {
     <div>
       <div className="flex justify-between items-center mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900 mb-2">
-            🚀 Proyectos
+          <h1 className="text-2xl font-bold text-gray-900 mb-2 flex items-center gap-2">
+            <RocketLaunchIcon className="w-6 h-6 text-purple-400 shrink-0" />
+            Proyectos
           </h1>
           <p className="text-gray-600">
             Administra tu portfolio de proyectos

@@ -8,6 +8,7 @@ import {
   PencilIcon,
   XMarkIcon,
   CheckIcon,
+  PaintBrushIcon,
 } from '@heroicons/react/24/outline';
 
 // Datos locales de las 5 escenas — solo campos de texto.
@@ -155,7 +156,10 @@ const AdminWhiteboard = () => {
     <div>
       {/* Header */}
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-900 mb-1">🎨 Whiteboard — Mi Viaje Profesional</h1>
+        <h1 className="text-2xl font-bold text-gray-900 mb-1 flex items-center gap-2">
+          <PaintBrushIcon className="w-6 h-6 text-purple-400 shrink-0" />
+          Whiteboard — Mi Viaje Profesional
+        </h1>
         <p className="text-gray-600 text-sm">
           Edita el texto de las escenas del whiteboard. Las animaciones e ilustraciones son fijas.
         </p>

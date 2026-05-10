@@ -2,6 +2,11 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { signInWithGoogle, isAdmin as checkIsAdmin, signOut } from '../firebase/auth';
 import { useAdmin } from '../hooks/useAdmin';
+import {
+  LockClosedIcon,
+  ShieldCheckIcon,
+  ArrowLongLeftIcon,
+} from '@heroicons/react/24/outline';
 
 const Login = () => {
   const [error, setError] = useState(null);
@@ -57,7 +62,9 @@ const Login = () => {
         <div className="bg-white rounded-2xl shadow-2xl p-8 border-4 border-purple-200">
           {/* Header */}
           <div className="text-center mb-8">
-            <div className="text-6xl mb-4">🔐</div>
+            <div className="flex items-center justify-center mb-4">
+              <LockClosedIcon className="w-16 h-16 text-purple-400" />
+            </div>
             <h1 className="text-3xl font-bold text-purple-600 mb-2">
               Admin Login
             </h1>
@@ -117,7 +124,7 @@ const Login = () => {
           {/* Security Info */}
           <div className="mt-6 bg-purple-50 border-2 border-purple-200 rounded-xl p-4">
             <div className="flex items-start space-x-2">
-              <span className="text-xl">🛡️</span>
+              <ShieldCheckIcon className="w-5 h-5 text-purple-500 shrink-0 mt-0.5" />
               <div>
                 <p className="text-xs text-purple-800 font-semibold mb-1">
                   Acceso Restringido
@@ -134,9 +141,10 @@ const Login = () => {
           <div className="mt-6 text-center">
             <button
               onClick={() => navigate('/')}
-              className="text-purple-600 hover:text-purple-700 font-medium text-sm transition-colors"
+              className="inline-flex items-center gap-1.5 text-purple-600 hover:text-purple-700 font-medium text-sm transition-colors"
             >
-              ← Volver al Portfolio
+              <ArrowLongLeftIcon className="w-4 h-4" />
+              Volver al Portfolio
             </button>
           </div>
         </div>

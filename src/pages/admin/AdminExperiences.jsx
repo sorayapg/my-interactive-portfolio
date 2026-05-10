@@ -6,7 +6,7 @@ import {
   deleteExperience,
 } from '../../services/contentService';
 import ExperienceForm from '../../components/admin/forms/ExperienceForm';
-import { PencilIcon, TrashIcon, PlusIcon } from '@heroicons/react/24/outline';
+import { PencilIcon, TrashIcon, PlusIcon, BriefcaseIcon } from '@heroicons/react/24/outline';
 
 const AdminExperiences = () => {
   const [experiences, setExperiences] = useState([]);
@@ -91,8 +91,9 @@ const AdminExperiences = () => {
     <div>
       <div className="flex justify-between items-center mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900 mb-2">
-            💼 Experiencias
+          <h1 className="text-2xl font-bold text-gray-900 mb-2 flex items-center gap-2">
+            <BriefcaseIcon className="w-6 h-6 text-purple-400 shrink-0" />
+            Experiencias
           </h1>
           <p className="text-gray-600">
             Gestiona tu experiencia laboral y educativa

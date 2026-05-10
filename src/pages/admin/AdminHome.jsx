@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { adminSections } from '../../config/adminSections';
+import { SparklesIcon, LightBulbIcon } from '@heroicons/react/24/outline';
 
 // Solo las secciones con description se muestran como cards en el dashboard
 const quickLinks = adminSections.filter((s) => s.description);
@@ -8,8 +9,9 @@ const AdminHome = () => {
   return (
     <div>
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">
-          ✨ Panel de Administración
+        <h1 className="text-3xl font-bold text-gray-900 mb-2 flex items-center gap-2">
+          <SparklesIcon className="w-7 h-7 text-purple-400 shrink-0" />
+          Panel de Administración
         </h1>
         <p className="text-gray-600">
           Bienvenida al mini CMS de tu portfolio kawaii
@@ -38,7 +40,10 @@ const AdminHome = () => {
       </div>
 
       <div className="mt-8 p-4 bg-blue-50 border-2 border-blue-200 rounded-lg">
-        <h3 className="font-bold text-blue-900 mb-2">💡 Consejos</h3>
+        <h3 className="font-bold text-blue-900 mb-2 flex items-center gap-1.5">
+          <LightBulbIcon className="w-4 h-4 text-blue-500 shrink-0" />
+          Consejos
+        </h3>
         <ul className="text-sm text-blue-800 space-y-1">
           <li>• Los cambios se reflejarán en tiempo real en tu portfolio</li>
           <li>• Recuerda guardar después de cada edición</li>

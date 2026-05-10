@@ -15,6 +15,7 @@ import {
   TrashIcon,
   XMarkIcon,
   CheckIcon,
+  EnvelopeOpenIcon,
 } from '@heroicons/react/24/outline';
 
 // Cards locales para migración — mismo contenido que CARDS_FALLBACK en CoverLetter.jsx
@@ -276,7 +277,10 @@ const AdminCoverLetter = () => {
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900 mb-1">💌 Carta de Presentación</h1>
+          <h1 className="text-2xl font-bold text-gray-900 mb-1 flex items-center gap-2">
+            <EnvelopeOpenIcon className="w-6 h-6 text-purple-400 shrink-0" />
+            Carta de Presentación
+          </h1>
           <p className="text-gray-600 text-sm">Gestiona y reordena las cards de tu carta kawaii</p>
         </div>
         <button

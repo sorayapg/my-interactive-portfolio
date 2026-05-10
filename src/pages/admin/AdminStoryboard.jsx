@@ -15,6 +15,7 @@ import {
   TrashIcon,
   XMarkIcon,
   CheckIcon,
+  BookOpenIcon,
 } from '@heroicons/react/24/outline';
 
 // Viñetas locales para migración — mismo array que el portfolio público
@@ -177,7 +178,10 @@ const AdminStoryboard = () => {
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900 mb-1">📖 Storyboard</h1>
+          <h1 className="text-2xl font-bold text-gray-900 mb-1 flex items-center gap-2">
+            <BookOpenIcon className="w-6 h-6 text-purple-400 shrink-0" />
+            Storyboard
+          </h1>
           <p className="text-gray-600 text-sm">Gestiona y reordena las viñetas de tu historia</p>
         </div>
         <button

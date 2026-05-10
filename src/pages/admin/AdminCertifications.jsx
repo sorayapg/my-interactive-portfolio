@@ -6,7 +6,7 @@ import {
   deleteCertification,
 } from '../../services/contentService';
 import CertificationForm from '../../components/admin/forms/CertificationForm';
-import { PencilIcon, TrashIcon, PlusIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
+import { PencilIcon, TrashIcon, PlusIcon, EyeSlashIcon, AcademicCapIcon } from '@heroicons/react/24/outline';
 
 const AdminCertifications = () => {
   const [certifications, setCertifications] = useState([]);
@@ -91,7 +91,10 @@ const AdminCertifications = () => {
     <div>
       <div className="flex justify-between items-center mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900 mb-2">🎓 Certificaciones</h1>
+          <h1 className="text-2xl font-bold text-gray-900 mb-2 flex items-center gap-2">
+            <AcademicCapIcon className="w-6 h-6 text-purple-400 shrink-0" />
+            Certificaciones
+          </h1>
           <p className="text-gray-600">Gestiona tus certificados y cursos completados</p>
         </div>
 

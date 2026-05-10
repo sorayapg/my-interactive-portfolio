@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { getSettings, updateSettings, seedInitialData, checkExistingData } from '../../services/contentService';
 import { initialSeedData } from '../../data/seedData';
+import { Cog6ToothIcon } from '@heroicons/react/24/outline';
 
 const AdminSettings = () => {
   const [settings, setSettings] = useState({
@@ -92,8 +93,9 @@ const AdminSettings = () => {
   return (
     <div>
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-900 mb-2">
-          ⚙️ Ajustes
+        <h1 className="text-2xl font-bold text-gray-900 mb-2 flex items-center gap-2">
+          <Cog6ToothIcon className="w-6 h-6 text-purple-400 shrink-0" />
+          Ajustes
         </h1>
         <p className="text-gray-600">
           Configuración general del portfolio

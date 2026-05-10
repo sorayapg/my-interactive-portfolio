@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { getProfile, updateProfile } from '../../services/contentService';
+import { UserIcon } from '@heroicons/react/24/outline';
 
 const AdminProfile = () => {
   const [profile, setProfile] = useState({
@@ -62,8 +63,9 @@ const AdminProfile = () => {
   return (
     <div>
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-900 mb-2">
-          👤 Editar Perfil
+        <h1 className="text-2xl font-bold text-gray-900 mb-2 flex items-center gap-2">
+          <UserIcon className="w-6 h-6 text-purple-400 shrink-0" />
+          Editar Perfil
         </h1>
         <p className="text-gray-600">
           Actualiza tu información personal
