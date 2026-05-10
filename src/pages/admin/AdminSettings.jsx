@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { getSettings, updateSettings, seedInitialData, checkExistingData } from '../../services/contentService';
 import { initialSeedData } from '../../data/seedData';
-import { Cog6ToothIcon } from '@heroicons/react/24/outline';
+import { Cog6ToothIcon, CircleStackIcon, ExclamationTriangleIcon, CheckCircleIcon, XCircleIcon, CloudArrowUpIcon, LightBulbIcon, AdjustmentsHorizontalIcon } from '@heroicons/react/24/outline';
 
 const AdminSettings = () => {
   const [settings, setSettings] = useState({
@@ -116,26 +116,39 @@ const AdminSettings = () => {
 
       {/* Seed Data Section */}
       <div className="mb-8 p-6 border-2 border-purple-200 rounded-lg bg-gradient-to-br from-purple-50 to-pink-50">
-        <h2 className="text-xl font-bold text-gray-900 mb-4">
-          🌱 Datos Iniciales
+        <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+          <CircleStackIcon className="w-5 h-5 text-purple-400 shrink-0" />
+          Datos Iniciales
         </h2>
         
         <div className="space-y-3 mb-4">
           <p className="text-gray-700">
             {dataStatus.isEmpty ? (
-              <>
-                ⚠️ <strong>Firestore está vacío.</strong> Carga los datos iniciales del portfolio para empezar a gestionar contenido.
-              </>
+              <span className="inline-flex items-start gap-1.5">
+                <ExclamationTriangleIcon className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" />
+                <span><strong>Firestore está vacío.</strong> Carga los datos iniciales del portfolio para empezar a gestionar contenido.</span>
+              </span>
             ) : (
-              <>
-                ✅ <strong>Firestore tiene datos.</strong> Ya puedes gestionar contenido desde el panel admin.
-              </>
+              <span className="inline-flex items-start gap-1.5">
+                <CheckCircleIcon className="w-4 h-4 text-green-500 shrink-0 mt-0.5" />
+                <span><strong>Firestore tiene datos.</strong> Ya puedes gestionar contenido desde el panel admin.</span>
+              </span>
             )}
           </p>
           
           <div className="text-sm text-gray-600 space-y-1">
-            <p>• Perfil: {dataStatus.hasProfile ? '✅ Cargado' : '❌ Vacío'}</p>
-            <p>• Proyectos: {dataStatus.hasProjects ? '✅ Cargados' : '❌ Vacío'}</p>
+            <p className="inline-flex items-center gap-1.5">
+              {dataStatus.hasProfile
+                ? <CheckCircleIcon className="w-4 h-4 text-green-500 shrink-0" />
+                : <XCircleIcon className="w-4 h-4 text-red-400 shrink-0" />}
+              Perfil: {dataStatus.hasProfile ? 'Cargado' : 'Vacío'}
+            </p>
+            <p className="inline-flex items-center gap-1.5">
+              {dataStatus.hasProjects
+                ? <CheckCircleIcon className="w-4 h-4 text-green-500 shrink-0" />
+                : <XCircleIcon className="w-4 h-4 text-red-400 shrink-0" />}
+              Proyectos: {dataStatus.hasProjects ? 'Cargados' : 'Vacío'}
+            </p>
           </div>
         </div>
 
@@ -149,17 +162,29 @@ const AdminSettings = () => {
               : 'bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:from-purple-600 hover:to-pink-600 shadow-md hover:shadow-lg'
           }`}
         >
-          {seeding ? '⏳ Cargando...' : '🚀 Cargar Datos Iniciales'}
+          {seeding ? (
+            <span className="inline-flex items-center gap-2">
+              <span className="animate-spin rounded-full h-4 w-4 border-b-2 border-white" />
+              Cargando...
+            </span>
+          ) : (
+            <span className="inline-flex items-center gap-2">
+              <CloudArrowUpIcon className="w-4 h-4 shrink-0" />
+              Cargar Datos Iniciales
+            </span>
+          )}
         </button>
         
-        <p className="text-xs text-gray-500 mt-3">
-          💡 Esto cargará el contenido actual del portfolio en Firestore. Solo necesitas hacerlo una vez.
+        <p className="text-xs text-gray-500 mt-3 inline-flex items-start gap-1.5">
+          <LightBulbIcon className="w-3.5 h-3.5 text-gray-400 shrink-0 mt-0.5" />
+          Esto cargará el contenido actual del portfolio en Firestore. Solo necesitas hacerlo una vez.
         </p>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-6">
-        <h2 className="text-xl font-bold text-gray-900 mb-4">
-          🎛️ Configuración de Secciones
+        <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+          <AdjustmentsHorizontalIcon className="w-5 h-5 text-purple-400 shrink-0" />
+          Configuración de Secciones
         </h2>
         
         <div className="space-y-4">
