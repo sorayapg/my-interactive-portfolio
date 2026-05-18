@@ -158,12 +158,12 @@ const AdminStoryboard = () => {
 
   const handleMigrate = async () => {
     setMigrating(true);
-    const { added, error } = await seedStorybookFromLocal(VINETAS_LOCALES);
+    const { created, updated, error } = await seedStorybookFromLocal(VINETAS_LOCALES);
     if (error) showMessage('error', `❌ Error en migración: ${error}`);
-    else showMessage('success', `✅ Migración completada: ${added} viñeta(s) subidas`);
+    else showMessage('success', `✅ Migración: ${created} creadas, ${updated} actualizadas, 0 duplicadas`);
     setMigrating(false);
     loadStories();
-  };;
+  };
 
   if (loading) {
     return (
@@ -209,8 +209,8 @@ const AdminStoryboard = () => {
       {/* Banner de migración — visible siempre para poder migrar viñetas locales pendientes */}
       {!loading && (
         <div className="mb-6 p-4 bg-amber-50 border-2 border-amber-200 rounded-xl">
-          <p className="text-sm text-amber-800 font-medium mb-3">
-            📦 ¿Faltan viñetas locales en Firestore? Ejecuta la migración para añadir las que falten (no duplica las ya migradas).
+          <p className="text-sm text-amber-800 font-medium mb-2">
+            📦 Migración idempotente: crea o actualiza cada viñeta local usando IDs estables (<code className="font-mono bg-amber-100 px-1 rounded">local_1</code> … <code className="font-mono bg-amber-100 px-1 rounded">local_9</code>). Nunca duplica. Los docs marcados con <strong>⚠️ ID antiguo</strong> son huérfanos de migraciones anteriores — elimínalos con 🗑️ tras migrar.
           </p>
           <button
             onClick={handleMigrate}
@@ -377,6 +377,14 @@ const AdminStoryboard = () => {
                   {story.visible === false && (
                     <span className="text-xs px-2 py-0.5 bg-gray-200 text-gray-500 rounded-full shrink-0">
                       oculta
+                    </span>
+                  )}
+                </div>
+                <div className="flex items-center gap-2 mt-0.5 flex-wrap">
+                  <span className="text-xs font-mono text-gray-400 truncate">{story.id}</span>
+                  {!story.id.startsWith('local_') && (
+                    <span className="text-xs px-2 py-0.5 bg-amber-100 text-amber-700 border border-amber-200 rounded-full shrink-0 font-medium">
+                      ⚠️ ID antiguo
                     </span>
                   )}
                 </div>

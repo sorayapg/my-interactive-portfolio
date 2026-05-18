@@ -453,39 +453,50 @@ export const deleteStorybook = async (id) => {
 
 /**
  * Migración idempotente: sube viñetas locales a Firestore.
- * Usa `localId` como clave para evitar duplicados si se ejecuta más de una vez.
+ * Usa `local_${vineta.id}` como document ID estable en Firestore.
+ * - Si el documento existe → actualiza (merge), nunca duplica.
+ * - Si no existe → crea.
+ * - Nunca usa addDoc. Idempotente: ejecutar N veces = mismo resultado.
+ * - Cambiar title/text/img/alt/bg en local → siguiente migración actualiza sin duplicar.
  */
 export const seedStorybookFromLocal = async (vinetas) => {
   try {
-    // Obtener localIds ya existentes en Firestore
-    const q = query(collection(db, 'storybook'));
-    const snapshot = await getDocs(q);
-    const existingLocalIds = new Set();
-    snapshot.forEach((d) => {
-      if (d.data().localId != null) existingLocalIds.add(String(d.data().localId));
-    });
+    // Pre-cargar IDs de documentos ya existentes en la colección
+    const snapshot = await getDocs(query(collection(db, 'storybook')));
+    const existingDocIds = new Set();
+    snapshot.forEach((d) => existingDocIds.add(d.id));
 
-    let added = 0;
+    let created = 0;
+    let updated = 0;
     for (const vineta of vinetas) {
-      if (existingLocalIds.has(String(vineta.id))) continue; // ya migrada
-      await addDoc(collection(db, 'storybook'), {
-        localId: String(vineta.id),
-        title: vineta.title,
-        text: vineta.text,
-        img: vineta.img,
-        alt: vineta.alt,
-        bg: vineta.bg,
-        order: vineta.id, // mantener orden original
-        visible: true,
-        createdAt: serverTimestamp(),
-        updatedAt: serverTimestamp(),
-      });
-      added++;
+      const stableId = `local_${vineta.id}`;
+      const docRef = doc(db, 'storybook', stableId);
+      const alreadyExists = existingDocIds.has(stableId);
+
+      await setDoc(
+        docRef,
+        {
+          localId: String(vineta.id),
+          title: vineta.title,
+          text: vineta.text,
+          img: vineta.img,
+          alt: vineta.alt,
+          bg: vineta.bg,
+          order: vineta.id,
+          visible: true,
+          ...(alreadyExists ? {} : { createdAt: serverTimestamp() }),
+          updatedAt: serverTimestamp(),
+        },
+        { merge: true }
+      );
+
+      if (alreadyExists) updated++;
+      else created++;
     }
-    return { added, error: null };
+    return { created, updated, error: null };
   } catch (error) {
-    console.error('Error en migración storybook:', error);
-    return { added: 0, error: error.message };
+    console.error('Error en migración storyboard:', error);
+    return { created: 0, updated: 0, error: error.message };
   }
 };
 
