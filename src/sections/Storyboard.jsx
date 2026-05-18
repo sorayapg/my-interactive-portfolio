@@ -79,7 +79,7 @@ const VINETAS_FALLBACK = [
 ];
 
 function Storyboard() {
-  const [selectedVineta, setSelectedVineta] = useState(null);
+  const [selectedIndex, setSelectedIndex] = useState(null);
   const [vinetas, setVinetas] = useState(VINETAS_FALLBACK);
 
   useEffect(() => {
@@ -104,10 +104,10 @@ function Storyboard() {
 
           {/* Grid: 1 col móvil → 2 sm → 3 md → 4 lg → 5 xl */}
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-            {vinetas.map((vineta) => (
+            {vinetas.map((vineta, index) => (
               <div
-                key={vineta.id}
-                onClick={() => setSelectedVineta(vineta)}
+                key={vineta.id ?? index}
+                onClick={() => setSelectedIndex(index)}
                 className={`group flex flex-col ${vineta.bg} rounded-xl shadow-md border-2 border-gray-300 overflow-hidden cursor-pointer
                   transition-all duration-200 hover:-translate-y-1 hover:shadow-xl`}
               >
@@ -133,11 +133,13 @@ function Storyboard() {
         </div>
       </section>
 
-      {/* Modal con historia completa */}
-      {selectedVineta && (
+      {/* Modal con carrusel de viñetas */}
+      {selectedIndex !== null && (
         <StoryboardModal
-          vineta={selectedVineta}
-          onClose={() => setSelectedVineta(null)}
+          vinetas={vinetas}
+          selectedIndex={selectedIndex}
+          onClose={() => setSelectedIndex(null)}
+          onNavigate={setSelectedIndex}
         />
       )}
     </>
