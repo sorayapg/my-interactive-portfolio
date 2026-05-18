@@ -210,7 +210,7 @@ const AdminStoryboard = () => {
       {!loading && (
         <div className="mb-6 p-4 bg-amber-50 border-2 border-amber-200 rounded-xl">
           <p className="text-sm text-amber-800 font-medium mb-2">
-            📦 Migración idempotente: crea o actualiza cada viñeta local usando IDs estables (<code className="font-mono bg-amber-100 px-1 rounded">local_1</code> … <code className="font-mono bg-amber-100 px-1 rounded">local_9</code>). Nunca duplica. Los docs marcados con <strong>⚠️ ID antiguo</strong> son huérfanos de migraciones anteriores — elimínalos con 🗑️ tras migrar.
+            📦 Migración idempotente en 2 pasos: (1) crea/actualiza <code className="font-mono bg-amber-100 px-1 rounded">local_1…local_N</code> desde el array local; (2) promueve automáticamente los docs con <strong>⚠️ ID antiguo</strong> al siguiente <code className="font-mono bg-amber-100 px-1 rounded">local_N+1</code> conservando sus datos. Tras migrar, elimina los docs ⚠️ con 🗑️.
           </p>
           <button
             onClick={handleMigrate}

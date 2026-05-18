@@ -452,38 +452,45 @@ export const deleteStorybook = async (id) => {
 };
 
 /**
- * Migración idempotente: sube viñetas locales a Firestore.
- * Usa `local_${vineta.id}` como document ID estable en Firestore.
- * - Si el documento existe → actualiza (merge), nunca duplica.
- * - Si no existe → crea.
- * - Nunca usa addDoc. Idempotente: ejecutar N veces = mismo resultado.
- * - Cambiar title/text/img/alt/bg en local → siguiente migración actualiza sin duplicar.
+ * Migración idempotente: sube viñetas locales a Firestore usando IDs estables.
+ *
+ * Paso 1 — Array local: cada viñeta[i] → setDoc a `local_${i+1}` (merge).
+ *   Usa posición del array, no el campo `id`, para no depender de campos que cambian.
+ *
+ * Paso 2 — Huérfanos: docs Firestore con auto-ID (sin prefijo `local_`) son
+ *   promovidos automáticamente a `local_${N+1}` conservando todos sus datos.
+ *   El doc antiguo NO se borra: el usuario lo elimina manualmente desde el CMS.
+ *
+ * Resultado: ejecutar N veces = mismo resultado, nunca duplica.
  */
 export const seedStorybookFromLocal = async (vinetas) => {
   try {
-    // Pre-cargar IDs de documentos ya existentes en la colección
+    // Snapshot inicial de todos los docs existentes en la colección
     const snapshot = await getDocs(query(collection(db, 'storybook')));
     const existingDocIds = new Set();
     snapshot.forEach((d) => existingDocIds.add(d.id));
 
     let created = 0;
     let updated = 0;
-    for (const vineta of vinetas) {
-      const stableId = `local_${vineta.id}`;
+
+    // ── Paso 1: viñetas del array local con IDs estables por posición ──────
+    for (let i = 0; i < vinetas.length; i++) {
+      const vineta = vinetas[i];
+      const stableId = `local_${i + 1}`;
       const docRef = doc(db, 'storybook', stableId);
       const alreadyExists = existingDocIds.has(stableId);
 
       await setDoc(
         docRef,
         {
-          localId: String(vineta.id),
+          localId: String(i + 1),
           title: vineta.title,
           text: vineta.text,
           img: vineta.img,
           alt: vineta.alt,
           bg: vineta.bg,
-          order: vineta.id,
-          visible: true,
+          order: i + 1,
+          visible: vineta.visible !== undefined ? vineta.visible : true,
           ...(alreadyExists ? {} : { createdAt: serverTimestamp() }),
           updatedAt: serverTimestamp(),
         },
@@ -493,6 +500,43 @@ export const seedStorybookFromLocal = async (vinetas) => {
       if (alreadyExists) updated++;
       else created++;
     }
+
+    // ── Paso 2: promover docs huérfanos (auto-ID) al siguiente local_N ─────
+    const orphans = [];
+    snapshot.forEach((d) => {
+      if (!d.id.startsWith('local_')) {
+        orphans.push({ firestoreId: d.id, data: d.data() });
+      }
+    });
+
+    // Ordenar por campo `order` para asignación determinista
+    orphans.sort((a, b) => (a.data.order ?? 999) - (b.data.order ?? 999));
+
+    let promoteN = vinetas.length + 1; // empieza después del último local del array
+    for (const orphan of orphans) {
+      const stableId = `local_${promoteN}`;
+      const docRef = doc(db, 'storybook', stableId);
+      const alreadyPromoted = existingDocIds.has(stableId);
+
+      // Extraer datos del huérfano preservando sus campos, sin sobrescribir timestamps
+      const { createdAt: _ca, updatedAt: _ua, ...orphanFields } = orphan.data;
+
+      await setDoc(
+        docRef,
+        {
+          ...orphanFields,
+          localId: String(promoteN),
+          ...(alreadyPromoted ? {} : { createdAt: serverTimestamp() }),
+          updatedAt: serverTimestamp(),
+        },
+        { merge: true }
+      );
+
+      if (alreadyPromoted) updated++;
+      else created++;
+      promoteN++;
+    }
+
     return { created, updated, error: null };
   } catch (error) {
     console.error('Error en migración storyboard:', error);
