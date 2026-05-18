@@ -17,7 +17,6 @@ import Certifications from './sections/Certifications';
 import AdminLayout from './components/admin/AdminLayout';
 import AdminHome from './pages/admin/AdminHome';
 import AdminProfile from './pages/admin/AdminProfile';
-import AdminExperiences from './pages/admin/AdminExperiences';
 import AdminProjects from './pages/admin/AdminProjects';
 import AdminCoverLetter from './pages/admin/AdminCoverLetter';
 import AdminSettings from './pages/admin/AdminSettings';
@@ -67,7 +66,6 @@ function App() {
         >
           <Route index element={<AdminHome />} />
           <Route path="profile" element={<AdminProfile />} />
-          <Route path="experiences" element={<AdminExperiences />} />
           <Route path="projects" element={<AdminProjects />} />
           <Route path="cover-letter" element={<AdminCoverLetter />} />
           <Route path="settings" element={<AdminSettings />} />

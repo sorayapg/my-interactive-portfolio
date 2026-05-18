@@ -1,7 +1,6 @@
 import {
   HomeIcon,
   UserIcon,
-  BriefcaseIcon,
   RectangleStackIcon,
   DocumentTextIcon,
   BookOpenIcon,
@@ -37,17 +36,6 @@ export const adminSections = [
       card: 'border-purple-200 from-purple-50',
       iconBg: 'bg-purple-100',
       iconText: 'text-purple-600',
-    },
-  },
-  {
-    path: '/admin/experiences',
-    label: 'Experiencias',
-    description: 'Gestionar experiencia laboral',
-    icon: BriefcaseIcon,
-    cardClasses: {
-      card: 'border-pink-200 from-pink-50',
-      iconBg: 'bg-pink-100',
-      iconText: 'text-pink-600',
     },
   },
   {
