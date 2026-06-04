@@ -3,6 +3,8 @@ import { useAdmin } from '../../hooks/useAdmin';
 import { signOut } from '../../firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import AdminNav from './AdminNav';
+import { ServiceProvider } from '../../context/ServiceContext';
+import * as contentService from '../../services/contentService';
 import {
   HeartIcon,
   IdentificationIcon,
@@ -20,6 +22,7 @@ const AdminLayout = () => {
   };
 
   return (
+    <ServiceProvider service={contentService} isDemo={false}>
     <div className="min-h-screen bg-gradient-to-br from-pink-50 via-purple-50 to-indigo-50">
       {/* Header */}
       <header className="bg-white border-b-2 border-purple-200 shadow-sm">
@@ -76,6 +79,7 @@ const AdminLayout = () => {
         </div>
       </div>
     </div>
+    </ServiceProvider>
   );
 };
 

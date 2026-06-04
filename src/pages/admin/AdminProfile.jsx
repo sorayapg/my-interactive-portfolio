@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
-import { getProfile, updateProfile } from '../../services/contentService';
+import { useService } from '../../context/ServiceContext';
 import { UserIcon } from '@heroicons/react/24/outline';
 
 const AdminProfile = () => {
+  const { getProfile, updateProfile, isDemo } = useService();
+
   const [profile, setProfile] = useState({
     name: '',
     title: '',
@@ -49,7 +51,7 @@ const AdminProfile = () => {
     if (error) {
       setMessage({ type: 'error', text: `Error: ${error}` });
     } else {
-      setMessage({ type: 'success', text: '✅ Perfil actualizado con éxito' });
+      setMessage({ type: 'success', text: isDemo ? '🎭 Cambio guardado en modo demo' : '✅ Perfil actualizado con éxito' });
     }
 
     setSaving(false);

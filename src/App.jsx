@@ -23,7 +23,12 @@ import AdminSettings from './pages/admin/AdminSettings';
 import AdminStoryboard from './pages/admin/AdminStoryboard';
 import AdminWhiteboard from './pages/admin/AdminWhiteboard';
 import AdminCertifications from './pages/admin/AdminCertifications';
+
+// Importar componentes demo (FASE 1 — solo local, sin deploy)
+import DemoLayout from './components/admin/DemoLayout';
+import DemoHome from './pages/admin/DemoHome';
 import PrivateRoute from './routes/PrivateRoute';
+import DemoRoute from './routes/DemoRoute';
 import Login from './pages/Login';
 
 // NOTA: Si ves errores de importación, haz: npm run dev (reiniciar servidor)
@@ -72,6 +77,19 @@ function App() {
           <Route path="storyboard" element={<AdminStoryboard />} />
           <Route path="whiteboard" element={<AdminWhiteboard />} />
           <Route path="certifications" element={<AdminCertifications />} />
+        </Route>
+
+        {/* Rutas de demo — accesibles solo si VITE_DEMO_MODE=true (ver .env.local.example) */}
+        <Route
+          path="/demo"
+          element={
+            <DemoRoute>
+              <DemoLayout />
+            </DemoRoute>
+          }
+        >
+          <Route index element={<DemoHome />} />
+          <Route path="profile" element={<AdminProfile />} />
         </Route>
       </Routes>
     </BrowserRouter>
