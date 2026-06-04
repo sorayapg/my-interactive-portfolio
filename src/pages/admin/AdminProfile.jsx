@@ -10,6 +10,7 @@ const AdminProfile = () => {
     email: '',
     github: '',
     linkedin: '',
+    imageUrl: '',
   });
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -38,7 +39,12 @@ const AdminProfile = () => {
     setSaving(true);
     setMessage(null);
 
-    const { error } = await updateProfile(profile);
+    const profileToSave = { ...profile };
+    if (!profileToSave.imageUrl?.trim()) {
+      delete profileToSave.imageUrl;
+    }
+
+    const { error } = await updateProfile(profileToSave);
 
     if (error) {
       setMessage({ type: 'error', text: `Error: ${error}` });
@@ -165,6 +171,31 @@ const AdminProfile = () => {
             onChange={handleChange}
             className="cms-field px-4 py-2"
           />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Foto de perfil (ruta o URL)
+          </label>
+          <input
+            type="text"
+            name="imageUrl"
+            value={profile.imageUrl || ''}
+            onChange={handleChange}
+            className="cms-field px-4 py-2"
+            placeholder="/images/storyboard/Soraya.png"
+          />
+          {profile.imageUrl && (
+            <img
+              src={profile.imageUrl}
+              alt="Vista previa"
+              onError={(e) => { e.target.style.display = 'none'; }}
+              className="mt-3 w-20 h-20 rounded-full object-cover border-2 border-purple-200"
+            />
+          )}
+          <p className="text-xs text-gray-500 mt-1">
+            Deja vacío para usar la imagen por defecto.
+          </p>
         </div>
 
         <button

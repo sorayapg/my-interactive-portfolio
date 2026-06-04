@@ -37,7 +37,7 @@ function About() {
 
         <div className="text-center mb-8">
           <img 
-            src={profile.imageUrl} 
+            src={profile.imageUrl || fallbackProfile.imageUrl} 
             alt={profile.name} 
             className="mx-auto rounded-full w-40 h-40 object-cover" 
           />
