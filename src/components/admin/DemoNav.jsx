@@ -1,16 +1,17 @@
 import { NavLink } from 'react-router-dom';
-import { HomeIcon, UserIcon, RocketLaunchIcon } from '@heroicons/react/24/outline';
+import { HomeIcon, UserIcon, RocketLaunchIcon, AcademicCapIcon } from '@heroicons/react/24/outline';
 
 /**
- * DemoNav — FASE 1B
+ * DemoNav — FASE 1C
  *
  * Navegación lateral del modo demo. Solo muestra las secciones
  * que tienen página demo disponible. Se irá ampliando en fases posteriores.
  */
 const demoSections = [
-  { path: '/demo',          label: 'Home',      icon: HomeIcon,         exact: true },
-  { path: '/demo/profile',  label: 'Perfil',    icon: UserIcon,         exact: false },
-  { path: '/demo/projects', label: 'Proyectos', icon: RocketLaunchIcon, exact: false },
+  { path: '/demo',                  label: 'Home',            icon: HomeIcon,         exact: true },
+  { path: '/demo/profile',          label: 'Perfil',          icon: UserIcon,         exact: false },
+  { path: '/demo/projects',         label: 'Proyectos',       icon: RocketLaunchIcon, exact: false },
+  { path: '/demo/certifications',   label: 'Certificaciones', icon: AcademicCapIcon,  exact: false },
 ];
 
 const DemoNav = () => (

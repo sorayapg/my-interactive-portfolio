@@ -99,6 +99,39 @@ let _settings = {
   maintenanceMode: false,
 };
 
+let _certifications = [
+  {
+    id: 'mock-cert1',
+    title: 'React - The Complete Guide',
+    platform: 'Udemy',
+    issueDate: '2024-03',
+    imageUrl: '',
+    skills: ['React', 'Hooks', 'Redux', 'Next.js'],
+    visible: true,
+    order: 1,
+  },
+  {
+    id: 'mock-cert2',
+    title: 'JavaScript Algorithms and Data Structures',
+    platform: 'freeCodeCamp',
+    issueDate: '2023-11',
+    imageUrl: '',
+    skills: ['JavaScript', 'Algoritmos', 'ES6+'],
+    visible: true,
+    order: 2,
+  },
+  {
+    id: 'mock-cert3',
+    title: 'Responsive Web Design',
+    platform: 'freeCodeCamp',
+    issueDate: '2023-08',
+    imageUrl: '',
+    skills: ['HTML5', 'CSS3', 'Flexbox', 'Grid'],
+    visible: true,
+    order: 3,
+  },
+];
+
 // ─── Profile ──────────────────────────────────────────────────────────────────
 
 export const getProfile = async () => ok({ ..._profile });
@@ -207,7 +240,25 @@ export const updateWhiteboardScene = async (id, sceneData) => {
 };
 
 export const seedWhiteboardFromLocal = async () => ({ added: 0, error: null }); // no-op en demo
+// ─── Certifications ──────────────────────────────────────────────────────────────────────
 
+export const listCertifications = async () => ok([..._certifications]);
+
+export const addCertification = async (certData) => {
+  const id = genId();
+  _certifications = [..._certifications, { id, ...certData }];
+  return okId(id);
+};
+
+export const updateCertification = async (id, certData) => {
+  _certifications = _certifications.map((c) => (c.id === id ? { ...c, ...certData } : c));
+  return okWrite();
+};
+
+export const deleteCertification = async (id) => {
+  _certifications = _certifications.filter((c) => c.id !== id);
+  return okWrite();
+};
 // ─── Settings ─────────────────────────────────────────────────────────────────
 
 export const getSettings = async () => ok({ ..._settings });

@@ -91,6 +91,7 @@ function App() {
           <Route index element={<DemoHome />} />
           <Route path="profile" element={<AdminProfile />} />
           <Route path="projects" element={<AdminProjects />} />
+          <Route path="certifications" element={<AdminCertifications />} />
         </Route>
       </Routes>
     </BrowserRouter>

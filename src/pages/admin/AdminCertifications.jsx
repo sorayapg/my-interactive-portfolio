@@ -1,14 +1,11 @@
 import { useState, useEffect } from 'react';
-import {
-  listCertifications,
-  addCertification,
-  updateCertification,
-  deleteCertification,
-} from '../../services/contentService';
+import { useService } from '../../context/ServiceContext';
 import CertificationForm from '../../components/admin/forms/CertificationForm';
 import { PencilIcon, TrashIcon, PlusIcon, EyeSlashIcon, AcademicCapIcon } from '@heroicons/react/24/outline';
 
 const AdminCertifications = () => {
+  const { listCertifications, addCertification, updateCertification, deleteCertification, isDemo } = useService();
+
   const [certifications, setCertifications] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
@@ -44,7 +41,9 @@ const AdminCertifications = () => {
 
     setMessage({
       type: 'success',
-      text: editingCert ? '✅ Certificación actualizada' : '✅ Certificación añadida',
+      text: editingCert
+        ? (isDemo ? '🎭 Certificación actualizada en modo demo' : '✅ Certificación actualizada')
+        : (isDemo ? '🎭 Certificación añadida en modo demo' : '✅ Certificación añadida'),
     });
 
     setShowForm(false);
@@ -67,7 +66,7 @@ const AdminCertifications = () => {
     if (error) {
       setMessage({ type: 'error', text: `Error: ${error}` });
     } else {
-      setMessage({ type: 'success', text: '✅ Certificación eliminada' });
+      setMessage({ type: 'success', text: isDemo ? '🎭 Certificación eliminada en modo demo' : '✅ Certificación eliminada' });
       loadCertifications();
     }
 
