@@ -90,6 +90,7 @@ function App() {
         >
           <Route index element={<DemoHome />} />
           <Route path="profile" element={<AdminProfile />} />
+          <Route path="projects" element={<AdminProjects />} />
         </Route>
       </Routes>
     </BrowserRouter>

@@ -1,14 +1,11 @@
 import { useState, useEffect } from 'react';
-import {
-  listProjects,
-  addProject,
-  updateProject,
-  deleteProject,
-} from '../../services/contentService';
+import { useService } from '../../context/ServiceContext';
 import ProjectForm from '../../components/admin/forms/ProjectForm';
 import { PencilIcon, TrashIcon, PlusIcon, RocketLaunchIcon } from '@heroicons/react/24/outline';
 
 const AdminProjects = () => {
+  const { listProjects, addProject, updateProject, deleteProject, isDemo } = useService();
+
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
@@ -44,7 +41,9 @@ const AdminProjects = () => {
 
     setMessage({
       type: 'success',
-      text: editingProject ? '✅ Proyecto actualizado' : '✅ Proyecto añadido',
+      text: editingProject
+        ? (isDemo ? '🎭 Proyecto actualizado en modo demo' : '✅ Proyecto actualizado')
+        : (isDemo ? '🎭 Proyecto añadido en modo demo' : '✅ Proyecto añadido'),
     });
 
     setShowForm(false);
@@ -67,7 +66,7 @@ const AdminProjects = () => {
     if (error) {
       setMessage({ type: 'error', text: `Error: ${error}` });
     } else {
-      setMessage({ type: 'success', text: '✅ Proyecto eliminado' });
+      setMessage({ type: 'success', text: isDemo ? '🎭 Proyecto eliminado en modo demo' : '✅ Proyecto eliminado' });
       loadProjects();
     }
     

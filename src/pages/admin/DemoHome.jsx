@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { BeakerIcon, UserIcon } from '@heroicons/react/24/outline';
+import { BeakerIcon, UserIcon, RocketLaunchIcon } from '@heroicons/react/24/outline';
 
 /**
  * DemoHome — FASE 1
@@ -36,10 +36,21 @@ const DemoHome = () => (
         <h3 className="text-lg font-bold text-gray-900 mb-1">Perfil</h3>
         <p className="text-sm text-gray-600">Editar información del perfil ficticio</p>
       </Link>
+
+      <Link
+        to="/demo/projects"
+        className="group p-6 rounded-xl border-2 border-amber-200 bg-gradient-to-br from-amber-50 to-white hover:shadow-lg hover:-translate-y-1 hover:scale-[1.02] transition-all duration-300"
+      >
+        <div className="w-12 h-12 rounded-full bg-amber-100 flex items-center justify-center mb-4 transition-transform duration-200 group-hover:scale-110">
+          <RocketLaunchIcon className="w-6 h-6 text-amber-600" />
+        </div>
+        <h3 className="text-lg font-bold text-gray-900 mb-1">Proyectos</h3>
+        <p className="text-sm text-gray-600">Gestionar el portfolio de proyectos ficticio</p>
+      </Link>
     </div>
 
     <p className="text-xs text-gray-400 mt-6">
-      Fase 1 — Sección Perfil disponible. Más secciones se añadirán en fases posteriores.
+      Fase 1B — Perfil y Proyectos disponibles. Más secciones se añadirán en fases posteriores.
     </p>
   </div>
 );
