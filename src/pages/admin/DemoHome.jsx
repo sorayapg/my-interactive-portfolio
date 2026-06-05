@@ -58,10 +58,21 @@ const DemoHome = () => (
         <h3 className="text-lg font-bold text-gray-900 mb-1">Certificaciones</h3>
         <p className="text-sm text-gray-600">Gestionar certificados y cursos ficticios</p>
       </Link>
+
+      <Link
+        to="/demo/storyboard"
+        className="group p-6 rounded-xl border-2 border-amber-200 bg-gradient-to-br from-amber-50 to-white hover:shadow-lg hover:-translate-y-1 hover:scale-[1.02] transition-all duration-300"
+      >
+        <div className="w-12 h-12 rounded-full bg-amber-100 flex items-center justify-center mb-4 transition-transform duration-200 group-hover:scale-110">
+          <BookOpenIcon className="w-6 h-6 text-amber-600" />
+        </div>
+        <h3 className="text-lg font-bold text-gray-900 mb-1">Storyboard</h3>
+        <p className="text-sm text-gray-600">Gestionar viñetas de la historia ficticia</p>
+      </Link>
     </div>
 
     <p className="text-xs text-gray-400 mt-6">
-      Fase 1D — Perfil, Proyectos, Certificaciones y Storyboard disponibles.
+      Demo CMS — los datos son ficticios y se resetean al recargar la página.
     </p>
   </div>
 );
