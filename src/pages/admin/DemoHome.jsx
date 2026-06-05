@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { BeakerIcon, UserIcon, RocketLaunchIcon, AcademicCapIcon, BookOpenIcon } from '@heroicons/react/24/outline';
+import { BeakerIcon, UserIcon, RocketLaunchIcon, AcademicCapIcon, BookOpenIcon, EnvelopeOpenIcon } from '@heroicons/react/24/outline';
 
 /**
  * DemoHome — FASE 1
@@ -68,6 +68,17 @@ const DemoHome = () => (
         </div>
         <h3 className="text-lg font-bold text-gray-900 mb-1">Storyboard</h3>
         <p className="text-sm text-gray-600">Gestionar viñetas de la historia ficticia</p>
+      </Link>
+
+      <Link
+        to="/demo/cover-letter"
+        className="group p-6 rounded-xl border-2 border-amber-200 bg-gradient-to-br from-amber-50 to-white hover:shadow-lg hover:-translate-y-1 hover:scale-[1.02] transition-all duration-300"
+      >
+        <div className="w-12 h-12 rounded-full bg-amber-100 flex items-center justify-center mb-4 transition-transform duration-200 group-hover:scale-110">
+          <EnvelopeOpenIcon className="w-6 h-6 text-amber-600" />
+        </div>
+        <h3 className="text-lg font-bold text-gray-900 mb-1">Cover Letter</h3>
+        <p className="text-sm text-gray-600">Gestionar cards de la carta ficticia</p>
       </Link>
     </div>
 

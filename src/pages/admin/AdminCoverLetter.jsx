@@ -1,12 +1,5 @@
 import { useState, useEffect } from 'react';
-import {
-  listCoverLetterCards,
-  updateCoverLetterCardOrder,
-  addCoverLetterCard,
-  updateCoverLetterCard,
-  deleteCoverLetterCard,
-  seedCoverLetterFromLocal,
-} from '../../services/contentService';
+import { useService } from '../../context/ServiceContext';
 import {
   ArrowUpIcon,
   ArrowDownIcon,
@@ -121,6 +114,16 @@ const EMPTY_FORM = {
 };
 
 const AdminCoverLetter = () => {
+  const {
+    listCoverLetterCards,
+    updateCoverLetterCardOrder,
+    addCoverLetterCard,
+    updateCoverLetterCard,
+    deleteCoverLetterCard,
+    seedCoverLetterFromLocal,
+    isDemo,
+  } = useService();
+
   const [cards, setCards] = useState([]);
   const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState(null);
@@ -154,7 +157,7 @@ const AdminCoverLetter = () => {
     const prev = cards[index - 1];
     await updateCoverLetterCardOrder(card.id, prev.order);
     await updateCoverLetterCardOrder(prev.id, card.order);
-    showMessage('success', '✅ Orden actualizado');
+    showMessage('success', isDemo ? '🎭 Orden actualizado en modo demo' : '✅ Orden actualizado');
     loadCards();
   };
 
@@ -164,7 +167,7 @@ const AdminCoverLetter = () => {
     const next = cards[index + 1];
     await updateCoverLetterCardOrder(card.id, next.order);
     await updateCoverLetterCardOrder(next.id, card.order);
-    showMessage('success', '✅ Orden actualizado');
+    showMessage('success', isDemo ? '🎭 Orden actualizado en modo demo' : '✅ Orden actualizado');
     loadCards();
   };
 
@@ -230,11 +233,11 @@ const AdminCoverLetter = () => {
     if (editingId) {
       const { error } = await updateCoverLetterCard(editingId, cardData);
       if (error) showMessage('error', `❌ Error: ${error}`);
-      else showMessage('success', '✅ Card actualizada');
+      else showMessage('success', isDemo ? '🎭 Carta actualizada en modo demo' : '✅ Card actualizada');
     } else {
       const { error } = await addCoverLetterCard(cardData);
       if (error) showMessage('error', `❌ Error: ${error}`);
-      else showMessage('success', '✅ Card añadida');
+      else showMessage('success', isDemo ? '🎭 Card añadida en modo demo' : '✅ Card añadida');
     }
     setSaving(false);
     closeForm();
@@ -244,7 +247,7 @@ const AdminCoverLetter = () => {
   const handleDelete = async (id) => {
     const { error } = await deleteCoverLetterCard(id);
     if (error) showMessage('error', `❌ Error: ${error}`);
-    else showMessage('success', '🗑️ Card eliminada');
+    else showMessage('success', isDemo ? '🎭 Card eliminada en modo demo' : '🗑️ Card eliminada');
     setConfirmDelete(null);
     loadCards();
   };
@@ -305,8 +308,8 @@ const AdminCoverLetter = () => {
         </div>
       )}
 
-      {/* Banner de migración */}
-      {!loading && (
+      {/* Banner de migración — oculto en modo demo */}
+      {!loading && !isDemo && (
         <div className="mb-6 p-4 bg-amber-50 border-2 border-amber-200 rounded-xl">
           <p className="text-sm text-amber-800 font-medium mb-3">
             📦 ¿Primera vez usando el CMS? Migra las cards locales a Firestore (seguro — no duplica las ya migradas).
