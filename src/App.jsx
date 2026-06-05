@@ -92,6 +92,7 @@ function App() {
           <Route path="profile" element={<AdminProfile />} />
           <Route path="projects" element={<AdminProjects />} />
           <Route path="certifications" element={<AdminCertifications />} />
+          <Route path="storyboard" element={<AdminStoryboard />} />
         </Route>
       </Routes>
     </BrowserRouter>

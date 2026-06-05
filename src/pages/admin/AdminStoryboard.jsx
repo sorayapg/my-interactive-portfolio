@@ -1,12 +1,5 @@
 import { useState, useEffect } from 'react';
-import {
-  listStorybook,
-  updateStoryOrder,
-  addStorybook,
-  updateStorybook,
-  deleteStorybook,
-  seedStorybookFromLocal,
-} from '../../services/contentService';
+import { useService } from '../../context/ServiceContext';
 import {
   ArrowUpIcon,
   ArrowDownIcon,
@@ -53,6 +46,16 @@ const BG_OPTIONS = [
 ];
 
 const AdminStoryboard = () => {
+  const {
+    listStorybook,
+    updateStoryOrder,
+    addStorybook,
+    updateStorybook,
+    deleteStorybook,
+    seedStorybookFromLocal,
+    isDemo,
+  } = useService();
+
   const [stories, setStories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState(null);
@@ -86,7 +89,7 @@ const AdminStoryboard = () => {
     const prevStory = stories[index - 1];
     await updateStoryOrder(story.id, prevStory.order);
     await updateStoryOrder(prevStory.id, story.order);
-    showMessage('success', '✅ Orden actualizado');
+    showMessage('success', isDemo ? '🎭 Orden actualizado en modo demo' : '✅ Orden actualizado');
     loadStories();
   };
 
@@ -96,7 +99,7 @@ const AdminStoryboard = () => {
     const nextStory = stories[index + 1];
     await updateStoryOrder(story.id, nextStory.order);
     await updateStoryOrder(nextStory.id, story.order);
-    showMessage('success', '✅ Orden actualizado');
+    showMessage('success', isDemo ? '🎭 Orden actualizado en modo demo' : '✅ Orden actualizado');
     loadStories();
   };
 
@@ -137,11 +140,11 @@ const AdminStoryboard = () => {
     if (editingId) {
       const { error } = await updateStorybook(editingId, form);
       if (error) showMessage('error', `❌ Error: ${error}`);
-      else showMessage('success', '✅ Viñeta actualizada');
+      else showMessage('success', isDemo ? '🎭 Viñeta actualizada en modo demo' : '✅ Viñeta actualizada');
     } else {
       const { error } = await addStorybook(form);
       if (error) showMessage('error', `❌ Error: ${error}`);
-      else showMessage('success', '✅ Viñeta añadida');
+      else showMessage('success', isDemo ? '🎭 Viñeta añadida en modo demo' : '✅ Viñeta añadida');
     }
     setSaving(false);
     closeForm();
@@ -151,7 +154,7 @@ const AdminStoryboard = () => {
   const handleDelete = async (id) => {
     const { error } = await deleteStorybook(id);
     if (error) showMessage('error', `❌ Error: ${error}`);
-    else showMessage('success', '🗑️ Viñeta eliminada');
+    else showMessage('success', isDemo ? '🎭 Viñeta eliminada en modo demo' : '🗑️ Viñeta eliminada');
     setConfirmDelete(null);
     loadStories();
   };
@@ -206,8 +209,8 @@ const AdminStoryboard = () => {
         </div>
       )}
 
-      {/* Banner de migración — visible siempre para poder migrar viñetas locales pendientes */}
-      {!loading && (
+      {/* Banner de migración — oculto en modo demo */}
+      {!loading && !isDemo && (
         <div className="mb-6 p-4 bg-amber-50 border-2 border-amber-200 rounded-xl">
           <p className="text-sm text-amber-800 font-medium mb-2">
             📦 Migración idempotente en 2 pasos: (1) crea/actualiza <code className="font-mono bg-amber-100 px-1 rounded">local_1…local_N</code> desde el array local; (2) promueve automáticamente los docs con <strong>⚠️ ID antiguo</strong> al siguiente <code className="font-mono bg-amber-100 px-1 rounded">local_N+1</code> conservando sus datos. Tras migrar, elimina los docs ⚠️ con 🗑️.

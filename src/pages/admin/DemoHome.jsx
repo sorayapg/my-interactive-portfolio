@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { BeakerIcon, UserIcon, RocketLaunchIcon, AcademicCapIcon } from '@heroicons/react/24/outline';
+import { BeakerIcon, UserIcon, RocketLaunchIcon, AcademicCapIcon, BookOpenIcon } from '@heroicons/react/24/outline';
 
 /**
  * DemoHome — FASE 1
@@ -61,7 +61,7 @@ const DemoHome = () => (
     </div>
 
     <p className="text-xs text-gray-400 mt-6">
-      Fase 1C — Perfil, Proyectos y Certificaciones disponibles. Más secciones se añadirán en fases posteriores.
+      Fase 1D — Perfil, Proyectos, Certificaciones y Storyboard disponibles.
     </p>
   </div>
 );
