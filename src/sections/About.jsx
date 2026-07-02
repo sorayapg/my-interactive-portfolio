@@ -5,7 +5,7 @@ import { getProfile } from '../services/contentService';
 const fallbackProfile = {
   name: 'Soraya Povedano Gardo',
   imageUrl: '/images/storyboard/Soraya.png',
-  about: 'Soy Desarrolladora Front-End especializada en React y JavaScript, enfocada en crear interfaces funcionales, intuitivas y visualmente cuidadas.\n\nHe participado en el desarrollo del Cloud Portal corporativo de Telefónica, creando componentes frontend dentro de una arquitectura híbrida PHP (Joomla) y JavaScript, así como en proyectos reales como una aplicación de huella de carbono para CaixaBank y una aplicación full-stack de gestión de eventos (CalendarApp) con autenticación de usuarios.\n\nMe caracterizo por combinar lógica técnica con sensibilidad de diseño, cuidando la experiencia de usuario, el detalle visual pixel-perfect y la integración eficiente con backend.',
+  bio: 'Soy Desarrolladora Front-End especializada en React y JavaScript, enfocada en crear interfaces funcionales, intuitivas y visualmente cuidadas.\n\nHe participado en el desarrollo del Cloud Portal corporativo de Telefónica, creando componentes frontend dentro de una arquitectura híbrida PHP (Joomla) y JavaScript, así como en proyectos reales como una aplicación de huella de carbono para CaixaBank y una aplicación full-stack de gestión de eventos (CalendarApp) con autenticación de usuarios.\n\nMe caracterizo por combinar lógica técnica con sensibilidad de diseño, cuidando la experiencia de usuario, el detalle visual pixel-perfect y la integración eficiente con backend.',
   cvUrl: '/documents/Curriculum Vitae Soraya Povedano Gardo.pdf',
 };
 
@@ -28,7 +28,7 @@ function About() {
     setLoading(false);
   };
 
-  const paragraphs = profile.about?.split('\n\n') || [];
+  const paragraphs = (profile.bio || profile.about)?.split('\n\n') || [];
 
   return (
     <section id="about" className="py-14 bg-white text-gray-800">
