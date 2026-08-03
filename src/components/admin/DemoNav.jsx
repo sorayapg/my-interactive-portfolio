@@ -1,8 +1,8 @@
 import { NavLink } from 'react-router-dom';
-import { HomeIcon, UserIcon, RocketLaunchIcon, AcademicCapIcon, BookOpenIcon, EnvelopeOpenIcon } from '@heroicons/react/24/outline';
+import { HomeIcon, UserIcon, RocketLaunchIcon, AcademicCapIcon, BookOpenIcon, EnvelopeOpenIcon, PaintBrushIcon } from '@heroicons/react/24/outline';
 
 /**
- * DemoNav — FASE 1G
+ * DemoNav — FASE 1E
  */
 const demoSections = [
   { path: '/demo',                  label: 'Home',            icon: HomeIcon,          exact: true },
@@ -10,6 +10,7 @@ const demoSections = [
   { path: '/demo/projects',         label: 'Proyectos',       icon: RocketLaunchIcon,  exact: false },
   { path: '/demo/certifications',   label: 'Certificaciones', icon: AcademicCapIcon,   exact: false },
   { path: '/demo/storyboard',       label: 'Storyboard',      icon: BookOpenIcon,      exact: false },
+  { path: '/demo/whiteboard',       label: 'Whiteboard',      icon: PaintBrushIcon,    exact: false },
   { path: '/demo/cover-letter',     label: 'Cover Letter',    icon: EnvelopeOpenIcon,  exact: false },
 ];
 
