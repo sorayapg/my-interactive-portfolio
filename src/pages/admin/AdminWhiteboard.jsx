@@ -1,9 +1,5 @@
 import { useState, useEffect } from 'react';
-import {
-  listWhiteboardScenes,
-  updateWhiteboardScene,
-  seedWhiteboardFromLocal,
-} from '../../services/contentService';
+import { useService } from '../../context/ServiceContext';
 import {
   PencilIcon,
   XMarkIcon,
@@ -59,6 +55,8 @@ const EMPTY_FORM = {
 };
 
 const AdminWhiteboard = () => {
+  const { listWhiteboardScenes, updateWhiteboardScene, seedWhiteboardFromLocal, isDemo } = useService();
+
   const [scenes, setScenes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState(null);
@@ -128,7 +126,7 @@ const AdminWhiteboard = () => {
     if (error) {
       showMessage('error', `❌ Error al guardar: ${error}`);
     } else {
-      showMessage('success', '✅ Escena actualizada');
+      showMessage('success', isDemo ? '🎭 Escena actualizada en modo demo' : '✅ Escena actualizada');
       closeForm();
       loadScenes();
     }
@@ -178,8 +176,8 @@ const AdminWhiteboard = () => {
         </div>
       )}
 
-      {/* Banner de migración */}
-      {scenes.length === 0 && (
+      {/* Banner de migración — oculto en modo demo */}
+      {!isDemo && scenes.length === 0 && (
         <div className="mb-6 p-4 bg-amber-50 border-2 border-amber-200 rounded-xl">
           <p className="text-sm text-amber-800 font-medium mb-3">
             📦 Las escenas aún no están en Firestore. Mígralas para poder editarlas desde el CMS.
@@ -194,7 +192,7 @@ const AdminWhiteboard = () => {
         </div>
       )}
 
-      {scenes.length > 0 && (
+      {!isDemo && scenes.length > 0 && (
         <div className="mb-6 p-3 bg-amber-50 border border-amber-200 rounded-lg">
           <button
             onClick={handleMigrate}
