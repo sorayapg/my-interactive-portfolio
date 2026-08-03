@@ -94,6 +94,7 @@ function App() {
           <Route path="certifications" element={<AdminCertifications />} />
           <Route path="storyboard" element={<AdminStoryboard />} />
           <Route path="cover-letter" element={<AdminCoverLetter />} />
+          <Route path="whiteboard" element={<AdminWhiteboard />} />
         </Route>
       </Routes>
     </BrowserRouter>
