@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { listProjects } from '../services/contentService';
+import { useService } from '../context/ServiceContext';
 import ProjectModal from '../components/ProjectModal';
 
 // Datos de fallback (contenido actual hardcodeado)
@@ -16,6 +16,7 @@ const fallbackProjects = [
 ];
 
 function Projects() {
+  const { listProjects } = useService();
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedProject, setSelectedProject] = useState(null);
