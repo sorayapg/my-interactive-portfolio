@@ -146,3 +146,32 @@ Portfolio personal con CMS integrado, diseño kawaii/pastel y animaciones SVG.
 - **DrawStory — no tocar**: El `IntersectionObserver` usa un sentinel `absolute top-1/2` para activar el paginador. Modificar el padding/margin de las escenas puede romper el trigger.
 - **`firestore.rules`**: Cada nueva colección debe añadirse explícitamente. Tras modificar: `npx firebase deploy --only firestore:rules`.
 - **Despliegue completo**: `npm run build` → `firebase deploy`.
+
+---
+
+## Sandbox — Evolución de la Demo CMS a entorno interactivo
+
+Evolución de la Demo CMS (ya aislada con `mockService`) hacia un Sandbox completo: el Usuario Demo podrá editar datos ficticios en el CMS Demo y visualizar el resultado en un Portfolio Demo en vivo, sin afectar nunca a Firestore ni al Portfolio Real. Desarrollo por fases pequeñas, cada una validada antes de continuar con la siguiente.
+
+### Fase 1 · Infraestructura mínima del Sandbox
+
+**Objetivo**: crear la ruta `/sandbox/portfolio` y comprobar que puede consumir `mockService` de forma aislada, antes de adaptar ningún componente real del Portfolio.
+
+**Decisiones**:
+- Nuevo namespace de rutas `/sandbox/*`, independiente de `/demo/*` (que se mantiene intacto, sin modificar).
+- Reutilización del `ServiceProvider`/`ServiceContext` ya existente (el mismo que usan `AdminLayout` y `DemoLayout`) — no se crea un provider nuevo.
+- Se crea un componente de verificación dedicado (`SandboxPortfolio`) en lugar de reutilizar `About.jsx`, para aislar por completo la validación de infraestructura de cualquier cambio sobre componentes compartidos con el Portfolio Real.
+
+**Archivos creados/modificados**:
+- Creado: `src/pages/sandbox/SandboxPortfolio.jsx` — obtiene los datos exclusivamente vía `useService()`, sin ningún import de `contentService`.
+- Modificado: `src/App.jsx` — nueva ruta `/sandbox/portfolio`, envuelta en `<ServiceProvider service={mockService} isDemo={true}>`.
+
+**Validaciones realizadas**:
+- Build de producción limpio (`npm run build`), sin errores ni warnings nuevos.
+- `/` (Portfolio Real) sigue mostrando los datos reales de Firestore, sin cambios.
+- `/admin` sin sesión redirige igual que antes de la fase.
+- `/demo` (Demo CMS) funciona exactamente igual que antes de la fase.
+- `/sandbox/portfolio` muestra correctamente `isDemo: true` y el perfil ficticio de `mockService` ("Alex Demo").
+- Confirmado mediante búsqueda en el código que `SandboxPortfolio.jsx` no importa `contentService` en ningún punto.
+
+**Resultado**: infraestructura base del Sandbox operativa y completamente aislada. Portfolio Real, CMS Real y Demo CMS sin regresiones.
