@@ -197,3 +197,25 @@ Evolución de la Demo CMS (ya aislada con `mockService`) hacia un Sandbox comple
 - Confirmado mediante búsqueda en el código que `About.jsx` ya no contiene ningún import de `contentService`.
 
 **Resultado**: primer componente real del Portfolio compartido con éxito entre Portfolio Real y Sandbox, cambiando únicamente su fuente de datos según el `ServiceProvider` que lo envuelve. Portfolio Real, CMS Real y Demo CMS sin regresiones.
+
+### Fase 4 · Segundo componente real compartido (`Certifications.jsx`)
+
+**Objetivo**: adaptar `Certifications.jsx` para que obtenga `listCertifications()` exclusivamente mediante `useService()`, eliminando su import directo de `contentService`, y añadirlo a `/sandbox/portfolio` junto a `About.jsx` para que el resultado de la fase sea visible.
+
+**Decisiones**:
+- `Certifications.jsx` pasa a ser el segundo componente de presentación compartido entre el Portfolio Real y el Sandbox, repitiendo exactamente el mismo patrón ya validado en la Fase 2 con `About.jsx`.
+- `CertificationModal.jsx` no requiere ningún cambio: ya recibe `cert`/`onClose` vía props, sin dependencia propia de ningún servicio.
+- No se ha modificado `ServiceContext.jsx`, `contentService.js` ni `mockService.js`.
+
+**Archivos modificados**:
+- `src/sections/Certifications.jsx` — sustituido el import directo de `listCertifications` desde `contentService` por el consumo vía `useService()`. Sin cambios en estado, efectos ni JSX.
+- `src/App.jsx` — añadido `<Certifications />` junto a `<About />` dentro de la ruta `/sandbox/portfolio`.
+
+**Validaciones realizadas**:
+- Build de producción limpio, sin errores ni warnings nuevos.
+- `/` (Portfolio Real): la sección "Certificaciones" sigue mostrando los datos reales de Firestore, sin ningún cambio visual.
+- `/sandbox/portfolio`: muestra ahora `About` + `Certifications`, con las 3 certificaciones ficticias de `mockService` (React - The Complete Guide, JavaScript Algorithms and Data Structures, Responsive Web Design).
+- `/demo` (Demo CMS) y `/admin` (sin sesión) funcionan exactamente igual que antes de la fase.
+- Confirmado mediante búsqueda en el código que `Certifications.jsx` ya no contiene ningún import de `contentService`.
+
+**Resultado**: segundo componente real del Portfolio compartido con éxito entre Portfolio Real y Sandbox. Portfolio Real, CMS Real y Demo CMS sin regresiones.
