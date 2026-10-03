@@ -219,3 +219,36 @@ Evolución de la Demo CMS (ya aislada con `mockService`) hacia un Sandbox comple
 - Confirmado mediante búsqueda en el código que `Certifications.jsx` ya no contiene ningún import de `contentService`.
 
 **Resultado**: segundo componente real del Portfolio compartido con éxito entre Portfolio Real y Sandbox. Portfolio Real, CMS Real y Demo CMS sin regresiones.
+
+### Fase 5 · Tercer componente real compartido (Projects.jsx)
+
+#### Objetivo
+
+Continuar la adaptación progresiva del Portfolio al modelo basado en `ServiceProvider`, incorporando la sección de Proyectos al Sandbox sin modificar el comportamiento del Portfolio Real.
+
+#### Decisiones tomadas
+
+- `Projects.jsx` deja de depender directamente de `contentService`.
+- El componente obtiene `listProjects()` exclusivamente mediante `useService()`.
+- Se reutiliza el mismo componente tanto en el Portfolio Real como en el Sandbox.
+- La ruta `/sandbox/portfolio` incorpora la sección de proyectos utilizando `mockService`.
+
+#### Archivos modificados
+
+- `src/sections/Projects.jsx`
+- `src/App.jsx`
+
+#### Validaciones realizadas
+
+- Build de producción sin errores.
+- Portfolio Real mostrando los proyectos reales desde Firestore.
+- Demo CMS funcionando sin cambios.
+- CMS Real funcionando sin cambios.
+- Sandbox mostrando correctamente:
+  - About
+  - Certifications
+  - Projects
+
+#### Resultado obtenido
+
+El Sandbox continúa evolucionando reutilizando componentes reales del Portfolio. La sección de Proyectos pasa a ser compartida entre el Portfolio Real y el Sandbox, cambiando únicamente la fuente de datos mediante `ServiceProvider`.
