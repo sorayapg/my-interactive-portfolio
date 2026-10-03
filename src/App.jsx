@@ -31,6 +31,11 @@ import PrivateRoute from './routes/PrivateRoute';
 import DemoRoute from './routes/DemoRoute';
 import Login from './pages/Login';
 
+// Importar infraestructura del Sandbox
+import { ServiceProvider } from './context/ServiceContext';
+import * as mockService from './services/mockService';
+import SandboxPortfolio from './pages/sandbox/SandboxPortfolio';
+
 // NOTA: Si ves errores de importación, haz: npm run dev (reiniciar servidor)
 
 // Componente para el layout público del portfolio
@@ -96,6 +101,16 @@ function App() {
           <Route path="cover-letter" element={<AdminCoverLetter />} />
           <Route path="whiteboard" element={<AdminWhiteboard />} />
         </Route>
+
+        {/* Sandbox — Fase 1: infraestructura mínima, aislada del Portfolio Real */}
+        <Route
+          path="/sandbox/portfolio"
+          element={
+            <ServiceProvider service={mockService} isDemo={true}>
+              <SandboxPortfolio />
+            </ServiceProvider>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );
