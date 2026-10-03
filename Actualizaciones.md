@@ -175,3 +175,25 @@ Evolución de la Demo CMS (ya aislada con `mockService`) hacia un Sandbox comple
 - Confirmado mediante búsqueda en el código que `SandboxPortfolio.jsx` no importa `contentService` en ningún punto.
 
 **Resultado**: infraestructura base del Sandbox operativa y completamente aislada. Portfolio Real, CMS Real y Demo CMS sin regresiones.
+
+### Fase 2 · Primer componente real compartido (`About.jsx`)
+
+**Objetivo**: adaptar `About.jsx` para que obtenga `getProfile()` exclusivamente mediante `useService()`, eliminando su import directo de `contentService`, y reutilizar ese mismo componente en `/sandbox/portfolio` en sustitución de la pantalla de verificación `SandboxPortfolio` de la Fase 1.
+
+**Decisiones**:
+- `About.jsx` pasa a ser el primer componente de presentación compartido entre el Portfolio Real y el Sandbox, sin duplicar su lógica ni su JSX.
+- `SandboxPortfolio.jsx` deja de usarse como vista de la ruta `/sandbox/portfolio`, pero se conserva en el repositorio sin eliminar, disponible para futuras pruebas internas de infraestructura si hiciera falta.
+- No se ha modificado `ServiceContext.jsx`, `contentService.js` ni `mockService.js`: el cambio se limita exclusivamente al componente y al punto de montaje de la ruta.
+
+**Archivos modificados**:
+- `src/sections/About.jsx` — sustituido el import directo de `getProfile` desde `contentService` por el consumo vía `useService()`. Sin cambios en estado, efectos ni JSX.
+- `src/App.jsx` — la ruta `/sandbox/portfolio` renderiza ahora `<About />` dentro del `ServiceProvider` con `mockService`; eliminado el import ya no usado de `SandboxPortfolio`.
+
+**Validaciones realizadas**:
+- Build de producción limpio, sin errores ni warnings nuevos.
+- `/` (Portfolio Real): la sección "Sobre Mí" sigue mostrando los datos reales de Firestore, sin ningún cambio visual.
+- `/sandbox/portfolio`: muestra ahora `About.jsx` alimentado por `mockService` (perfil ficticio "Alex Demo").
+- `/demo` (Demo CMS) y `/admin` (sin sesión) funcionan exactamente igual que antes de la fase.
+- Confirmado mediante búsqueda en el código que `About.jsx` ya no contiene ningún import de `contentService`.
+
+**Resultado**: primer componente real del Portfolio compartido con éxito entre Portfolio Real y Sandbox, cambiando únicamente su fuente de datos según el `ServiceProvider` que lo envuelve. Portfolio Real, CMS Real y Demo CMS sin regresiones.
