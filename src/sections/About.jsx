@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { getProfile } from '../services/contentService';
+import { useService } from '../context/ServiceContext';
 
 // Datos de fallback
 const fallbackProfile = {
@@ -10,6 +10,7 @@ const fallbackProfile = {
 };
 
 function About() {
+  const { getProfile } = useService();
   const [profile, setProfile] = useState(fallbackProfile);
   const [loading, setLoading] = useState(true);
 

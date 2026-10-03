@@ -34,7 +34,6 @@ import Login from './pages/Login';
 // Importar infraestructura del Sandbox
 import { ServiceProvider } from './context/ServiceContext';
 import * as mockService from './services/mockService';
-import SandboxPortfolio from './pages/sandbox/SandboxPortfolio';
 
 // NOTA: Si ves errores de importación, haz: npm run dev (reiniciar servidor)
 
@@ -102,12 +101,12 @@ function App() {
           <Route path="whiteboard" element={<AdminWhiteboard />} />
         </Route>
 
-        {/* Sandbox — Fase 1: infraestructura mínima, aislada del Portfolio Real */}
+        {/* Sandbox — Fase 2: About.jsx reutilizado tal cual, alimentado por mockService */}
         <Route
           path="/sandbox/portfolio"
           element={
             <ServiceProvider service={mockService} isDemo={true}>
-              <SandboxPortfolio />
+              <About />
             </ServiceProvider>
           }
         />
