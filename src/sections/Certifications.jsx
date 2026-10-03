@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { listCertifications } from '../services/contentService';
+import { useService } from '../context/ServiceContext';
 import CertificationModal from '../components/CertificationModal';
 import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/outline';
 
@@ -12,6 +12,7 @@ const getRecentIds = (certs, n = 2) => {
 };
 
 function Certifications() {
+  const { listCertifications } = useService();
   const [certifications, setCertifications] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedCert, setSelectedCert] = useState(null);

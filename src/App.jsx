@@ -101,12 +101,13 @@ function App() {
           <Route path="whiteboard" element={<AdminWhiteboard />} />
         </Route>
 
-        {/* Sandbox — Fase 2: About.jsx reutilizado tal cual, alimentado por mockService */}
+        {/* Sandbox — Fase 2/4: componentes reales reutilizados, alimentados por mockService */}
         <Route
           path="/sandbox/portfolio"
           element={
             <ServiceProvider service={mockService} isDemo={true}>
               <About />
+              <Certifications />
             </ServiceProvider>
           }
         />
